@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Kaizen</string>
+    <string name="home">Home</string>
+    <string name="hotel">Hotel</string>
+    <string name="room_service">Room Service</string>
+    <string name="guest_service">Guest Service</string>
+    <string name="bar_dinning"><![CDATA[Bar & Dinning]]></string>
+    <string name="spa_salon"><![CDATA[Spa & Salon]]></string>
+    <string name="more">More</string>
+    <string name="cart">Cart</string>
+</resources>
