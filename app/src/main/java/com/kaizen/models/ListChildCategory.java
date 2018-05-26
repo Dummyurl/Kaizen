@@ -1,52 +1,13 @@
 package com.kaizen.models;
 
 public class ListChildCategory {
-    private String status;
-    private String productImage;
-    private String brandName;
-    private String productID;
     private String id;
-    private String aliasName;
-    private String enquiry;
-    private String description;
-    private String CatId;
-    private String mainCatId;
-    private String CreatedDate;
-    private String subCatId;
+    private String subTitle;
+    private String status;
+    private String categoryId;
     private String bannerImg;
-    private String coverImage;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getProductImage() {
-        return productImage;
-    }
-
-    public void setProductImage(String productImage) {
-        this.productImage = productImage;
-    }
-
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
-    }
-
-    public String getProductID() {
-        return productID;
-    }
-
-    public void setProductID(String productID) {
-        this.productID = productID;
-    }
+    private String createdDate;
+    private String mainTitle;
 
     public String getId() {
         return id;
@@ -56,60 +17,28 @@ public class ListChildCategory {
         this.id = id;
     }
 
-    public String getAliasName() {
-        return aliasName;
+    public String getSubTitle() {
+        return subTitle;
     }
 
-    public void setAliasName(String aliasName) {
-        this.aliasName = aliasName;
+    public void setSubTitle(String subTitle) {
+        this.subTitle = subTitle;
     }
 
-    public String getEnquiry() {
-        return enquiry;
+    public String getStatus() {
+        return status;
     }
 
-    public void setEnquiry(String enquiry) {
-        this.enquiry = enquiry;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getDescription() {
-        return description;
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCatId() {
-        return CatId;
-    }
-
-    public void setCatId(String catId) {
-        CatId = catId;
-    }
-
-    public String getMainCatId() {
-        return mainCatId;
-    }
-
-    public void setMainCatId(String mainCatId) {
-        this.mainCatId = mainCatId;
-    }
-
-    public String getCreatedDate() {
-        return CreatedDate;
-    }
-
-    public void setCreatedDate(String createdDate) {
-        CreatedDate = createdDate;
-    }
-
-    public String getSubCatId() {
-        return subCatId;
-    }
-
-    public void setSubCatId(String subCatId) {
-        this.subCatId = subCatId;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getBannerImg() {
@@ -120,31 +49,32 @@ public class ListChildCategory {
         this.bannerImg = bannerImg;
     }
 
-    public String getCoverImage() {
-        return coverImage;
+    public String getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCoverImage(String coverImage) {
-        this.coverImage = coverImage;
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getMainTitle() {
+        return mainTitle;
+    }
+
+    public void setMainTitle(String mainTitle) {
+        this.mainTitle = mainTitle;
     }
 
     @Override
     public String toString() {
-        return "ListChildCategory{" +
-                "status='" + status + '\'' +
-                ", productImage='" + productImage + '\'' +
-                ", brandName='" + brandName + '\'' +
-                ", productID='" + productID + '\'' +
-                ", id='" + id + '\'' +
-                ", aliasName='" + aliasName + '\'' +
-                ", enquiry='" + enquiry + '\'' +
-                ", description='" + description + '\'' +
-                ", CatId='" + CatId + '\'' +
-                ", mainCatId='" + mainCatId + '\'' +
-                ", CreatedDate='" + CreatedDate + '\'' +
-                ", subCatId='" + subCatId + '\'' +
+        return "ChildCategory{" +
+                "id='" + id + '\'' +
+                ", subTitle='" + subTitle + '\'' +
+                ", status='" + status + '\'' +
+                ", categoryId='" + categoryId + '\'' +
                 ", bannerImg='" + bannerImg + '\'' +
-                ", coverImage='" + coverImage + '\'' +
+                ", createdDate='" + createdDate + '\'' +
+                ", mainTitle='" + mainTitle + '\'' +
                 '}';
     }
 }

@@ -90,7 +90,7 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
 
     @Override
     public void onCategoryClick(Category category) {
-        Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.IMAGE_URL + category.getCategory_image()).into(iv_image);
+        Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.CATEGORY_IMAGE_URL + category.getCategory_image()).into(iv_image);
 
         RecyclerView rv_sub_category = findViewById(R.id.rv_sub_category);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -121,7 +121,7 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
             @Override
             public void onResponse(Call<ListChildCategoryResponse> call, Response<ListChildCategoryResponse> response) {
                 if (response.body() != null && response.isSuccessful()) {
-                    ChildCategoryPager childCategoryPager = new ChildCategoryPager(getSupportFragmentManager(), response.body().getListchildcategory());
+                    ChildCategoryPager childCategoryPager = new ChildCategoryPager(getSupportFragmentManager(), response.body().getReports());
                     view_pager.setAdapter(childCategoryPager);
                 } else {
                     showErrorToast(R.string.something_went_wrong);

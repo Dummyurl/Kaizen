@@ -26,6 +26,7 @@ public class SubcategoryAdapter extends CommonRecyclerAdapter<Subcategory> {
     private Subcategory selectedSubcategory;
     private TextView tv_selected;
     private Category category;
+    private RecyclerView rv_selected;
 
     public SubcategoryAdapter(Category category, ISetOnChildClickListener iSetOnChildClickListener) {
         this.iSetOnChildClickListener = iSetOnChildClickListener;
@@ -79,11 +80,16 @@ public class SubcategoryAdapter extends CommonRecyclerAdapter<Subcategory> {
         }
 
         private void showRecyclerView(Subcategory subcategory) {
+            if (rv_selected != null) {
+                rv_selected.setVisibility(View.GONE);
+            }
+
             rv_child_category.setVisibility(View.VISIBLE);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context);
             rv_child_category.setLayoutManager(layoutManager);
+            rv_selected = rv_child_category;
 
-            final ChildCategoryAdapter childCategoryAdapter = new ChildCategoryAdapter(category,subcategory, iSetOnChildClickListener);
+            final ChildCategoryAdapter childCategoryAdapter = new ChildCategoryAdapter(category, subcategory, iSetOnChildClickListener);
             rv_child_category.setAdapter(childCategoryAdapter);
 
             RetrofitService service = RetrofitInstance.createService(RetrofitService.class);

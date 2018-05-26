@@ -17,6 +17,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin8dp"
+            android:layout_marginTop="@dimen/margin8dp"
             android:layout_weight="0.75"
             android:background="#80000000">
 
@@ -44,7 +46,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view_divider"
                 android:layout_marginTop="@dimen/margin16dp"
-                android:padding="@dimen/margin16dp" />
+                android:padding="@dimen/margin16dp"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
         </RelativeLayout>
 
         <View

@@ -11,7 +11,9 @@ public class APIUrls {
 
     public static final String CHILD_CATEGORY = BASE_URL + "index.php/api/getChildmenulist";
 
-    public static final String LIST_CHILD_CATEGORY = BASE_URL + "index.php/api/getBrandslist";
+    public static final String LIST_CHILD_CATEGORY = BASE_URL + "index.php/api/getBannerslist";
 
-    public static final String IMAGE_URL = BASE_URL + "administrator/uploads/category/";
+    public static final String CATEGORY_IMAGE_URL = BASE_URL + "administrator/uploads/category/";
+
+    public static final String CHILD_CATEGORY_IMAGE_URL = BASE_URL + "administrator/uploads/banners/";
 }

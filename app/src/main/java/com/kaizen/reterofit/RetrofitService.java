@@ -2,7 +2,6 @@ package com.kaizen.reterofit;
 
 import com.kaizen.models.CategoryResponse;
 import com.kaizen.models.ChildCategoryResponse;
-import com.kaizen.models.ListChildCategory;
 import com.kaizen.models.ListChildCategoryResponse;
 import com.kaizen.models.SubcategoryResponse;
 

@@ -16,7 +16,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.kaizen.R;
-import com.kaizen.models.ChildCategory;
 import com.kaizen.models.ListChildCategory;
 import com.kaizen.reterofit.APIUrls;
 
@@ -63,9 +62,9 @@ public class ChildCategoryFragment extends Fragment {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .skipMemoryCache(true);
 
-        Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.IMAGE_URL + listChildCategory.getCoverImage()).into(iv_child_category);
+        Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.CHILD_CATEGORY_IMAGE_URL + listChildCategory.getBannerImg()).into(iv_child_category);
 
-        tv_title.setText(Html.fromHtml(listChildCategory.getBrandName()));
-        tv_description.setText(Html.fromHtml(listChildCategory.getDescription()));
+        tv_title.setText(Html.fromHtml(listChildCategory.getMainTitle()));
+        tv_description.setText(Html.fromHtml(listChildCategory.getSubTitle()));
     }
 }
