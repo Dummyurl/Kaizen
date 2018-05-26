@@ -15,6 +15,7 @@ import com.kaizen.models.Category;
 public class CategoryAdapter extends CommonRecyclerAdapter<Category> {
     private TextView tv_selected;
     private Context context;
+    private Category selectedCategory;
     private ISetOnCategoryClickListener iSetOnCategoryClickListener;
 
     public CategoryAdapter(ISetOnCategoryClickListener iSetOnCategoryClickListener) {
@@ -48,10 +49,11 @@ public class CategoryAdapter extends CommonRecyclerAdapter<Category> {
             Category category = getItem(position);
             tv_category.setText(category.getMainCategoryTitle());
 
-            if (tv_selected != null) {
+            if (tv_selected != null && selectedCategory.getId().equals(category.getId())) {
                 tv_selected.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_rectangle_blue));
                 tv_category.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_rectangle_orange));
                 tv_selected = tv_category;
+                selectedCategory = category;
             } else {
                 int drawableId = R.drawable.ic_rectangle_blue;
 
@@ -59,6 +61,7 @@ public class CategoryAdapter extends CommonRecyclerAdapter<Category> {
                     drawableId = R.drawable.ic_rectangle_orange;
                     iSetOnCategoryClickListener.onCategoryClick(category);
                     tv_selected = tv_category;
+                    selectedCategory = category;
                 }
 
                 tv_category.setBackground(ContextCompat.getDrawable(context, drawableId));
@@ -76,6 +79,7 @@ public class CategoryAdapter extends CommonRecyclerAdapter<Category> {
 
             tv_category.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_rectangle_orange));
             tv_selected = tv_category;
+            selectedCategory = category;
         }
     }
 }
