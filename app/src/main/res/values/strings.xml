@@ -9,4 +9,9 @@
     <string name="more">More</string>
     <string name="cart">Cart</string>
     <string name="something_went_wrong">Something went wrong!</string>
+    <string name="room_number">Room Number</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="room_number_empty">Enter Room Number</string>
+    <string name="password_empty">Enter Password</string>
 </resources>

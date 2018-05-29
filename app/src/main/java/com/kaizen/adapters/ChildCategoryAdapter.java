@@ -5,13 +5,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.kaizen.R;
 import com.kaizen.listeners.ISetOnChildClickListener;
 import com.kaizen.models.Category;
 import com.kaizen.models.ChildCategory;
 import com.kaizen.models.Subcategory;
+import com.kaizen.reterofit.APIUrls;
 
 public class ChildCategoryAdapter extends CommonRecyclerAdapter<ChildCategory> {
 
@@ -20,11 +25,17 @@ public class ChildCategoryAdapter extends CommonRecyclerAdapter<ChildCategory> {
     private Subcategory subcategory;
     private ChildCategory selectedChildCategory;
     private Category category;
+    private RequestOptions requestOptions;
 
     public ChildCategoryAdapter(Category category, Subcategory subcategory, ISetOnChildClickListener iSetOnChildClickListener) {
         this.iSetOnChildClickListener = iSetOnChildClickListener;
         this.subcategory = subcategory;
         this.category = category;
+
+        requestOptions = new RequestOptions()
+                .placeholder(R.drawable.ic_place_holder)
+                .error(R.drawable.ic_place_holder)
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
     }
 
     @Override
@@ -43,11 +54,13 @@ public class ChildCategoryAdapter extends CommonRecyclerAdapter<ChildCategory> {
 
     private class ChildCategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tv_child_category;
+        ImageView iv_child_category;
 
         private ChildCategoryViewHolder(View view) {
             super(view);
             view.setOnClickListener(this);
             tv_child_category = view.findViewById(R.id.tv_child_category);
+            iv_child_category = view.findViewById(R.id.iv_child_category);
         }
 
         private void bindData(int position) {
@@ -61,6 +74,13 @@ public class ChildCategoryAdapter extends CommonRecyclerAdapter<ChildCategory> {
                     iSetOnChildClickListener.onChildCategoryClick(category, subcategory, childCategory);
                 }
             }
+
+            if (childCategory.getChildcat().size() > 0) {
+                String imageName = childCategory.getChildcat().get(0).getMainImage();
+
+                Glide.with(context).setDefaultRequestOptions(requestOptions).load(APIUrls.CHILD_CATEGORY_IMAGE_URL + imageName).into(iv_child_category);
+            }
+
         }
 
         @Override

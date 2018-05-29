@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListChildCategoryResponse {
-    private List<ListChildCategory> reports;
+    private List<ListChildCategory> listchildcategory;
 
-    public List<ListChildCategory> getReports() {
-        if (reports == null) {
-            reports = new ArrayList<>();
+    public List<ListChildCategory> getListchildcategory() {
+        if (listchildcategory == null) {
+            listchildcategory = new ArrayList<>();
         }
 
-        return reports;
+        return listchildcategory;
     }
 
-    public void setReports(List<ListChildCategory> reports) {
-        this.reports = reports;
+    public void setListchildcategory(List<ListChildCategory> listchildcategory) {
+        this.listchildcategory = listchildcategory;
     }
 
     @Override
     public String toString() {
-        return "ChildCategoryResponse{" +
-                "reports=" + reports +
+        return "ListChildCategoryResponse{" +
+                "listchildcategory=" + listchildcategory +
                 '}';
     }
 }

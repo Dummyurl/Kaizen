@@ -1,20 +1,43 @@
 package com.kaizen.models;
 
-public class ListChildCategory {
+public class Childcat {
     private String created_date;
+
+    private String mainCategoryId;
+
+    private String categoryTitle;
+
     private String status;
+
+    private String categoryAlias;
+
     private String brand_id;
+
     private String brandName;
+
     private String mainImage;
+
     private String id;
+
+    private String subCategoryId;
+
     private String aliasName;
+
     private String enquiry;
+
     private String description;
+
     private String CatId;
-    private String mainCatId;
+
     private String CreatedDate;
+
+    private String mainCatId;
+
     private String subCatId;
+
     private String bannerImg;
+
+    private String createDate;
 
     public String getCreated_date() {
         return created_date;
@@ -24,12 +47,36 @@ public class ListChildCategory {
         this.created_date = created_date;
     }
 
+    public String getMainCategoryId() {
+        return mainCategoryId;
+    }
+
+    public void setMainCategoryId(String mainCategoryId) {
+        this.mainCategoryId = mainCategoryId;
+    }
+
+    public String getCategoryTitle() {
+        return categoryTitle;
+    }
+
+    public void setCategoryTitle(String categoryTitle) {
+        this.categoryTitle = categoryTitle;
+    }
+
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getCategoryAlias() {
+        return categoryAlias;
+    }
+
+    public void setCategoryAlias(String categoryAlias) {
+        this.categoryAlias = categoryAlias;
     }
 
     public String getBrand_id() {
@@ -64,6 +111,14 @@ public class ListChildCategory {
         this.id = id;
     }
 
+    public String getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public void setSubCategoryId(String subCategoryId) {
+        this.subCategoryId = subCategoryId;
+    }
+
     public String getAliasName() {
         return aliasName;
     }
@@ -96,20 +151,20 @@ public class ListChildCategory {
         CatId = catId;
     }
 
-    public String getMainCatId() {
-        return mainCatId;
-    }
-
-    public void setMainCatId(String mainCatId) {
-        this.mainCatId = mainCatId;
-    }
-
     public String getCreatedDate() {
         return CreatedDate;
     }
 
     public void setCreatedDate(String createdDate) {
         CreatedDate = createdDate;
+    }
+
+    public String getMainCatId() {
+        return mainCatId;
+    }
+
+    public void setMainCatId(String mainCatId) {
+        this.mainCatId = mainCatId;
     }
 
     public String getSubCatId() {
@@ -128,23 +183,11 @@ public class ListChildCategory {
         this.bannerImg = bannerImg;
     }
 
-    @Override
-    public String toString() {
-        return "ListChildCategory{" +
-                "created_date='" + created_date + '\'' +
-                ", status='" + status + '\'' +
-                ", brand_id='" + brand_id + '\'' +
-                ", brandName='" + brandName + '\'' +
-                ", mainImage='" + mainImage + '\'' +
-                ", id='" + id + '\'' +
-                ", aliasName='" + aliasName + '\'' +
-                ", enquiry='" + enquiry + '\'' +
-                ", description='" + description + '\'' +
-                ", CatId='" + CatId + '\'' +
-                ", mainCatId='" + mainCatId + '\'' +
-                ", CreatedDate='" + CreatedDate + '\'' +
-                ", subCatId='" + subCatId + '\'' +
-                ", bannerImg='" + bannerImg + '\'' +
-                '}';
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 }

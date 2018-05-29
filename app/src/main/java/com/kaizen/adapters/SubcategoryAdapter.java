@@ -1,5 +1,6 @@
 package com.kaizen.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.kaizen.models.ChildCategoryResponse;
 import com.kaizen.models.Subcategory;
 import com.kaizen.reterofit.RetrofitInstance;
 import com.kaizen.reterofit.RetrofitService;
+import com.kaizen.utils.ToastUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,7 +105,7 @@ public class SubcategoryAdapter extends CommonRecyclerAdapter<Subcategory> {
 
                 @Override
                 public void onFailure(Call<ChildCategoryResponse> call, Throwable t) {
-
+                    ToastUtil.showError((Activity) context, R.string.something_went_wrong);
                 }
             });
         }

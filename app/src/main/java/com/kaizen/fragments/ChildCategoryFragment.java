@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -55,6 +56,7 @@ public class ChildCategoryFragment extends Fragment {
         TextView tv_title = view.findViewById(R.id.tv_title);
         TextView tv_description = view.findViewById(R.id.tv_description);
         ImageView iv_child_category = view.findViewById(R.id.iv_child_category);
+        RelativeLayout rl_content = view.findViewById(R.id.rl_content);
 
         RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.drawable.ic_place_holder)
@@ -62,9 +64,15 @@ public class ChildCategoryFragment extends Fragment {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .skipMemoryCache(true);
 
-        Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.CHILD_CATEGORY_IMAGE_URL + listChildCategory.getBannerImg()).into(iv_child_category);
+        Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.CHILD_CATEGORY_IMAGE_URL + listChildCategory.getMainImage()).into(iv_child_category);
 
-        tv_title.setText(Html.fromHtml(listChildCategory.getMainTitle()));
-        tv_description.setText(Html.fromHtml(listChildCategory.getSubTitle()));
+        if (listChildCategory.getBrandName().isEmpty()) {
+            rl_content.setVisibility(View.GONE);
+        } else {
+            rl_content.setVisibility(View.VISIBLE);
+        }
+
+        tv_title.setText(Html.fromHtml(listChildCategory.getBrandName()));
+        tv_description.setText(Html.fromHtml(listChildCategory.getDescription()));
     }
 }

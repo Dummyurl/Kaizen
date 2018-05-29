@@ -1,5 +1,8 @@
 package com.kaizen.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChildCategory {
     private String subCategoryId;
     private String id;
@@ -8,6 +11,16 @@ public class ChildCategory {
     private String status;
     private String categoryAlias;
     private String createDate;
+    private String mainImage;
+    private List<Childcat> childcat;
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
+    }
 
     public String getSubCategoryId() {
         return subCategoryId;
@@ -63,6 +76,18 @@ public class ChildCategory {
 
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
+    }
+
+    public List<Childcat> getChildcat() {
+        if (childcat == null) {
+            childcat = new ArrayList<>();
+        }
+
+        return childcat;
+    }
+
+    public void setChildcat(List<Childcat> childcat) {
+        this.childcat = childcat;
     }
 
     @Override

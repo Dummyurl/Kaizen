@@ -4,6 +4,7 @@ import com.kaizen.models.CategoryResponse;
 import com.kaizen.models.ChildCategoryResponse;
 import com.kaizen.models.ListChildCategoryResponse;
 import com.kaizen.models.SubcategoryResponse;
+import com.kaizen.models.UserResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -26,4 +27,7 @@ public interface RetrofitService {
 
     @GET(APIUrls.LIST_CHILD_CATEGORY)
     Call<ListChildCategoryResponse> getListChildCategory(@Query("menuid") String menuid, @Query("subid") String subid, @Query("childid") String childid);
+
+    @GET(APIUrls.LOGIN)
+    Call<UserResponse> login(@Query("roomno") String roomno, @Query("password") String password);
 }

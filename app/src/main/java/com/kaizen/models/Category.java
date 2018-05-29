@@ -6,6 +6,15 @@ public class Category {
     private String status;
     private String category_image;
     private String createDate;
+    private String mainImage;
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
+    }
 
     public String getId() {
         return id;

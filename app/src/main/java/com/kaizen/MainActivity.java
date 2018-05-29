@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,8 +57,7 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
         requestOptions = new RequestOptions()
                 .placeholder(R.drawable.ic_place_holder)
                 .error(R.drawable.ic_place_holder)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .skipMemoryCache(true);
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         TextView tv_date = findViewById(R.id.tv_date);
         DateFormat df = new SimpleDateFormat("EEEE, MMM dd yyyy", Locale.getDefault());
@@ -86,6 +86,24 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
                 showErrorToast(R.string.something_went_wrong);
             }
         });
+
+        findViewById(R.id.iv_left).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view_pager.setCurrentItem(getItem(-1), true);
+            }
+        });
+
+        findViewById(R.id.iv_right).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view_pager.setCurrentItem(getItem(+1), true);
+            }
+        });
+    }
+
+    private int getItem(int i) {
+        return view_pager.getCurrentItem() + i;
     }
 
     @Override
@@ -116,12 +134,12 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
     }
 
     @Override
-    public void onChildCategoryClick(Category category, Subcategory subcategory, ChildCategory childCategory) {
+    public void onChildCategoryClick(Category category, Subcategory subcategory, final ChildCategory childCategory) {
         service.getListChildCategory(category.getId(), subcategory.getId(), childCategory.getId()).enqueue(new Callback<ListChildCategoryResponse>() {
             @Override
             public void onResponse(Call<ListChildCategoryResponse> call, Response<ListChildCategoryResponse> response) {
                 if (response.body() != null && response.isSuccessful()) {
-                    ChildCategoryPager childCategoryPager = new ChildCategoryPager(getSupportFragmentManager(), response.body().getReports());
+                    ChildCategoryPager childCategoryPager = new ChildCategoryPager(getSupportFragmentManager(), response.body().getListchildcategory());
                     view_pager.setAdapter(childCategoryPager);
                 } else {
                     showErrorToast(R.string.something_went_wrong);
