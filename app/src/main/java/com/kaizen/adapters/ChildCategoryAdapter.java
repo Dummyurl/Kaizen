@@ -1,11 +1,14 @@
 package com.kaizen.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -55,20 +58,24 @@ public class ChildCategoryAdapter extends CommonRecyclerAdapter<ChildCategory> {
     private class ChildCategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tv_child_category;
         ImageView iv_child_category;
+        RelativeLayout rl_background;
 
         private ChildCategoryViewHolder(View view) {
             super(view);
             view.setOnClickListener(this);
             tv_child_category = view.findViewById(R.id.tv_child_category);
             iv_child_category = view.findViewById(R.id.iv_child_category);
+            rl_background = view.findViewById(R.id.rl_background);
         }
 
         private void bindData(int position) {
             ChildCategory childCategory = getItem(position);
             tv_child_category.setText(childCategory.getCategoryTitle());
+            rl_background.setBackgroundColor(ContextCompat.getColor(context, R.color.blue));
 
             if (selectedChildCategory != null && selectedChildCategory.getId().equals(childCategory.getId())) {
                 iSetOnChildClickListener.onChildCategoryClick(category, subcategory, childCategory);
+                rl_background.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
             }
 
             if (childCategory.getChildcat().size() > 0) {
@@ -84,6 +91,7 @@ public class ChildCategoryAdapter extends CommonRecyclerAdapter<ChildCategory> {
             ChildCategory childCategory = getItem(getAdapterPosition());
             iSetOnChildClickListener.onChildCategoryClick(category, subcategory, childCategory);
             selectedChildCategory = childCategory;
+            rl_background.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
         }
     }
 }

@@ -2,7 +2,11 @@ package com.kaizen;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentSender;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
@@ -10,14 +14,26 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.kaizen.activities.BaseActivity;
 import com.kaizen.adapters.CategoryAdapter;
 import com.kaizen.adapters.ChildCategoryPager;
@@ -60,6 +76,7 @@ import zh.wang.android.yweathergetter4a.YahooWeatherInfoListener;
 public class MainActivity extends BaseActivity implements ISetOnCategoryClickListener, ISetOnChildClickListener, YahooWeatherInfoListener, View.OnClickListener {
 
     public static final int RC_LOCATION = 4586;
+    final static int REQUEST_LOCATION = 199;
     private ImageView iv_category;
     private RequestOptions requestOptions;
     private RetrofitService service;
@@ -70,6 +87,7 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
 
     private ImageView iv_temperature, iv_tomorrow_temperature;
     private YahooWeather mYahooWeather = YahooWeather.getInstance(5000, true);
+    private GoogleApiClient googleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,14 +148,6 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
 
 
         ll_weather = findViewById(R.id.ll_weather);
-        String[] perms = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
-
-        if (EasyPermissions.hasPermissions(this, perms)) {
-            searchByGPS();
-        } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.location_rationale), RC_LOCATION, perms);
-        }
-
         ll_buttons = findViewById(R.id.ll_buttons);
 
         tv_type = findViewById(R.id.tv_type);
@@ -164,6 +174,105 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
         findViewById(R.id.tv_check_out).setOnClickListener(this);
         findViewById(R.id.tv_internet).setOnClickListener(this);
         findViewById(R.id.tv_collect_tray).setOnClickListener(this);
+
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER) && hasGPSDevice(this)) {
+            getWeather();
+        }
+
+        if (!hasGPSDevice(this)) {
+            showInfoToast("Gps not Supported");
+        }
+
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER) && hasGPSDevice(this)) {
+            showInfoToast("Gps not enabled");
+            enableLoc();
+        }
+    }
+
+    private void getWeather() {
+        String[] perms = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            searchByGPS();
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.location_rationale), RC_LOCATION, perms);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_LOCATION) {
+            getWeather();
+        }
+    }
+
+    private boolean hasGPSDevice(Context context) {
+        final LocationManager mgr = (LocationManager) context
+                .getSystemService(Context.LOCATION_SERVICE);
+        if (mgr == null)
+            return false;
+        final List<String> providers = mgr.getAllProviders();
+        if (providers == null)
+            return false;
+        return providers.contains(LocationManager.GPS_PROVIDER);
+    }
+
+    private void enableLoc() {
+
+        if (googleApiClient == null) {
+            googleApiClient = new GoogleApiClient.Builder(this)
+                    .addApi(LocationServices.API)
+                    .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+                        @Override
+                        public void onConnected(Bundle bundle) {
+
+                        }
+
+                        @Override
+                        public void onConnectionSuspended(int i) {
+                            googleApiClient.connect();
+                        }
+                    })
+                    .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
+                        @Override
+                        public void onConnectionFailed(ConnectionResult connectionResult) {
+                        }
+                    }).build();
+            googleApiClient.connect();
+
+            LocationRequest locationRequest = LocationRequest.create();
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            locationRequest.setInterval(30 * 1000);
+            locationRequest.setFastestInterval(5 * 1000);
+            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                    .addLocationRequest(locationRequest);
+
+            builder.setAlwaysShow(true);
+
+            PendingResult<LocationSettingsResult> result =
+                    LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
+            result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+                @Override
+                public void onResult(LocationSettingsResult result) {
+                    final Status status = result.getStatus();
+                    switch (status.getStatusCode()) {
+                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                            try {
+                                // Show the dialog by calling startResolutionForResult(),
+                                // and check the result in onActivityResult().
+                                status.startResolutionForResult(MainActivity.this, REQUEST_LOCATION);
+
+                            } catch (IntentSender.SendIntentException e) {
+                                // Ignore the error.
+                            }
+                            break;
+                    }
+                }
+            });
+        }
     }
 
     private void searchByGPS() {

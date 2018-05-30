@@ -21,6 +21,10 @@ public class BaseActivity extends AppCompatActivity {
         ToastUtil.showInfo(this, msg);
     }
 
+    public void showInfoToast(String msg) {
+        ToastUtil.showInfo(this, msg);
+    }
+
     public void showErrorToast(int msg) {
         ToastUtil.showError(this, msg);
     }
