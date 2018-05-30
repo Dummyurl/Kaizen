@@ -69,15 +69,7 @@ public class SubcategoryAdapter extends CommonRecyclerAdapter<Subcategory> {
                 selectedSubcategory = subcategory;
                 showRecyclerView(subcategory);
             } else {
-
-                if (position == 0) {
-                    tv_selected = tv_sub_category;
-                    selectedSubcategory = subcategory;
-
-                    showRecyclerView(subcategory);
-                } else {
-                    rv_child_category.setVisibility(View.GONE);
-                }
+                rv_child_category.setVisibility(View.GONE);
             }
         }
 

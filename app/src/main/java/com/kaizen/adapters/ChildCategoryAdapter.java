@@ -69,10 +69,6 @@ public class ChildCategoryAdapter extends CommonRecyclerAdapter<ChildCategory> {
 
             if (selectedChildCategory != null && selectedChildCategory.getId().equals(childCategory.getId())) {
                 iSetOnChildClickListener.onChildCategoryClick(category, subcategory, childCategory);
-            } else {
-                if (position == 0) {
-                    iSetOnChildClickListener.onChildCategoryClick(category, subcategory, childCategory);
-                }
             }
 
             if (childCategory.getChildcat().size() > 0) {
