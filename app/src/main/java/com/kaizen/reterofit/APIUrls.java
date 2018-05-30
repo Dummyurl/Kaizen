@@ -20,4 +20,12 @@ public class APIUrls {
     public static final String CHILD_CATEGORY_IMAGE_URL = BASE_URL + "administrator/uploads/banners/";
 
     public static final String LOGIN = BASE_URL + "index.php/api/login";
+
+    public static final String FEEDBACK = BASE_URL + "index.php/api/feedback";
+
+    public static final String CHECKOUT = BASE_URL + "index.php/api/checkout";
+
+    public static final String INTERNET = BASE_URL + "index.php/api/internet";
+
+    public static final String COLLECTTRAY = BASE_URL + "index.php/api/collectry";
 }

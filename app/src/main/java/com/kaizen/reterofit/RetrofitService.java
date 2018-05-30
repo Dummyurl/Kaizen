@@ -4,6 +4,7 @@ import com.kaizen.models.BannerResponse;
 import com.kaizen.models.CategoryResponse;
 import com.kaizen.models.ChildCategoryResponse;
 import com.kaizen.models.ListChildCategoryResponse;
+import com.kaizen.models.RequestResponse;
 import com.kaizen.models.SubcategoryResponse;
 import com.kaizen.models.UserResponse;
 
@@ -34,4 +35,16 @@ public interface RetrofitService {
 
     @GET(APIUrls.BANNER_LIST)
     Call<BannerResponse> getBanners(@Query("menuid") String menuid);
+
+    @GET(APIUrls.FEEDBACK)
+    Call<RequestResponse> sendFeedBack(@Query("roomno") String roomno, @Query("name") String name, @Query("description") String description);
+
+    @GET(APIUrls.CHECKOUT)
+    Call<RequestResponse> checkoutTime(@Query("roomno") String roomno, @Query("name") String name, @Query("checktime") String checktime);
+
+    @GET(APIUrls.INTERNET)
+    Call<RequestResponse> askForInternet(@Query("roomno") String roomno, @Query("name") String name);
+
+    @GET(APIUrls.COLLECTTRAY)
+    Call<RequestResponse> collectTray(@Query("roomno") String roomno, @Query("name") String name, @Query("timing") String timing);
 }

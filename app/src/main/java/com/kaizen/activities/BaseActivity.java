@@ -33,6 +33,10 @@ public class BaseActivity extends AppCompatActivity {
         ToastUtil.showSuccess(this, msg);
     }
 
+    public void showSuccessToast(String msg) {
+        ToastUtil.showSuccess(this, msg);
+    }
+
     public boolean isNetworkAvailable() {
         try {
             ConnectivityManager connectivityManager

@@ -249,6 +249,7 @@
                         android:layout_height="wrap_content">
 
                         <TextView
+                            android:id="@+id/tv_feed_back"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/margin4dp"
@@ -264,6 +265,7 @@
                             android:textSize="16sp" />
 
                         <TextView
+                            android:id="@+id/tv_check_out"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/margin4dp"
@@ -286,6 +288,7 @@
                         android:layout_marginTop="@dimen/margin4dp">
 
                         <TextView
+                            android:id="@+id/tv_collect_tray"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/margin4dp"
@@ -301,6 +304,7 @@
                             android:textSize="16sp" />
 
                         <TextView
+                            android:id="@+id/tv_internet"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/margin4dp"

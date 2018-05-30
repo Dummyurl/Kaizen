@@ -20,4 +20,18 @@
     <string name="check_out">Check Out</string>
     <string name="collect_tray">Collect Tray</string>
     <string name="internet">Internet</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_description">Enter Description</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter_date_time"><![CDATA[Enter Date & Time]]></string>
+    <string name="select_time">Select Time</string>
+    <string name="select_date">Select Date</string>
+
+    <string-array name="collect_tray">
+        <item>Immidiate</item>
+        <item>15-30Minutes</item>
+        <item>1Hour</item>
+        <item>2Hours</item>
+    </string-array>
 </resources>
