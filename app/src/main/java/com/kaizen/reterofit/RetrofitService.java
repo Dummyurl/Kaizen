@@ -1,5 +1,6 @@
 package com.kaizen.reterofit;
 
+import com.kaizen.models.BannerResponse;
 import com.kaizen.models.CategoryResponse;
 import com.kaizen.models.ChildCategoryResponse;
 import com.kaizen.models.ListChildCategoryResponse;
@@ -30,4 +31,7 @@ public interface RetrofitService {
 
     @GET(APIUrls.LOGIN)
     Call<UserResponse> login(@Query("roomno") String roomno, @Query("password") String password);
+
+    @GET(APIUrls.BANNER_LIST)
+    Call<BannerResponse> getBanners(@Query("menuid") String menuid);
 }

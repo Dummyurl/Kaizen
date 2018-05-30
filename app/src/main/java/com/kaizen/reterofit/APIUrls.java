@@ -9,6 +9,8 @@ public class APIUrls {
 
     public static final String SUB_CATEGORY = BASE_URL + "index.php/api/getSubmenulist";
 
+    public static final String BANNER_LIST = BASE_URL + "index.php/api/getBannerslist";
+
     public static final String CHILD_CATEGORY = BASE_URL + "index.php/api/getChildmenulist";
 
     public static final String LIST_CHILD_CATEGORY = BASE_URL + "index.php/api/getBrandslist";
