@@ -64,6 +64,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import pub.devrel.easypermissions.EasyPermissions;
 import retrofit2.Call;
@@ -188,6 +190,8 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
             showInfoToast("Gps not enabled");
             enableLoc();
         }
+
+        setupAutoPager();
     }
 
     private void getWeather() {
@@ -375,16 +379,18 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
 
     @Override
     public void gotWeatherInfo(WeatherInfo weatherInfo, YahooWeather.ErrorType errorType) {
-        tv_type.setText(weatherInfo.getCurrentText());
-        tv_location.setText(weatherInfo.getLocationCity());
-        tv_temperature.setText(String.format("%s\u00B0 C", weatherInfo.getCurrentTemp()));
-        tv_high_temperature.setText(String.format("%s\u00B0 C", weatherInfo.getForecastInfo1().getForecastTempHigh()));
-        tv_low_temperature.setText(String.format("%s\u00B0 C", weatherInfo.getForecastInfo1().getForecastTempLow()));
-        tv_tomorrow_high_temperature.setText(String.format("%s\u00B0 C", weatherInfo.getForecastInfo2().getForecastTempLow()));
-        tv_tomorrow_low_temperature.setText(String.format("%s\u00B0 C", weatherInfo.getForecastInfo2().getForecastTempLow()));
+        if (weatherInfo != null) {
+            tv_type.setText(weatherInfo.getCurrentText());
+            tv_location.setText(weatherInfo.getLocationCity());
+            tv_temperature.setText(String.format("%s\u00B0 C", weatherInfo.getCurrentTemp()));
+            tv_high_temperature.setText(String.format("%s\u00B0 C", weatherInfo.getForecastInfo1().getForecastTempHigh()));
+            tv_low_temperature.setText(String.format("%s\u00B0 C", weatherInfo.getForecastInfo1().getForecastTempLow()));
+            tv_tomorrow_high_temperature.setText(String.format("%s\u00B0 C", weatherInfo.getForecastInfo2().getForecastTempLow()));
+            tv_tomorrow_low_temperature.setText(String.format("%s\u00B0 C", weatherInfo.getForecastInfo2().getForecastTempLow()));
 
-        iv_temperature.setImageBitmap(weatherInfo.getForecastInfo1().getForecastConditionIcon());
-        iv_tomorrow_temperature.setImageBitmap(weatherInfo.getForecastInfo2().getForecastConditionIcon());
+            iv_temperature.setImageBitmap(weatherInfo.getForecastInfo1().getForecastConditionIcon());
+            iv_tomorrow_temperature.setImageBitmap(weatherInfo.getForecastInfo2().getForecastConditionIcon());
+        }
     }
 
     @Override
@@ -426,7 +432,7 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
                         } else if (description.isEmpty()) {
                             showErrorToast(R.string.enter_description);
                         } else {
-                            service.sendFeedBack(user.getUser_id(), name, description).enqueue(new Callback<RequestResponse>() {
+                            service.sendFeedBack(user.getRoomno(), name, description).enqueue(new Callback<RequestResponse>() {
                                 @Override
                                 public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                                     if (response.isSuccessful() && response.body() != null) {
@@ -456,6 +462,43 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
                     }
                 });
         feedBackBuilder.create().show();
+    }
+
+    private void setupAutoPager() {
+        final Handler handler = new Handler();
+
+        final Runnable update = new Runnable() {
+            public void run() {
+
+                if (view_pager != null) {
+                    int currentPage = view_pager.getCurrentItem();
+
+                    int count = 0;
+
+                    if (view_pager.getAdapter() != null) {
+                        count = view_pager.getAdapter().getCount();
+                    }
+
+                    if (currentPage == count - 1) {
+                        currentPage = 0;
+                    } else {
+                        currentPage++;
+                    }
+
+                    view_pager.setCurrentItem(currentPage);
+                }
+            }
+        };
+
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                handler.post(update);
+            }
+        }, 5000, 5000);
     }
 
     private void checkout(final User user) {
@@ -488,7 +531,7 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
                         } else if (dateTime.isEmpty()) {
                             showErrorToast(R.string.enter_date_time);
                         } else {
-                            service.checkoutTime(user.getUser_id(), name, dateTime).enqueue(new Callback<RequestResponse>() {
+                            service.checkoutTime(user.getRoomno(), name, dateTime).enqueue(new Callback<RequestResponse>() {
                                 @Override
                                 public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                                     if (response.isSuccessful() && response.body() != null) {
@@ -535,7 +578,7 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
                         if (name.isEmpty()) {
                             showErrorToast(R.string.enter_name);
                         } else {
-                            service.askForInternet(user.getUser_id(), name).enqueue(new Callback<RequestResponse>() {
+                            service.askForInternet(user.getRoomno(), name).enqueue(new Callback<RequestResponse>() {
                                 @Override
                                 public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                                     if (response.isSuccessful() && response.body() != null) {
@@ -584,7 +627,7 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
                         if (name.isEmpty()) {
                             showErrorToast(R.string.enter_name);
                         } else {
-                            service.collectTray(user.getUser_id(), name, timing).enqueue(new Callback<RequestResponse>() {
+                            service.collectTray(user.getRoomno(), name, timing).enqueue(new Callback<RequestResponse>() {
                                 @Override
                                 public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                                     if (response.isSuccessful() && response.body() != null) {

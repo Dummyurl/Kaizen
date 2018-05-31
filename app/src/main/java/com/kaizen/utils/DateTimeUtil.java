@@ -25,7 +25,7 @@ import java.util.Locale;
  */
 
 public class DateTimeUtil {
-    public static final String FULL_DATE = "dd-MM-yyyy";
+    public static final String FULL_DATE = "yyyy-MM-dd";
     public static final String yyyyMMdd = "yyyyMMdd";
 
     public void datePicker(final Context context, final DateTimeSetListener dateSetListener) {
