@@ -23,6 +23,8 @@ public class APIUrls {
 
     public static final String FEEDBACK = BASE_URL + "index.php/api/feedback";
 
+    public static final String SENDENQUERY = BASE_URL + "index.php/api/sendenquiry?=401&=40&=saxxistest&=2hours";
+
     public static final String CHECKOUT = BASE_URL + "index.php/api/checkout";
 
     public static final String INTERNET = BASE_URL + "index.php/api/internet";

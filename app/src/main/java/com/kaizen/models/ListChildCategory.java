@@ -8,13 +8,13 @@ public class ListChildCategory {
     private String mainImage;
     private String id;
     private String aliasName;
-    private String enquiry;
     private String description;
     private String CatId;
     private String mainCatId;
     private String CreatedDate;
     private String subCatId;
     private String bannerImg;
+    private boolean enquiry;
 
     public String getCreated_date() {
         return created_date;
@@ -72,11 +72,11 @@ public class ListChildCategory {
         this.aliasName = aliasName;
     }
 
-    public String getEnquiry() {
+    public boolean getEnquiry() {
         return enquiry;
     }
 
-    public void setEnquiry(String enquiry) {
+    public void setEnquiry(boolean enquiry) {
         this.enquiry = enquiry;
     }
 

@@ -47,4 +47,8 @@ public interface RetrofitService {
 
     @GET(APIUrls.COLLECTTRAY)
     Call<RequestResponse> collectTray(@Query("roomno") String roomno, @Query("name") String name, @Query("timing") String timing);
+
+    @GET(APIUrls.SENDENQUERY)
+    Call<RequestResponse> sendQuery(@Query("userid") String userid, @Query("catid") String catid, @Query("name") String name, @Query("timeperiod") String timeperiod);
+
 }

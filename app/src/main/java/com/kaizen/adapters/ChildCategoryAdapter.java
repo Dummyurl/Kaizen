@@ -29,6 +29,7 @@ public class ChildCategoryAdapter extends CommonRecyclerAdapter<ChildCategory> {
     private ChildCategory selectedChildCategory;
     private Category category;
     private RequestOptions requestOptions;
+    private RelativeLayout rl_selected;
 
     public ChildCategoryAdapter(Category category, Subcategory subcategory, ISetOnChildClickListener iSetOnChildClickListener) {
         this.iSetOnChildClickListener = iSetOnChildClickListener;
@@ -76,6 +77,7 @@ public class ChildCategoryAdapter extends CommonRecyclerAdapter<ChildCategory> {
             if (selectedChildCategory != null && selectedChildCategory.getId().equals(childCategory.getId())) {
                 iSetOnChildClickListener.onChildCategoryClick(category, subcategory, childCategory);
                 rl_background.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
+                rl_selected = rl_background;
             }
 
             if (childCategory.getChildcat().size() > 0) {
@@ -88,6 +90,11 @@ public class ChildCategoryAdapter extends CommonRecyclerAdapter<ChildCategory> {
 
         @Override
         public void onClick(View v) {
+            if (rl_selected != null) {
+                rl_selected.setBackgroundColor(ContextCompat.getColor(context, R.color.blue));
+            }
+            rl_selected = rl_background;
+
             ChildCategory childCategory = getItem(getAdapterPosition());
             iSetOnChildClickListener.onChildCategoryClick(category, subcategory, childCategory);
             selectedChildCategory = childCategory;

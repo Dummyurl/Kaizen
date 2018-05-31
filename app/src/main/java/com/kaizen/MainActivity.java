@@ -305,6 +305,7 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
                         listChildCategory.setDescription(banner.getSubTitle());
                         listChildCategory.setMainImage(banner.getBannerImg());
                         listChildCategory.setId(banner.getId());
+                        listChildCategory.setEnquiry(banner.isEnquiry());
                         listChildCategorys.add(listChildCategory);
                     }
 

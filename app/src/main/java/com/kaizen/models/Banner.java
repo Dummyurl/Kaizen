@@ -8,9 +8,18 @@ public class Banner {
     private String bannerImg;
     private String createdDate;
     private String mainTitle;
+    private boolean enquiry;
 
     public String getId() {
         return id;
+    }
+
+    public boolean isEnquiry() {
+        return enquiry;
+    }
+
+    public void setEnquiry(boolean enquiry) {
+        this.enquiry = enquiry;
     }
 
     public void setId(String id) {
