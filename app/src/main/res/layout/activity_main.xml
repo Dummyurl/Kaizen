@@ -116,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:textColor="@android:color/white"
-                        android:textSize="20sp"
+                        android:textSize="48sp"
                         android:textStyle="bold"
                         tools:text="12:30 PM" />
 

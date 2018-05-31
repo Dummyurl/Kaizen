@@ -66,7 +66,7 @@ public class ChildCategoryFragment extends Fragment {
 
         Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.CHILD_CATEGORY_IMAGE_URL + listChildCategory.getMainImage()).into(iv_child_category);
 
-        if (listChildCategory.getBrandName().trim().isEmpty()) {
+        if (listChildCategory.getDescription().trim().isEmpty()) {
             rl_content.setVisibility(View.GONE);
         } else {
             rl_content.setVisibility(View.VISIBLE);

@@ -165,7 +165,7 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
         someHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                tv_time.setText(new SimpleDateFormat("HH:mm aa", Locale.getDefault()).format(new Date()));
+                tv_time.setText(new SimpleDateFormat("hh:mm aa", Locale.getDefault()).format(new Date()));
                 someHandler.postDelayed(this, 1000);
             }
         }, 10);
