@@ -218,7 +218,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
         setupAutoPager();
     }
 
-    private void searchByGPS() {
+    public void searchByGPS() {
         mYahooWeather.setNeedDownloadIcons(true);
         mYahooWeather.setUnit(YahooWeather.UNIT.CELSIUS);
         mYahooWeather.setSearchMode(YahooWeather.SEARCH_MODE.GPS);

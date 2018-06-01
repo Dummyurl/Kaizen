@@ -2,6 +2,7 @@ package com.kaizen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -82,7 +83,13 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_LOCATION) {
+            FragmentManager fM = getSupportFragmentManager();
+            Fragment fragment = fM.findFragmentByTag(HomeFragment.class.getSimpleName());
 
+            if (fragment != null && fragment instanceof HomeFragment) {
+                HomeFragment homeFragment = (HomeFragment) fragment;
+                homeFragment.searchByGPS();
+            }
         }
     }
 
@@ -99,7 +106,6 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
 
         fT.commit();
     }
-
 
 
     public void openChildMenu(String catId, String subCatId, String id) {
