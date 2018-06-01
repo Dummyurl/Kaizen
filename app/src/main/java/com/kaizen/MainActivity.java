@@ -109,15 +109,21 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
 
 
     public void openChildMenu(String catId, String subCatId, String id) {
-        for (int i = 1; i < categoryAdapter.getItemCount(); i++) {
+        for (int i = 0; i < categoryAdapter.getItemCount(); i++) {
             Category category = categoryAdapter.getItem(i);
 
-//            if (category.getId().equals(catId)) {
-            CategoryAdapter.CategoryViewHolder categoryViewHolder = (CategoryAdapter.CategoryViewHolder) rv_category.findViewHolderForAdapterPosition(i);
-            categoryAdapter.setSelectedCategory(category, categoryViewHolder.tv_category);
+            if (category.getId().equals(catId)) {
+                CategoryAdapter.CategoryViewHolder categoryViewHolder = (CategoryAdapter.CategoryViewHolder) rv_category.findViewHolderForAdapterPosition(i);
+                categoryAdapter.setSelectedCategory(category, categoryViewHolder.tv_category);
 
-//            }
-            break;
+                CategoryFragment categoryFragment = CategoryFragment.newInstance(category);
+                categoryFragment.openMenu(subCatId,id);
+                FragmentManager fM = getSupportFragmentManager();
+                FragmentTransaction fT = fM.beginTransaction();
+                fT.replace(R.id.frame_layout,categoryFragment , CategoryFragment.class.getSimpleName());
+                fT.commit();
+                break;
+            }
         }
     }
 }

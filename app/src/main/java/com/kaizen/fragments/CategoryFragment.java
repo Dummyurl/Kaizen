@@ -52,6 +52,7 @@ public class CategoryFragment extends Fragment implements ISetOnChildClickListen
     private ViewPager view_pager;
     private RetrofitService service;
     private Category category;
+    private String subCatId, childId;
 
     public static CategoryFragment newInstance(Category category) {
         CategoryFragment categoryFragment = new CategoryFragment();
@@ -145,7 +146,7 @@ public class CategoryFragment extends Fragment implements ISetOnChildClickListen
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rv_sub_category.setLayoutManager(layoutManager);
-        final SubcategoryAdapter subcategoryAdapter = new SubcategoryAdapter(category, this);
+        final SubcategoryAdapter subcategoryAdapter = new SubcategoryAdapter(category, subCatId, childId, this);
         rv_sub_category.setAdapter(subcategoryAdapter);
 
         service.getSubCategories(category.getId()).enqueue(new Callback<SubcategoryResponse>() {
@@ -184,6 +185,8 @@ public class CategoryFragment extends Fragment implements ISetOnChildClickListen
                 ToastUtil.showError(getActivity(), R.string.something_went_wrong);
             }
         });
+        childId = null;
+        subCatId = null;
     }
 
     private void setupAutoPager() {
@@ -225,5 +228,10 @@ public class CategoryFragment extends Fragment implements ISetOnChildClickListen
 
     private int getItem(int i) {
         return view_pager.getCurrentItem() + i;
+    }
+
+    public void openMenu(String subCatId, String childId) {
+        this.subCatId = subCatId;
+        this.childId = childId;
     }
 }

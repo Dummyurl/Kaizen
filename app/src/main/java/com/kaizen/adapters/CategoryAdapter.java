@@ -37,8 +37,6 @@ public class CategoryAdapter extends CommonRecyclerAdapter<Category> {
     }
 
     public void setSelectedCategory(Category category, TextView tv_category) {
-        iSetOnCategoryClickListener.onCategoryClick(category);
-
         if (tv_selected != null) {
             tv_selected.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_rectangle_blue));
         }

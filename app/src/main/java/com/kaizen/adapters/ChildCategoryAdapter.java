@@ -30,11 +30,13 @@ public class ChildCategoryAdapter extends CommonRecyclerAdapter<ChildCategory> {
     private Category category;
     private RequestOptions requestOptions;
     private RelativeLayout rl_selected;
+    private String childId;
 
-    public ChildCategoryAdapter(Category category, Subcategory subcategory, ISetOnChildClickListener iSetOnChildClickListener) {
+    public ChildCategoryAdapter(Category category, Subcategory subcategory, String childId, ISetOnChildClickListener iSetOnChildClickListener) {
         this.iSetOnChildClickListener = iSetOnChildClickListener;
         this.subcategory = subcategory;
         this.category = category;
+        this.childId = childId;
 
         requestOptions = new RequestOptions()
                 .placeholder(R.drawable.ic_place_holder)
@@ -74,10 +76,11 @@ public class ChildCategoryAdapter extends CommonRecyclerAdapter<ChildCategory> {
             tv_child_category.setText(childCategory.getCategoryTitle());
             rl_background.setBackgroundColor(ContextCompat.getColor(context, R.color.blue));
 
-            if (selectedChildCategory != null && selectedChildCategory.getId().equals(childCategory.getId())) {
+            if ((selectedChildCategory != null && selectedChildCategory.getId().equals(childCategory.getId()) || (childId != null && childId.equals(childCategory.getId())))) {
                 iSetOnChildClickListener.onChildCategoryClick(category, subcategory, childCategory);
                 rl_background.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
                 rl_selected = rl_background;
+                childId = null;
             }
 
             if (childCategory.getChildcat().size() > 0) {

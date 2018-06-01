@@ -30,10 +30,14 @@ public class SubcategoryAdapter extends CommonRecyclerAdapter<Subcategory> {
     private TextView tv_selected;
     private Category category;
     private RecyclerView rv_selected;
+    private String subId;
+    private String childId;
 
-    public SubcategoryAdapter(Category category, ISetOnChildClickListener iSetOnChildClickListener) {
+    public SubcategoryAdapter(Category category, String subId, String childId, ISetOnChildClickListener iSetOnChildClickListener) {
         this.iSetOnChildClickListener = iSetOnChildClickListener;
         this.category = category;
+        this.subId = subId;
+        this.childId = childId;
     }
 
     @Override
@@ -65,7 +69,7 @@ public class SubcategoryAdapter extends CommonRecyclerAdapter<Subcategory> {
             Subcategory subcategory = getItem(position);
             tv_sub_category.setText(subcategory.getSubCategoryTitle());
 
-            if (tv_selected != null && selectedSubcategory.getId().equals(subcategory.getId())) {
+            if ((tv_selected != null && selectedSubcategory.getId().equals(subcategory.getId()) || (subId != null && subId.equals(subcategory.getId())))) {
                 tv_selected = tv_sub_category;
                 selectedSubcategory = subcategory;
                 showRecyclerView(subcategory);
@@ -84,7 +88,7 @@ public class SubcategoryAdapter extends CommonRecyclerAdapter<Subcategory> {
             rv_child_category.setLayoutManager(layoutManager);
             rv_selected = rv_child_category;
 
-            final ChildCategoryAdapter childCategoryAdapter = new ChildCategoryAdapter(category, subcategory, iSetOnChildClickListener);
+            final ChildCategoryAdapter childCategoryAdapter = new ChildCategoryAdapter(category, subcategory, childId, iSetOnChildClickListener);
             rv_child_category.setAdapter(childCategoryAdapter);
 
             RetrofitService service = RetrofitInstance.createService(RetrofitService.class);
@@ -93,6 +97,8 @@ public class SubcategoryAdapter extends CommonRecyclerAdapter<Subcategory> {
                 public void onResponse(Call<ChildCategoryResponse> call, Response<ChildCategoryResponse> response) {
                     if (response.body() != null && response.isSuccessful()) {
                         childCategoryAdapter.addItems(response.body().getChildcategory());
+                        subId = null;
+                        childId = null;
                     }
                 }
 

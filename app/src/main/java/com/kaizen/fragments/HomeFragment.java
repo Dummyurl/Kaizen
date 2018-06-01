@@ -200,8 +200,10 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                         listChildCategorys.add(listChildCategory);
                     }
 
-                    ChildCategoryPager childCategoryPager = new ChildCategoryPager(getChildFragmentManager(), listChildCategorys);
-                    view_pager.setAdapter(childCategoryPager);
+                    if (getActivity() != null && !getActivity().isFinishing()) {
+                        ChildCategoryPager childCategoryPager = new ChildCategoryPager(getChildFragmentManager(), listChildCategorys);
+                        view_pager.setAdapter(childCategoryPager);
+                    }
                 } else {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                 }
@@ -397,7 +399,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                         String name = et_name.getText().toString().trim();
 
                         if (name.isEmpty()) {
-                            ToastUtil.showError(getActivity(),R.string.enter_name);
+                            ToastUtil.showError(getActivity(), R.string.enter_name);
                         } else {
                             service.askForInternet(user.getRoomno(), name).enqueue(new Callback<RequestResponse>() {
                                 @Override
