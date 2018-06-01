@@ -30,4 +30,6 @@ public class APIUrls {
     public static final String INTERNET = BASE_URL + "index.php/api/internet";
 
     public static final String COLLECTTRAY = BASE_URL + "index.php/api/collectry";
+
+    public static final String BANNER_LINK = BASE_URL + "index.php/api/bannerslink";
 }

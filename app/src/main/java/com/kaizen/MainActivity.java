@@ -90,6 +90,8 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
     private ImageView iv_temperature, iv_tomorrow_temperature;
     private YahooWeather mYahooWeather = YahooWeather.getInstance(5000, true);
     private GoogleApiClient googleApiClient;
+    private CategoryAdapter categoryAdapter;
+    private RecyclerView rv_category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,10 +113,11 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
         String date = df.format(new Date().getTime());
         tv_date.setText(date);
 
-        RecyclerView rv_category = findViewById(R.id.rv_category);
+        rv_category = findViewById(R.id.rv_category);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rv_category.setLayoutManager(layoutManager);
-        final CategoryAdapter categoryAdapter = new CategoryAdapter(this);
+
+        categoryAdapter = new CategoryAdapter(this);
         rv_category.setAdapter(categoryAdapter);
 
         service = RetrofitInstance.createService(RetrofitService.class);
@@ -306,6 +309,10 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
                         listChildCategory.setMainImage(banner.getBannerImg());
                         listChildCategory.setId(banner.getId());
                         listChildCategory.setEnquiry(banner.isEnquiry());
+                        listChildCategory.setEnableClick(true);
+                        listChildCategory.setCatId(banner.getCatId());
+                        listChildCategory.setMainCatId(banner.getMainCatId());
+                        listChildCategory.setSubCatId(banner.getSubCatId());
                         listChildCategorys.add(listChildCategory);
                     }
 
@@ -658,5 +665,18 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
                     }
                 });
         collectTrayBuilder.create().show();
+    }
+
+    public void openChildMenu(String catId, String subCatId, String id) {
+        for (int i = 1; i < categoryAdapter.getItemCount(); i++) {
+            Category category = categoryAdapter.getItem(i);
+
+//            if (category.getId().equals(catId)) {
+            CategoryAdapter.CategoryViewHolder categoryViewHolder = (CategoryAdapter.CategoryViewHolder) rv_category.findViewHolderForAdapterPosition(i);
+            categoryAdapter.setSelectedCategory(category,categoryViewHolder.tv_category);
+
+//            }
+            break;
+        }
     }
 }

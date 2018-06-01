@@ -1,9 +1,11 @@
 package com.kaizen.reterofit;
 
+import com.kaizen.models.Banner;
 import com.kaizen.models.BannerResponse;
 import com.kaizen.models.CategoryResponse;
 import com.kaizen.models.ChildCategoryResponse;
 import com.kaizen.models.ListChildCategoryResponse;
+import com.kaizen.models.ReportsResponse;
 import com.kaizen.models.RequestResponse;
 import com.kaizen.models.SubcategoryResponse;
 import com.kaizen.models.UserResponse;
@@ -51,4 +53,6 @@ public interface RetrofitService {
     @GET(APIUrls.SENDENQUERY)
     Call<RequestResponse> sendQuery(@Query("userid") String userid, @Query("catid") String catid, @Query("name") String name, @Query("timeperiod") String timeperiod);
 
+    @GET(APIUrls.BANNER_LINK)
+    Call<ReportsResponse> getBanner(@Query("cid") String cid, @Query("subid") String subid, @Query("subsubid") String subsubid);
 }

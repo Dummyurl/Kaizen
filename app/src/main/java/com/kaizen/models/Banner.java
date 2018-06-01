@@ -9,6 +9,33 @@ public class Banner {
     private String createdDate;
     private String mainTitle;
     private boolean enquiry;
+    private String mainCatId;
+    private String subCatId;
+    private String CatId;
+
+    public String getMainCatId() {
+        return mainCatId;
+    }
+
+    public void setMainCatId(String mainCatId) {
+        this.mainCatId = mainCatId;
+    }
+
+    public String getSubCatId() {
+        return subCatId;
+    }
+
+    public void setSubCatId(String subCatId) {
+        this.subCatId = subCatId;
+    }
+
+    public String getCatId() {
+        return CatId;
+    }
+
+    public void setCatId(String catId) {
+        CatId = catId;
+    }
 
     public String getId() {
         return id;

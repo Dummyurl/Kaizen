@@ -2,6 +2,7 @@ package com.kaizen.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Html;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
+import com.kaizen.MainActivity;
 import com.kaizen.R;
 import com.kaizen.models.ListChildCategory;
 import com.kaizen.models.RequestResponse;
@@ -103,6 +104,20 @@ public class ChildCategoryFragment extends Fragment {
                 sendQuery();
             }
         });
+
+        if (listChildCategory.isEnableClick()) {
+            iv_child_category.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    if (mainActivity != null && !mainActivity.isFinishing()) {
+                        mainActivity.openChildMenu(listChildCategory.getCatId(), listChildCategory.getSubCatId(), listChildCategory.getId());
+                    }
+                }
+            });
+        } else {
+            iv_child_category.setOnClickListener(null);
+        }
     }
 
     private void sendQuery() {

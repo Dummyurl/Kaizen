@@ -15,6 +15,19 @@ public class ListChildCategory {
     private String subCatId;
     private String bannerImg;
     private boolean enquiry;
+    private boolean enableClick;
+
+    public boolean isEnquiry() {
+        return enquiry;
+    }
+
+    public boolean isEnableClick() {
+        return enableClick;
+    }
+
+    public void setEnableClick(boolean enableClick) {
+        this.enableClick = enableClick;
+    }
 
     public String getCreated_date() {
         return created_date;

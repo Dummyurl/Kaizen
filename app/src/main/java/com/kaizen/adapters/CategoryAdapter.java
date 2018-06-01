@@ -36,8 +36,20 @@ public class CategoryAdapter extends CommonRecyclerAdapter<Category> {
         categoryViewHolder.bindData(position);
     }
 
-    private class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tv_category;
+    public void setSelectedCategory(Category category, TextView tv_category) {
+        iSetOnCategoryClickListener.onCategoryClick(category);
+
+        if (tv_selected != null) {
+            tv_selected.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_rectangle_blue));
+        }
+
+        tv_category.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_rectangle_orange));
+        tv_selected = tv_category;
+        selectedCategory = category;
+    }
+
+    public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public TextView tv_category;
 
         private CategoryViewHolder(View view) {
             super(view);
@@ -45,7 +57,7 @@ public class CategoryAdapter extends CommonRecyclerAdapter<Category> {
             tv_category = view.findViewById(R.id.tv_category);
         }
 
-        private void bindData(int position) {
+        public void bindData(int position) {
             Category category = getItem(position);
             tv_category.setText(category.getMainCategoryTitle());
 
