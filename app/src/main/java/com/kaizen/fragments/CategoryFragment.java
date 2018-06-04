@@ -165,6 +165,14 @@ public class CategoryFragment extends Fragment implements ISetOnChildClickListen
             }
         });
         setupAutoPager();
+
+        iv_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
     @Override

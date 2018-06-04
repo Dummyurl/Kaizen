@@ -89,7 +89,10 @@ public class ChildCategoryFragment extends Fragment {
             rl_content.setVisibility(View.VISIBLE);
         }
 
-        tv_title.setText(Html.fromHtml(listChildCategory.getBrandName()));
+        if (listChildCategory.getAliasName() != null) {
+            tv_title.setText(Html.fromHtml(listChildCategory.getAliasName()));
+        }
+
         tv_description.setText(Html.fromHtml(listChildCategory.getDescription()));
 
         if (listChildCategory.getEnquiry()) {
@@ -111,7 +114,7 @@ public class ChildCategoryFragment extends Fragment {
                 public void onClick(View v) {
                     MainActivity mainActivity = (MainActivity) getActivity();
                     if (mainActivity != null && !mainActivity.isFinishing()) {
-                        mainActivity.openChildMenu(listChildCategory.getCatId(), listChildCategory.getSubCatId(), listChildCategory.getId());
+                        mainActivity.openChildMenu(listChildCategory.getMainCatId(), listChildCategory.getSubCatId(), listChildCategory.getCatId());
                     }
                 }
             });
@@ -139,7 +142,7 @@ public class ChildCategoryFragment extends Fragment {
                             ToastUtil.showError(getActivity(), R.string.enter_name);
                         } else {
                             RetrofitService service = RetrofitInstance.createService(RetrofitService.class);
-                            service.sendQuery(user.getRoomno(), listChildCategory.getCatId(), name, timing).enqueue(new Callback<RequestResponse>() {
+                            service.sendQuery(user.getRoomno(), listChildCategory.getMainCatId(), name, timing).enqueue(new Callback<RequestResponse>() {
                                 @Override
                                 public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                                     if (response.isSuccessful() && response.body() != null) {

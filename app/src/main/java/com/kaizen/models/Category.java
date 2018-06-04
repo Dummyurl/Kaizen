@@ -7,6 +7,33 @@ public class Category {
     private String category_image;
     private String createDate;
     private String mainImage;
+    private String CatId;
+    private String mainCatId;
+    private String subCatId;
+
+    public String getCatId() {
+        return CatId;
+    }
+
+    public void setCatId(String catId) {
+        CatId = catId;
+    }
+
+    public String getMainCatId() {
+        return mainCatId;
+    }
+
+    public void setMainCatId(String mainCatId) {
+        this.mainCatId = mainCatId;
+    }
+
+    public String getSubCatId() {
+        return subCatId;
+    }
+
+    public void setSubCatId(String subCatId) {
+        this.subCatId = subCatId;
+    }
 
     public String getMainImage() {
         return mainImage;

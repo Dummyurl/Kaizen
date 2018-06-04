@@ -2,11 +2,13 @@ package com.kaizen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.kaizen.activities.BaseActivity;
@@ -110,17 +112,20 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
 
     public void openChildMenu(String catId, String subCatId, String id) {
         for (int i = 0; i < categoryAdapter.getItemCount(); i++) {
-            Category category = categoryAdapter.getItem(i);
+            final Category category = categoryAdapter.getItem(i);
 
             if (category.getId().equals(catId)) {
                 CategoryAdapter.CategoryViewHolder categoryViewHolder = (CategoryAdapter.CategoryViewHolder) rv_category.findViewHolderForAdapterPosition(i);
-                categoryAdapter.setSelectedCategory(category, categoryViewHolder.tv_category);
+
+                if (categoryViewHolder != null) {
+                    categoryAdapter.setSelectedCategory(category, categoryViewHolder.tv_category);
+                }
 
                 CategoryFragment categoryFragment = CategoryFragment.newInstance(category);
-                categoryFragment.openMenu(subCatId,id);
+                categoryFragment.openMenu(subCatId, id);
                 FragmentManager fM = getSupportFragmentManager();
                 FragmentTransaction fT = fM.beginTransaction();
-                fT.replace(R.id.frame_layout,categoryFragment , CategoryFragment.class.getSimpleName());
+                fT.replace(R.id.frame_layout, categoryFragment, CategoryFragment.class.getSimpleName());
                 fT.commit();
                 break;
             }

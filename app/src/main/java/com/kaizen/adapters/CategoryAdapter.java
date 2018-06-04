@@ -12,6 +12,9 @@ import com.kaizen.R;
 import com.kaizen.listeners.ISetOnCategoryClickListener;
 import com.kaizen.models.Category;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CategoryAdapter extends CommonRecyclerAdapter<Category> {
     private TextView tv_selected;
     private Context context;
