@@ -35,6 +35,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.gson.Gson;
+import com.kaizen.MainActivity;
 import com.kaizen.R;
 import com.kaizen.adapters.ChildCategoryPager;
 import com.kaizen.listeners.DateTimeSetListener;
@@ -178,6 +179,16 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
             ToastUtil.showError(getActivity(), "Gps not enabled");
             enableLoc();
         }
+
+        iv_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null && !mainActivity.isFinishing()) {
+                    mainActivity.openChildMenu(category.getMainCatId(), category.getSubCatId(), category.getCatId());
+                }
+            }
+        });
 
         service = RetrofitInstance.createService(RetrofitService.class);
         service.getBanners(category.getId()).enqueue(new Callback<BannerResponse>() {

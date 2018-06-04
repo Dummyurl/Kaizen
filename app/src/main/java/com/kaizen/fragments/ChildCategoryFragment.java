@@ -1,6 +1,7 @@
 package com.kaizen.fragments;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -149,7 +151,18 @@ public class ChildCategoryFragment extends Fragment {
                                         RequestResponse requestResponse = response.body();
 
                                         if (requestResponse.isResponce()) {
-                                            ToastUtil.showSuccess(getActivity(), requestResponse.getMessage());
+                                            View thanksView = getLayoutInflater().inflate(R.layout.dialog_thanks, null);
+                                            final Dialog thanksDialog = new Dialog(getContext());
+                                            thanksDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                            thanksDialog.setContentView(thanksView);
+                                            thanksView.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    thanksDialog.dismiss();
+                                                }
+                                            });
+
+                                            thanksDialog.show();
                                             dialog.dismiss();
                                         } else {
                                             ToastUtil.showError(getActivity(), requestResponse.getError());

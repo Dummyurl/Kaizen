@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
+import com.kaizen.MainActivity;
 import com.kaizen.R;
 import com.kaizen.adapters.ChildCategoryPager;
 import com.kaizen.adapters.SubcategoryAdapter;
@@ -169,10 +170,12 @@ public class CategoryFragment extends Fragment implements ISetOnChildClickListen
         iv_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity != null && !mainActivity.isFinishing()) {
+                    mainActivity.openChildMenu(category.getMainCatId(), category.getSubCatId(), category.getCatId());
+                }
             }
         });
-
     }
 
     @Override
