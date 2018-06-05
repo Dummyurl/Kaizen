@@ -32,4 +32,8 @@ public class APIUrls {
     public static final String COLLECTTRAY = BASE_URL + "index.php/api/collectry";
 
     public static final String BANNER_LINK = BASE_URL + "index.php/api/bannerslink";
+
+    public static final String FOOD_CATEGORY = BASE_URL + "index.php/api/getFcategory";
+
+    public static final String FOOD_SUB_CATEGORY = BASE_URL + "index.php/api/getFsubcategory";
 }

@@ -15,6 +15,7 @@ import com.kaizen.activities.BaseActivity;
 import com.kaizen.adapters.CategoryAdapter;
 import com.kaizen.adapters.ChildCategoryPager;
 import com.kaizen.fragments.CategoryFragment;
+import com.kaizen.fragments.FoodCategoryFragment;
 import com.kaizen.fragments.HomeFragment;
 import com.kaizen.listeners.ISetOnCategoryClickListener;
 import com.kaizen.listeners.ISetOnChildClickListener;
@@ -102,7 +103,10 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
 
         if (category.getMainCategoryTitle().equalsIgnoreCase("home")) {
             fT.replace(R.id.frame_layout, HomeFragment.newInstance(category), HomeFragment.class.getSimpleName());
-        } else {
+        } else if(category.getMainCategoryTitle().equalsIgnoreCase("room services")) {
+            fT.replace(R.id.frame_layout, FoodCategoryFragment.newInstance(category), FoodCategoryFragment.class.getSimpleName());
+        }
+         else {
             fT.replace(R.id.frame_layout, CategoryFragment.newInstance(category), CategoryFragment.class.getSimpleName());
         }
 
