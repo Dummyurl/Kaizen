@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.kaizen.activities.BaseActivity;
 import com.kaizen.adapters.CategoryAdapter;
 import com.kaizen.adapters.ChildCategoryPager;
+import com.kaizen.fragments.CartFragment;
 import com.kaizen.fragments.CategoryFragment;
 import com.kaizen.fragments.FoodCategoryFragment;
 import com.kaizen.fragments.HomeFragment;
@@ -103,10 +104,11 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
 
         if (category.getMainCategoryTitle().equalsIgnoreCase("home")) {
             fT.replace(R.id.frame_layout, HomeFragment.newInstance(category), HomeFragment.class.getSimpleName());
-        } else if(category.getMainCategoryTitle().equalsIgnoreCase("room services")) {
+        } else if (category.getMainCategoryTitle().equalsIgnoreCase("room services")) {
             fT.replace(R.id.frame_layout, FoodCategoryFragment.newInstance(category), FoodCategoryFragment.class.getSimpleName());
-        }
-         else {
+        } else if (category.getMainCategoryTitle().equalsIgnoreCase("cart")) {
+            fT.replace(R.id.frame_layout, new CartFragment(), CartFragment.class.getSimpleName());
+        } else {
             fT.replace(R.id.frame_layout, CategoryFragment.newInstance(category), CategoryFragment.class.getSimpleName());
         }
 

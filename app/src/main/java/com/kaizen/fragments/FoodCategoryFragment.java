@@ -21,22 +21,17 @@ import com.google.gson.Gson;
 import com.kaizen.MainActivity;
 import com.kaizen.R;
 import com.kaizen.adapters.ChildCategoryPager;
-import com.kaizen.adapters.FoodCategoryAdapter;
+import com.kaizen.adapters.FoodSubcategoryAdapter;
 import com.kaizen.adapters.FoodSubcategoryPager;
-import com.kaizen.adapters.SubcategoryAdapter;
-import com.kaizen.listeners.ISetOnChildClickListener;
 import com.kaizen.listeners.ISetOnFoodChildClickListener;
 import com.kaizen.models.Banner;
 import com.kaizen.models.BannerResponse;
 import com.kaizen.models.Category;
-import com.kaizen.models.ChildCategory;
 import com.kaizen.models.FoodCategory;
 import com.kaizen.models.FoodCategoryResponse;
 import com.kaizen.models.FoodItemResponse;
 import com.kaizen.models.FoodSubcategory;
 import com.kaizen.models.ListChildCategory;
-import com.kaizen.models.ListChildCategoryResponse;
-import com.kaizen.models.Subcategory;
 import com.kaizen.models.SubcategoryResponse;
 import com.kaizen.reterofit.APIUrls;
 import com.kaizen.reterofit.RetrofitInstance;
@@ -148,20 +143,20 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
             }
         });
 
-        Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.CATEGORY_IMAGE_URL + category.getCategory_image()).into(iv_category);
+        Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.FOOD_IMAGE_URL + category.getCategory_image()).into(iv_category);
 
         RecyclerView rv_sub_category = view.findViewById(R.id.rv_sub_category);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rv_sub_category.setLayoutManager(layoutManager);
-        final FoodCategoryAdapter foodCategoryAdapter = new FoodCategoryAdapter(category, subCatId, childId, this);
-        rv_sub_category.setAdapter(foodCategoryAdapter);
+        final FoodSubcategoryAdapter foodSubcategoryAdapter = new FoodSubcategoryAdapter(category, subCatId, childId, this);
+        rv_sub_category.setAdapter(foodSubcategoryAdapter);
 
         service.getFoodCategory().enqueue(new Callback<FoodCategoryResponse>() {
             @Override
             public void onResponse(Call<FoodCategoryResponse> call, Response<FoodCategoryResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    foodCategoryAdapter.addItems(response.body().getFoodmaincategory());
+                    foodSubcategoryAdapter.addItems(response.body().getFoodmaincategory());
                 } else {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                 }
@@ -169,6 +164,21 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
 
             @Override
             public void onFailure(Call<FoodCategoryResponse> call, Throwable t) {
+                ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+            }
+        });
+
+        service.getSubCategories(category.getId()).enqueue(new Callback<SubcategoryResponse>() {
+            @Override
+            public void onResponse(Call<SubcategoryResponse> call, Response<SubcategoryResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                } else {
+                    ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SubcategoryResponse> call, Throwable t) {
                 ToastUtil.showError(getActivity(), R.string.something_went_wrong);
             }
         });

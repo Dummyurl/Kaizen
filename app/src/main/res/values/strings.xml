@@ -34,6 +34,8 @@
     <string name="add_to_cart">Add to Cart</string>
     <string name="unable_to_add_to_cart">Unable to add item to cart</string>
     <string name="item_add_to_cart">Item added to cart</string>
+    <string name="_1">1</string>
+    <string name="no_items_available">No items available</string>
 
     <string-array name="collect_tray">
         <item>Immidiate</item>

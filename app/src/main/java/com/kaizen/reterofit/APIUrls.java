@@ -17,6 +17,8 @@ public class APIUrls {
 
     public static final String CATEGORY_IMAGE_URL = BASE_URL + "administrator/uploads/category/";
 
+    public static final String FOOD_IMAGE_URL = BASE_URL + "administrator/uploads/food/";
+
     public static final String CHILD_CATEGORY_IMAGE_URL = BASE_URL + "administrator/uploads/banners/";
 
     public static final String LOGIN = BASE_URL + "index.php/api/login";

@@ -67,7 +67,7 @@ public class FoodChildCategoryFragment extends Fragment {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .skipMemoryCache(true);
 
-        Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.CHILD_CATEGORY_IMAGE_URL + foodItem.getBannerImg()).into(iv_child_category);
+        Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.FOOD_IMAGE_URL + foodItem.getBannerImg()).into(iv_child_category);
 
         if (foodItem.getDescription().trim().isEmpty()) {
             rl_content.setVisibility(View.GONE);
