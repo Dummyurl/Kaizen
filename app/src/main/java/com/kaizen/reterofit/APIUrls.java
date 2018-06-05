@@ -36,4 +36,6 @@ public class APIUrls {
     public static final String FOOD_CATEGORY = BASE_URL + "index.php/api/getFcategory";
 
     public static final String FOOD_SUB_CATEGORY = BASE_URL + "index.php/api/getFsubcategory";
+
+    public static final String FOOD_ITEMS = BASE_URL + "index.php/api/getFitemslist";
 }

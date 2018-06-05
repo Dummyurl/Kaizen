@@ -5,6 +5,7 @@ import com.kaizen.models.BannerResponse;
 import com.kaizen.models.CategoryResponse;
 import com.kaizen.models.ChildCategoryResponse;
 import com.kaizen.models.FoodCategoryResponse;
+import com.kaizen.models.FoodItemResponse;
 import com.kaizen.models.FoodSubcategoryResponse;
 import com.kaizen.models.ListChildCategoryResponse;
 import com.kaizen.models.ReportsResponse;
@@ -63,4 +64,7 @@ public interface RetrofitService {
 
     @GET(APIUrls.FOOD_SUB_CATEGORY)
     Call<FoodSubcategoryResponse> getFoodSubcategory(@Query("cid") String cid);
+
+    @GET(APIUrls.FOOD_ITEMS)
+    Call<FoodItemResponse> getFoodItems(@Query("cid") String cid, @Query("subid") String subid);
 }

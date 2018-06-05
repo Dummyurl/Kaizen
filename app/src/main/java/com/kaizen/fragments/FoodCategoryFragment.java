@@ -22,6 +22,7 @@ import com.kaizen.MainActivity;
 import com.kaizen.R;
 import com.kaizen.adapters.ChildCategoryPager;
 import com.kaizen.adapters.FoodCategoryAdapter;
+import com.kaizen.adapters.FoodSubcategoryPager;
 import com.kaizen.adapters.SubcategoryAdapter;
 import com.kaizen.listeners.ISetOnChildClickListener;
 import com.kaizen.listeners.ISetOnFoodChildClickListener;
@@ -31,6 +32,7 @@ import com.kaizen.models.Category;
 import com.kaizen.models.ChildCategory;
 import com.kaizen.models.FoodCategory;
 import com.kaizen.models.FoodCategoryResponse;
+import com.kaizen.models.FoodItemResponse;
 import com.kaizen.models.FoodSubcategory;
 import com.kaizen.models.ListChildCategory;
 import com.kaizen.models.ListChildCategoryResponse;
@@ -232,11 +234,11 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
 
     @Override
     public void onChildCategoryClick(Category category, FoodCategory foodCategory, FoodSubcategory foodSubcategory) {
-        service.getListChildCategory(category.getId(), foodCategory.getId(), foodSubcategory.getId()).enqueue(new Callback<ListChildCategoryResponse>() {
+        service.getFoodItems(foodCategory.getId(), foodCategory.getId()).enqueue(new Callback<FoodItemResponse>() {
             @Override
-            public void onResponse(Call<ListChildCategoryResponse> call, Response<ListChildCategoryResponse> response) {
+            public void onResponse(Call<FoodItemResponse> call, Response<FoodItemResponse> response) {
                 if (response.body() != null && response.isSuccessful()) {
-                    ChildCategoryPager childCategoryPager = new ChildCategoryPager(getChildFragmentManager(), response.body().getListchildcategory());
+                    FoodSubcategoryPager childCategoryPager = new FoodSubcategoryPager(getChildFragmentManager(), response.body().getFooditemslist());
                     view_pager.setAdapter(childCategoryPager);
                 } else {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
@@ -244,10 +246,11 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
             }
 
             @Override
-            public void onFailure(Call<ListChildCategoryResponse> call, Throwable t) {
+            public void onFailure(Call<FoodItemResponse> call, Throwable t) {
                 ToastUtil.showError(getActivity(), R.string.something_went_wrong);
             }
         });
+
         childId = null;
         subCatId = null;
     }
