@@ -32,6 +32,8 @@
     <string name="your_request_has_been_successfully_submitted">your request has been successfully submitted</string>
     <string name="close">Close</string>
     <string name="add_to_cart">Add to Cart</string>
+    <string name="unable_to_add_to_cart">Unable to add item to cart</string>
+    <string name="item_add_to_cart">Item added to cart</string>
 
     <string-array name="collect_tray">
         <item>Immidiate</item>

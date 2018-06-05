@@ -234,22 +234,26 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
 
     @Override
     public void onChildCategoryClick(Category category, FoodCategory foodCategory, FoodSubcategory foodSubcategory) {
-        service.getFoodItems(foodCategory.getId(), foodCategory.getId()).enqueue(new Callback<FoodItemResponse>() {
-            @Override
-            public void onResponse(Call<FoodItemResponse> call, Response<FoodItemResponse> response) {
-                if (response.body() != null && response.isSuccessful()) {
-                    FoodSubcategoryPager childCategoryPager = new FoodSubcategoryPager(getChildFragmentManager(), response.body().getFooditemslist());
-                    view_pager.setAdapter(childCategoryPager);
-                } else {
+        try {
+            service.getFoodItems(foodCategory.getId(), foodCategory.getId()).enqueue(new Callback<FoodItemResponse>() {
+                @Override
+                public void onResponse(Call<FoodItemResponse> call, Response<FoodItemResponse> response) {
+                    if (response.body() != null && response.isSuccessful()) {
+                        FoodSubcategoryPager childCategoryPager = new FoodSubcategoryPager(getChildFragmentManager(), response.body().getFooditemslist());
+                        view_pager.setAdapter(childCategoryPager);
+                    } else {
+                        ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<FoodItemResponse> call, Throwable t) {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                 }
-            }
-
-            @Override
-            public void onFailure(Call<FoodItemResponse> call, Throwable t) {
-                ToastUtil.showError(getActivity(), R.string.something_went_wrong);
-            }
-        });
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         childId = null;
         subCatId = null;

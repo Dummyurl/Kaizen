@@ -128,8 +128,10 @@ public class CategoryFragment extends Fragment implements ISetOnChildClickListen
                         listChildCategorys.add(listChildCategory);
                     }
 
-                    ChildCategoryPager childCategoryPager = new ChildCategoryPager(getChildFragmentManager(), listChildCategorys);
-                    view_pager.setAdapter(childCategoryPager);
+                    if (getActivity() != null && !getActivity().isFinishing()) {
+                        ChildCategoryPager childCategoryPager = new ChildCategoryPager(getChildFragmentManager(), listChildCategorys);
+                        view_pager.setAdapter(childCategoryPager);
+                    }
                 } else {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                 }

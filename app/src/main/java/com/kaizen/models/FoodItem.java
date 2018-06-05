@@ -1,9 +1,18 @@
 package com.kaizen.models;
 
-public class FoodItem {
+import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
+import com.orm.dsl.Unique;
+
+public class FoodItem extends SugarRecord {
+
+    public FoodItem() {
+
+    }
+
     private String created_date;
     private String aliasName;
-    private String id;
+    private String foodId;
     private String status;
     private String food_discount_price;
     private String description;
@@ -30,12 +39,12 @@ public class FoodItem {
         this.aliasName = aliasName;
     }
 
-    public String getId() {
-        return id;
+    public String getFoodId() {
+        return foodId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setFoodId(String foodId) {
+        this.foodId = foodId;
     }
 
     public String getStatus() {

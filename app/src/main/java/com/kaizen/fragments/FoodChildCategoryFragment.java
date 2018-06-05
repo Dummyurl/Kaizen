@@ -20,6 +20,7 @@ import com.kaizen.R;
 import com.kaizen.models.FoodItem;
 import com.kaizen.models.FoodSubcategory;
 import com.kaizen.reterofit.APIUrls;
+import com.kaizen.utils.ToastUtil;
 
 public class FoodChildCategoryFragment extends Fragment {
 
@@ -83,6 +84,13 @@ public class FoodChildCategoryFragment extends Fragment {
         tv_add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                long id = FoodItem.save(foodItem);
+
+                if (id == -1) {
+                    ToastUtil.showError(getActivity(),R.string.unable_to_add_to_cart);
+                } else {
+                    ToastUtil.showSuccess(getActivity(),R.string.item_add_to_cart);
+                }
             }
         });
     }

@@ -75,6 +75,7 @@ public class LoginActivity extends BaseActivity implements EasyPermissions.Permi
                             if (userResponse.getData() != null) {
                                 PreferenceUtil.setUser(LoginActivity.this, userResponse.getData());
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
                             } else {
                                 showErrorToast(userResponse.getError());
                             }
