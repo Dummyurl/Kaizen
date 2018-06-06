@@ -36,6 +36,10 @@
     <string name="item_add_to_cart">Item added to cart</string>
     <string name="_1">1</string>
     <string name="no_items_available">No items available</string>
+    <string name="remove_from_cart">Remove Item from cart?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="order">Order</string>
 
     <string-array name="collect_tray">
         <item>Immidiate</item>

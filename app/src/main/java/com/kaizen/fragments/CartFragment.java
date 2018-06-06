@@ -1,5 +1,7 @@
 package com.kaizen.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,10 +16,16 @@ import android.widget.TextView;
 import com.kaizen.R;
 import com.kaizen.adapters.CartAdapter;
 import com.kaizen.models.FoodItem;
+import com.kaizen.reterofit.RetrofitInstance;
+import com.kaizen.reterofit.RetrofitService;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
 public class CartFragment extends Fragment {
+
+    private TextView tv_content;
 
     @Nullable
     @Override
@@ -31,7 +39,7 @@ public class CartFragment extends Fragment {
 
         TextView tv_empty = view.findViewById(R.id.tv_empty);
         RecyclerView rv_cart = view.findViewById(R.id.rv_cart);
-        rv_cart.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rv_cart.setLayoutManager(new GridLayoutManager(getContext(), 4));
 
         CartAdapter cartAdapter = new CartAdapter();
         rv_cart.setAdapter(cartAdapter);

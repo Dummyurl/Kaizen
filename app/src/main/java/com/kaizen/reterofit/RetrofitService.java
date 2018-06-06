@@ -67,4 +67,7 @@ public interface RetrofitService {
 
     @GET(APIUrls.FOOD_ITEMS)
     Call<FoodItemResponse> getFoodItems(@Query("cid") String cid, @Query("subid") String subid);
+
+    @GET(APIUrls.ORDER_ITEM)
+    Call<RequestResponse> orderItem(@Query("roomno") String roomno, @Query("foodid") String foodid, @Query("quantity") String quantity);
 }
