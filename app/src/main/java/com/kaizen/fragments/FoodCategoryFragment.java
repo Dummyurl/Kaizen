@@ -130,8 +130,10 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
                         listChildCategorys.add(listChildCategory);
                     }
 
-                    ChildCategoryPager childCategoryPager = new ChildCategoryPager(getChildFragmentManager(), listChildCategorys);
-                    view_pager.setAdapter(childCategoryPager);
+                    if (getActivity() != null && !getActivity().isFinishing()) {
+                        ChildCategoryPager childCategoryPager = new ChildCategoryPager(getChildFragmentManager(), listChildCategorys);
+                        view_pager.setAdapter(childCategoryPager);
+                    }
                 } else {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                 }
@@ -143,7 +145,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
             }
         });
 
-        Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.FOOD_IMAGE_URL + category.getCategory_image()).into(iv_category);
+        Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.CATEGORY_IMAGE_URL + category.getCategory_image()).into(iv_category);
 
         RecyclerView rv_sub_category = view.findViewById(R.id.rv_sub_category);
 
