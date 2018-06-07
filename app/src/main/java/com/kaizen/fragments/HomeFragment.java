@@ -1,6 +1,7 @@
 package com.kaizen.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,10 +16,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -35,18 +39,15 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.gson.Gson;
-import com.kaizen.MainActivity;
+import com.kaizen.activities.MainActivity;
 import com.kaizen.R;
 import com.kaizen.adapters.ChildCategoryPager;
 import com.kaizen.listeners.DateTimeSetListener;
 import com.kaizen.models.Banner;
 import com.kaizen.models.BannerResponse;
 import com.kaizen.models.Category;
-import com.kaizen.models.ChildCategory;
 import com.kaizen.models.ListChildCategory;
-import com.kaizen.models.ListChildCategoryResponse;
 import com.kaizen.models.RequestResponse;
-import com.kaizen.models.Subcategory;
 import com.kaizen.models.User;
 import com.kaizen.reterofit.APIUrls;
 import com.kaizen.reterofit.RetrofitInstance;
@@ -81,8 +82,6 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
 
     private ImageView iv_temperature, iv_tomorrow_temperature;
     private YahooWeather mYahooWeather = YahooWeather.getInstance(5000, true);
-    private ImageView iv_category;
-    private RequestOptions requestOptions;
     private ViewPager view_pager;
     private GoogleApiClient googleApiClient;
     private RetrofitService service;
@@ -120,8 +119,8 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
         TabLayout tab_layout = view.findViewById(R.id.tab_layout);
         tab_layout.setupWithViewPager(view_pager);
 
-        iv_category = view.findViewById(R.id.iv_category);
-        requestOptions = new RequestOptions()
+        ImageView iv_category = view.findViewById(R.id.iv_category);
+        RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.drawable.ic_place_holder)
                 .error(R.drawable.ic_place_holder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -229,6 +228,39 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
         Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.CATEGORY_IMAGE_URL + category.getCategory_image()).into(iv_category);
 
         setupAutoPager();
+
+        final TextView tv_language = view.findViewById(R.id.tv_language);
+        tv_language.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                PopupMenu menu = new PopupMenu(getContext(), v);
+                menu.getMenu().add(0, 1478, 0, R.string.english);
+                menu.getMenu().add(0, 1479, 0, R.string.arabic);
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        Activity activity = getActivity();
+
+                        if (activity != null && !activity.isFinishing()) {
+                            MainActivity mainActivity = (MainActivity) activity;
+
+                            if (item.getItemId() == 1478) {
+                                mainActivity.updateViews("en");
+                                tv_language.setText(R.string.english);
+                            } else {
+                                mainActivity.updateViews("ar");
+                                tv_language.setText(R.string.arabic);
+                            }
+                        }
+
+                        return true;
+                    }
+                });
+                menu.show();
+            }
+        });
     }
 
     public void searchByGPS() {

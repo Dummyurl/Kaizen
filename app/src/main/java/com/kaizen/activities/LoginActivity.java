@@ -8,13 +8,11 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.EditText;
 
-import com.kaizen.MainActivity;
 import com.kaizen.R;
 import com.kaizen.models.UserResponse;
 import com.kaizen.reterofit.RetrofitInstance;
 import com.kaizen.reterofit.RetrofitService;
 import com.kaizen.utils.PreferenceUtil;
-import com.kaizen.utils.ToastUtil;
 
 import java.util.List;
 

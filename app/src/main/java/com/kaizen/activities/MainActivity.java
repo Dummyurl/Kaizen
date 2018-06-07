@@ -1,6 +1,8 @@
-package com.kaizen;
+package com.kaizen.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.kaizen.R;
 import com.kaizen.activities.BaseActivity;
 import com.kaizen.adapters.CategoryAdapter;
 import com.kaizen.adapters.ChildCategoryPager;
@@ -27,6 +30,7 @@ import com.kaizen.models.ListChildCategoryResponse;
 import com.kaizen.models.Subcategory;
 import com.kaizen.reterofit.RetrofitInstance;
 import com.kaizen.reterofit.RetrofitService;
+import com.kaizen.utils.LocaleHelper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -43,7 +47,6 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
 
 
     private RetrofitService service;
-
     private CategoryAdapter categoryAdapter;
     private RecyclerView rv_category;
 
@@ -136,5 +139,10 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
                 break;
             }
         }
+    }
+
+    public void updateViews(String languageCode) {
+        Context context = LocaleHelper.setLocale(this, languageCode);
+        recreate();
     }
 }

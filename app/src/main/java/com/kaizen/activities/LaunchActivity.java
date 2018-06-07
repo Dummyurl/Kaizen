@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.kaizen.MainActivity;
 import com.kaizen.models.User;
 import com.kaizen.utils.PreferenceUtil;
 

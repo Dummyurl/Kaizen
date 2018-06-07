@@ -40,11 +40,18 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="order">Order</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
 
     <string-array name="collect_tray">
         <item>Immidiate</item>
         <item>15-30Minutes</item>
         <item>1Hour</item>
         <item>2Hours</item>
+    </string-array>
+
+    <string-array name="language">
+        <item>English</item>
+        <item>Arabic</item>
     </string-array>
 </resources>

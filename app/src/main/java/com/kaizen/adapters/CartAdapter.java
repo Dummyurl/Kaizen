@@ -90,7 +90,7 @@ public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
         @Override
         public void onClick(View view) {
             String value = tv_content.getText().toString();
-
+            final int position = getAdapterPosition();
             final int content = Integer.parseInt(value);
 
             switch (view.getId()) {
@@ -111,6 +111,7 @@ public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
                             public void onClick(DialogInterface dialog, int which) {
                                 FoodItem foodItem = getItem(getAdapterPosition());
                                 foodItem.delete();
+                                removeItem(position);
                                 dialog.dismiss();
                             }
                         }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -126,7 +127,7 @@ public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
                     break;
                 case R.id.btn_order:
                     final User user = PreferenceUtil.getUser(context);
-                    FoodItem foodItem = getItem(getAdapterPosition());
+                    FoodItem foodItem = getItem(position);
 
                     RetrofitService service = RetrofitInstance.createService(RetrofitService.class);
                     service.orderItem(user.getRoomno(), String.valueOf(foodItem.getId()), value).enqueue(new Callback<RequestResponse>() {
@@ -138,6 +139,7 @@ public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
                                 if (requestResponse.isResponce()) {
                                     FoodItem foodItem = getItem(getAdapterPosition());
                                     foodItem.delete();
+                                    removeItem(position);
                                     ToastUtil.showSuccess((Activity) context, requestResponse.getMessage());
                                 } else {
                                     ToastUtil.showError((Activity) context, requestResponse.getError());
