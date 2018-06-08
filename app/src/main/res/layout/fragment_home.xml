@@ -70,7 +70,7 @@
                     android:layout_marginBottom="@dimen/margin4dp"
                     android:background="@android:color/holo_red_light"
                     android:gravity="center"
-                    android:padding="@dimen/margin16dp"
+                    android:padding="@dimen/margin8dp"
                     android:text="@string/emergency"
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
@@ -219,7 +219,7 @@
                     android:layout_marginBottom="@dimen/margin4dp"
                     android:background="@color/colorAccent"
                     android:gravity="center"
-                    android:padding="@dimen/margin16dp"
+                    android:padding="@dimen/margin8dp"
                     android:text="@string/prayer_timings"
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />

@@ -3,6 +3,7 @@ package com.kaizen.fragments;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.IntentSender;
@@ -15,6 +16,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +44,7 @@ import com.google.gson.Gson;
 import com.kaizen.R;
 import com.kaizen.activities.MainActivity;
 import com.kaizen.adapters.ChildCategoryPager;
+import com.kaizen.adapters.PrayerAdapter;
 import com.kaizen.listeners.DateTimeSetListener;
 import com.kaizen.models.Banner;
 import com.kaizen.models.BannerResponse;
@@ -52,11 +56,13 @@ import com.kaizen.reterofit.APIUrls;
 import com.kaizen.reterofit.RetrofitInstance;
 import com.kaizen.reterofit.RetrofitService;
 import com.kaizen.utils.DateTimeUtil;
+import com.kaizen.utils.PrayTime;
 import com.kaizen.utils.PreferenceUtil;
 import com.kaizen.utils.ToastUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -86,6 +92,8 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
     private GoogleApiClient googleApiClient;
     private RetrofitService service;
     private Category category;
+    private List<String> prayerTimes, prayerNames;
+    private ProgressDialog progressDialog;
 
     public static HomeFragment newInstance(Category category) {
         HomeFragment homeFragment = new HomeFragment();
@@ -114,6 +122,12 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        prayerTimes = new ArrayList<>();
+        prayerNames = new ArrayList<>();
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage(getString(R.string.loading));
+        progressDialog.show();
 
         view_pager = view.findViewById(R.id.view_pager);
         TabLayout tab_layout = view.findViewById(R.id.tab_layout);
@@ -149,6 +163,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
         view.findViewById(R.id.tv_check_out).setOnClickListener(this);
         view.findViewById(R.id.tv_internet).setOnClickListener(this);
         view.findViewById(R.id.tv_collect_tray).setOnClickListener(this);
+        view.findViewById(R.id.tv_prayer).setOnClickListener(this);
 
 
         view.findViewById(R.id.iv_left).setOnClickListener(new View.OnClickListener() {
@@ -272,6 +287,10 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
 
     @Override
     public void gotWeatherInfo(WeatherInfo weatherInfo, YahooWeather.ErrorType errorType) {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+
         if (weatherInfo != null) {
             tv_type.setText(weatherInfo.getCurrentText());
             tv_location.setText(weatherInfo.getLocationCity());
@@ -284,6 +303,20 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
             iv_temperature.setImageBitmap(weatherInfo.getForecastInfo1().getForecastConditionIcon());
             iv_tomorrow_temperature.setImageBitmap(weatherInfo.getForecastInfo2().getForecastConditionIcon());
 
+            PrayTime prayers = new PrayTime();
+            prayers.setTimeFormat(prayers.Time12);
+            prayers.setCalcMethod(prayers.Makkah);
+            prayers.setAsrJuristic(prayers.Shafii);
+            prayers.setAdjustHighLats(prayers.AngleBased);
+            int[] offsets = {0, 0, 0, 0, 0, 0, 0};
+            prayers.tune(offsets);
+
+            Date now = new Date();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(now);
+
+            prayerTimes = prayers.getPrayerTimes(cal, Double.parseDouble(weatherInfo.getConditionLat()), Double.parseDouble(weatherInfo.getConditionLon()), 5);
+            prayerNames = prayers.getTimeNames();
         }
     }
 
@@ -303,6 +336,26 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                 break;
             case R.id.tv_collect_tray:
                 collectTray(user);
+                break;
+            case R.id.tv_prayer:
+                View prayerView = getLayoutInflater().inflate(R.layout.dialog_prayer_timings, null);
+                RecyclerView rv_prayer = prayerView.findViewById(R.id.rv_prayer);
+                rv_prayer.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                PrayerAdapter prayerAdapter = new PrayerAdapter(prayerNames);
+                rv_prayer.setAdapter(prayerAdapter);
+                prayerAdapter.addItems(prayerTimes);
+
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.prayer_timings)
+                        .setView(prayerView)
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
+                ;
                 break;
         }
     }
