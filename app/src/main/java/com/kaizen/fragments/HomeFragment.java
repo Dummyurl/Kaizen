@@ -19,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -39,8 +38,8 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.gson.Gson;
-import com.kaizen.activities.MainActivity;
 import com.kaizen.R;
+import com.kaizen.activities.MainActivity;
 import com.kaizen.adapters.ChildCategoryPager;
 import com.kaizen.listeners.DateTimeSetListener;
 import com.kaizen.models.Banner;
@@ -59,6 +58,7 @@ import com.kaizen.utils.ToastUtil;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
@@ -283,6 +283,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
 
             iv_temperature.setImageBitmap(weatherInfo.getForecastInfo1().getForecastConditionIcon());
             iv_tomorrow_temperature.setImageBitmap(weatherInfo.getForecastInfo2().getForecastConditionIcon());
+
         }
     }
 
