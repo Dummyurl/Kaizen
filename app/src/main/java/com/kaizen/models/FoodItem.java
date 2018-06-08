@@ -22,6 +22,16 @@ public class FoodItem extends SugarRecord {
     private String subCatId;
     private String bannerImg;
     private String brandName;
+    private int quantity;
+
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public String getCreated_date() {
         return created_date;

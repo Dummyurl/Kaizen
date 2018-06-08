@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl_food"
             android:layout_centerHorizontal="true"
-            android:paddingBottom="@dimen/margin4dp">
+            android:paddingBottom="@dimen/margin8dp">
 
             <ImageView
                 android:id="@+id/iv_add"
@@ -104,15 +104,6 @@
                 android:src="@drawable/ic_minus" />
         </LinearLayout>
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_order"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ll_content"
-            android:layout_centerHorizontal="true"
-            android:paddingBottom="@dimen/margin8dp"
-            android:text="@string/order"
-            android:theme="@style/ButtonThemeAccent" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

@@ -32,6 +32,11 @@ import retrofit2.Response;
 
 public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
     private Context context;
+    private ICartActions iCartActions;
+
+    public CartAdapter(ICartActions iCartActions) {
+        this.iCartActions = iCartActions;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateBasicItemViewHolder(ViewGroup parent, int viewType) {
@@ -61,7 +66,6 @@ public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
             tv_price.setPaintFlags(tv_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             view.findViewById(R.id.iv_add).setOnClickListener(this);
             view.findViewById(R.id.iv_remove).setOnClickListener(this);
-            view.findViewById(R.id.btn_order).setOnClickListener(this);
         }
 
         private void bindData(int position) {
@@ -77,12 +81,12 @@ public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
             Glide.with(context).setDefaultRequestOptions(requestOptions).load(APIUrls.FOOD_IMAGE_URL + foodItem.getBannerImg()).into(iv_food);
 
             if (TextUtils.isEmpty(foodItem.getFood_discount_price())) {
-                tv_discount_price.setText(String.format("\u20B9 %s", foodItem.getFood_discount_price()));
+                tv_discount_price.setText(String.format("\uFDFC %s", foodItem.getFood_discount_price()));
                 tv_price.setVisibility(View.GONE);
             } else {
                 tv_price.setVisibility(View.VISIBLE);
-                tv_price.setText(String.format("(\u20B9 %s)", foodItem.getFood_price()));
-                tv_discount_price.setText(String.format("\u20B9 %s", foodItem.getFood_discount_price()));
+                tv_price.setText(String.format("(\uFDFC %s)", foodItem.getFood_price()));
+                tv_discount_price.setText(String.format("\uFDFC %s", foodItem.getFood_discount_price()));
             }
 
         }
@@ -92,13 +96,16 @@ public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
             String value = tv_content.getText().toString();
             final int position = getAdapterPosition();
             final int content = Integer.parseInt(value);
+            final FoodItem foodItem = getItem(position);
 
             switch (view.getId()) {
                 case R.id.iv_add:
 
                     int increment = content + 1;
                     tv_content.setText(String.valueOf(increment));
-
+                    foodItem.setQuantity(increment);
+                    FoodItem.update(foodItem);
+                    iCartActions.onCartUpdated();
                     break;
                 case R.id.iv_remove:
                     int decrement = content - 1;
@@ -109,7 +116,6 @@ public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
                         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                FoodItem foodItem = getItem(getAdapterPosition());
                                 foodItem.delete();
                                 removeItem(position);
                                 dialog.dismiss();
@@ -122,41 +128,17 @@ public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
                         }).create().show();
                     } else {
                         tv_content.setText(String.valueOf(decrement));
+                        foodItem.setQuantity(decrement);
+                        FoodItem.update(foodItem);
                     }
 
+                    iCartActions.onCartUpdated();
                     break;
-                case R.id.btn_order:
-                    final User user = PreferenceUtil.getUser(context);
-                    FoodItem foodItem = getItem(position);
-
-                    RetrofitService service = RetrofitInstance.createService(RetrofitService.class);
-                    service.orderItem(user.getRoomno(), String.valueOf(foodItem.getId()), value).enqueue(new Callback<RequestResponse>() {
-                        @Override
-                        public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
-                            if (response.body() != null && response.isSuccessful()) {
-                                RequestResponse requestResponse = response.body();
-
-                                if (requestResponse.isResponce()) {
-                                    FoodItem foodItem = getItem(getAdapterPosition());
-                                    foodItem.delete();
-                                    removeItem(position);
-                                    ToastUtil.showSuccess((Activity) context, requestResponse.getMessage());
-                                } else {
-                                    ToastUtil.showError((Activity) context, requestResponse.getError());
-                                }
-                            } else {
-                                ToastUtil.showError((Activity) context, R.string.something_went_wrong);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<RequestResponse> call, Throwable t) {
-                            ToastUtil.showError((Activity) context, R.string.something_went_wrong);
-                        }
-                    });
-                    break;
-
             }
         }
+    }
+
+    public interface ICartActions {
+        void onCartUpdated();
     }
 }

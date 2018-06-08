@@ -1,10 +1,12 @@
 package com.kaizen.fragments;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,14 +86,28 @@ public class FoodChildCategoryFragment extends Fragment {
         tv_add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                foodItem.setQuantity(1);
                 long id = FoodItem.save(foodItem);
 
                 if (id == -1) {
-                    ToastUtil.showError(getActivity(),R.string.unable_to_add_to_cart);
+                    ToastUtil.showError(getActivity(), R.string.unable_to_add_to_cart);
                 } else {
-                    ToastUtil.showSuccess(getActivity(),R.string.item_add_to_cart);
+                    ToastUtil.showSuccess(getActivity(), R.string.item_add_to_cart);
                 }
             }
         });
+
+        TextView tv_price = view.findViewById(R.id.tv_price);
+        tv_price.setPaintFlags(tv_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        TextView tv_discount_price = view.findViewById(R.id.tv_discount_price);
+
+        if (TextUtils.isEmpty(foodItem.getFood_discount_price())) {
+            tv_discount_price.setText(String.format("\uFDFC %s", foodItem.getFood_discount_price()));
+            tv_price.setVisibility(View.GONE);
+        } else {
+            tv_price.setVisibility(View.VISIBLE);
+            tv_price.setText(String.format("(\uFDFC %s)", foodItem.getFood_price()));
+            tv_discount_price.setText(String.format("\uFDFC %s", foodItem.getFood_discount_price()));
+        }
     }
 }
