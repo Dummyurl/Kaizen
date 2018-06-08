@@ -14,7 +14,10 @@ import com.kaizen.models.SubcategoryResponse;
 import com.kaizen.models.UserResponse;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -68,6 +71,7 @@ public interface RetrofitService {
     @GET(APIUrls.FOOD_ITEMS)
     Call<FoodItemResponse> getFoodItems(@Query("cid") String cid, @Query("subid") String subid);
 
-    @GET(APIUrls.ORDER_ITEM)
-    Call<RequestResponse> orderItem(@Query("roomno") String roomno, @Query("items") String items);
+    @POST(APIUrls.ORDER_ITEM)
+    @FormUrlEncoded
+    Call<RequestResponse> orderItem(@Query("roomno") String roomno, @Field("data") String items);
 }

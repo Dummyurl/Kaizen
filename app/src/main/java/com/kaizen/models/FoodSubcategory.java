@@ -10,6 +10,7 @@ public class FoodSubcategory {
     private String subCategoryTitle;
     private String maincat_id;
     private String createdDate;
+    private String bannerImg;
     private List<Childcat> childcat;
 
     public List<Childcat> getChildcat() {
@@ -19,6 +20,14 @@ public class FoodSubcategory {
         }
 
         return childcat;
+    }
+
+    public String getBannerImg() {
+        return bannerImg;
+    }
+
+    public void setBannerImg(String bannerImg) {
+        this.bannerImg = bannerImg;
     }
 
     public void setChildcat(List<Childcat> childcat) {

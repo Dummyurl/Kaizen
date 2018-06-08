@@ -247,7 +247,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     @Override
     public void onChildCategoryClick(Category category, FoodCategory foodCategory, FoodSubcategory foodSubcategory) {
         try {
-            service.getFoodItems(foodCategory.getId(), foodCategory.getId()).enqueue(new Callback<FoodItemResponse>() {
+            service.getFoodItems(foodCategory.getId(), foodSubcategory.getId()).enqueue(new Callback<FoodItemResponse>() {
                 @Override
                 public void onResponse(Call<FoodItemResponse> call, Response<FoodItemResponse> response) {
                     if (response.body() != null && response.isSuccessful()) {

@@ -82,12 +82,13 @@ public class FoodChildCategoryAdapter extends CommonRecyclerAdapter<FoodSubcateg
                 childId = null;
             }
 
-            if (childCategory.getChildcat().size() > 0) {
-                String imageName = childCategory.getChildcat().get(0).getMainImage();
+            String imageName = null;
 
-                Glide.with(context).setDefaultRequestOptions(requestOptions).load(APIUrls.CHILD_CATEGORY_IMAGE_URL + imageName).into(iv_child_category);
+            if (childCategory.getChildcat().size() > 0) {
+                childCategory.getChildcat().get(0).getMainImage();
             }
 
+            Glide.with(context).setDefaultRequestOptions(requestOptions).load(APIUrls.CHILD_CATEGORY_IMAGE_URL + imageName).into(iv_child_category);
         }
 
         @Override

@@ -125,9 +125,6 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
 
         prayerTimes = new ArrayList<>();
         prayerNames = new ArrayList<>();
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage(getString(R.string.loading));
-        progressDialog.show();
 
         view_pager = view.findViewById(R.id.view_pager);
         TabLayout tab_layout = view.findViewById(R.id.tab_layout);
@@ -287,10 +284,6 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
 
     @Override
     public void gotWeatherInfo(WeatherInfo weatherInfo, YahooWeather.ErrorType errorType) {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
-
         if (weatherInfo != null) {
             tv_type.setText(weatherInfo.getCurrentText());
             tv_location.setText(weatherInfo.getLocationCity());
@@ -317,6 +310,34 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
 
             prayerTimes = prayers.getPrayerTimes(cal, Double.parseDouble(weatherInfo.getConditionLat()), Double.parseDouble(weatherInfo.getConditionLon()), 5);
             prayerNames = prayers.getTimeNames();
+
+            showPrayerTimings();
+        }
+    }
+
+    private void showPrayerTimings() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            View prayerView = getLayoutInflater().inflate(R.layout.dialog_prayer_timings, null);
+            RecyclerView rv_prayer = prayerView.findViewById(R.id.rv_prayer);
+            rv_prayer.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            PrayerAdapter prayerAdapter = new PrayerAdapter(prayerNames);
+            rv_prayer.setAdapter(prayerAdapter);
+            prayerAdapter.addItems(prayerTimes);
+
+            new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.prayer_timings)
+                    .setView(prayerView)
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).create().show();
+        }
+
+        if (progressDialog != null) {
+            progressDialog.dismiss();
         }
     }
 
@@ -338,24 +359,15 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                 collectTray(user);
                 break;
             case R.id.tv_prayer:
-                View prayerView = getLayoutInflater().inflate(R.layout.dialog_prayer_timings, null);
-                RecyclerView rv_prayer = prayerView.findViewById(R.id.rv_prayer);
-                rv_prayer.setLayoutManager(new LinearLayoutManager(getContext()));
+                progressDialog = new ProgressDialog(getContext());
+                progressDialog.setMessage(getString(R.string.loading));
+                progressDialog.show();
 
-                PrayerAdapter prayerAdapter = new PrayerAdapter(prayerNames);
-                rv_prayer.setAdapter(prayerAdapter);
-                prayerAdapter.addItems(prayerTimes);
-
-                new AlertDialog.Builder(getContext())
-                        .setTitle(R.string.prayer_timings)
-                        .setView(prayerView)
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }).create().show();
-                ;
+                if (prayerNames.size() > 0) {
+                    showPrayerTimings();
+                } else {
+                    searchByGPS();
+                }
                 break;
         }
     }
