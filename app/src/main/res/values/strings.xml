@@ -46,7 +46,8 @@
     <string name="success_desc">Your order has been placed. We\'ll see you soon!</string>
     <string name="emergency">Emergency</string>
     <string name="prayer_timings">Prayer Timings</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
+    <string name="emergency_desc">Your response has been registered our representative will contact you soon</string>
 
     <string-array name="collect_tray">
         <item>Immidiate</item>

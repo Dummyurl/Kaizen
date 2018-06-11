@@ -42,4 +42,6 @@ public class APIUrls {
     public static final String FOOD_ITEMS = BASE_URL + "index.php/api/getFitemslist";
 
     public static final String ORDER_ITEM = BASE_URL + "index.php/api/getPlaceOrder";
+
+    public static final String EMERGENCY = BASE_URL + "index.php/api/getEmergency";
 }

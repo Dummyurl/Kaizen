@@ -74,4 +74,7 @@ public interface RetrofitService {
     @POST(APIUrls.ORDER_ITEM)
     @FormUrlEncoded
     Call<RequestResponse> orderItem(@Query("roomno") String roomno, @Field("data") String items);
+
+    @GET(APIUrls.EMERGENCY)
+    Call<RequestResponse> sendEmergency(@Query("roomno") String roomno);
 }

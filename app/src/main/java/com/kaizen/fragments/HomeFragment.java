@@ -3,6 +3,7 @@ package com.kaizen.fragments;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -161,7 +163,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
         view.findViewById(R.id.tv_internet).setOnClickListener(this);
         view.findViewById(R.id.tv_collect_tray).setOnClickListener(this);
         view.findViewById(R.id.tv_prayer).setOnClickListener(this);
-
+        view.findViewById(R.id.tv_emergency).setOnClickListener(this);
 
         view.findViewById(R.id.iv_left).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -368,6 +370,47 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                 } else {
                     searchByGPS();
                 }
+                break;
+            case R.id.tv_emergency:
+                service.sendEmergency(user.getRoomno()).enqueue(new Callback<RequestResponse>() {
+                    @Override
+                    public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
+                        if (response.body() != null && response.isSuccessful()) {
+                            RequestResponse requestResponse = response.body();
+
+                            if (requestResponse.isResponce()) {
+                                View emergencyView = getLayoutInflater().inflate(R.layout.dialog_thanks, null);
+                                TextView tv_thanks = emergencyView.findViewById(R.id.tv_thanks);
+                                TextView tv_description = emergencyView.findViewById(R.id.tv_description);
+
+                                tv_thanks.setText(R.string.success);
+                                tv_description.setText(R.string.emergency_desc);
+
+                                final Dialog thanksDialog = new Dialog(getContext());
+                                thanksDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                thanksDialog.setContentView(emergencyView);
+                                emergencyView.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        thanksDialog.dismiss();
+                                    }
+                                });
+
+                                thanksDialog.show();
+                            } else {
+                                ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+                            }
+
+                        } else {
+                            ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RequestResponse> call, Throwable t) {
+                        ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+                    }
+                });
                 break;
         }
     }
