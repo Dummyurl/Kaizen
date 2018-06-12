@@ -1,5 +1,8 @@
 package com.kaizen.fragments;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -12,7 +15,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -23,6 +29,7 @@ import com.kaizen.R;
 import com.kaizen.adapters.ChildCategoryPager;
 import com.kaizen.adapters.FoodCategoryAdapter;
 import com.kaizen.adapters.FoodItemPager;
+import com.kaizen.listeners.DateTimeSetListener;
 import com.kaizen.listeners.ISetOnFoodChildClickListener;
 import com.kaizen.models.Banner;
 import com.kaizen.models.BannerResponse;
@@ -34,10 +41,16 @@ import com.kaizen.models.FoodItemListResponse;
 import com.kaizen.models.FoodItemResponse;
 import com.kaizen.models.FoodSubcategory;
 import com.kaizen.models.ListChildCategory;
+import com.kaizen.models.RequestResponse;
+import com.kaizen.models.Settings;
+import com.kaizen.models.SettingsResponse;
 import com.kaizen.models.SubcategoryResponse;
+import com.kaizen.models.User;
 import com.kaizen.reterofit.APIUrls;
 import com.kaizen.reterofit.RetrofitInstance;
 import com.kaizen.reterofit.RetrofitService;
+import com.kaizen.utils.DateTimeUtil;
+import com.kaizen.utils.PreferenceUtil;
 import com.kaizen.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -49,7 +62,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildClickListener {
+public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildClickListener, View.OnClickListener {
 
     private static final String CATEGORY = "CATEGORY";
     private ImageView iv_category;
@@ -198,6 +211,29 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
                 }
             }
         });
+
+        final TextView tv_service_time = view.findViewById(R.id.tv_service_time);
+        view.findViewById(R.id.tv_feed_back).setOnClickListener(this);
+        view.findViewById(R.id.tv_collect_tray).setOnClickListener(this);
+
+        service.getSettings().enqueue(new Callback<SettingsResponse>() {
+            @Override
+            public void onResponse(Call<SettingsResponse> call, Response<SettingsResponse> response) {
+                if (response.body() != null && response.isSuccessful()) {
+                    SettingsResponse settingsResponse = response.body();
+
+                    if (settingsResponse.getSettings().size() > 0) {
+                        Settings settings = settingsResponse.getSettings().get(0);
+                        tv_service_time.setText("Service Time: " + settings.getName());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SettingsResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     private void setupAutoPager() {
@@ -282,6 +318,135 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
                 ToastUtil.showError(getActivity(), R.string.something_went_wrong);
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_feed_back:
+                sendFeedBack();
+                break;
+            case R.id.tv_collect_tray:
+                collectTray();
+                break;
+        }
+    }
+
+    private void sendFeedBack() {
+        final User user = PreferenceUtil.getUser(getContext());
+
+        View feedBackView = getLayoutInflater().inflate(R.layout.dialog_feedback, null);
+        final EditText et_name = feedBackView.findViewById(R.id.et_name);
+        final EditText et_description = feedBackView.findViewById(R.id.et_description);
+
+        AlertDialog.Builder feedBackBuilder = new AlertDialog.Builder(getContext())
+                .setTitle(R.string.feedback)
+                .setView(feedBackView)
+                .setPositiveButton(R.string.submit, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, int which) {
+                        String name = et_name.getText().toString().trim();
+                        String description = et_description.getText().toString().trim();
+
+                        if (name.isEmpty()) {
+                            ToastUtil.showError(getActivity(), R.string.enter_name);
+                        } else if (description.isEmpty()) {
+                            ToastUtil.showError(getActivity(), R.string.enter_description);
+                        } else {
+                            service.sendFeedBack(user.getRoomno(), name, description).enqueue(new Callback<RequestResponse>() {
+                                @Override
+                                public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
+                                    if (response.isSuccessful() && response.body() != null) {
+                                        RequestResponse requestResponse = response.body();
+
+                                        if (requestResponse.isResponce()) {
+                                            ToastUtil.showSuccess(getActivity(), requestResponse.getMessage());
+                                            dialog.dismiss();
+                                        } else {
+                                            ToastUtil.showError(getActivity(), requestResponse.getError());
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<RequestResponse> call, Throwable t) {
+
+                                }
+                            });
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        feedBackBuilder.create().show();
+    }
+
+    private void collectTray() {
+        final User user = PreferenceUtil.getUser(getContext());
+        View collectTrayView = getLayoutInflater().inflate(R.layout.dialog_collect_tray, null);
+        final EditText et_name = collectTrayView.findViewById(R.id.et_name);
+        final EditText et_time = collectTrayView.findViewById(R.id.et_time);
+
+        et_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DateTimeUtil().datePicker(getContext(), new DateTimeSetListener() {
+                    @Override
+                    public void onDateTimeSet(String date) {
+                        et_time.setText(date);
+                    }
+                });
+            }
+        });
+
+        AlertDialog.Builder collectTrayBuilder = new AlertDialog.Builder(getContext())
+                .setTitle(R.string.collect_tray)
+                .setView(collectTrayView)
+                .setPositiveButton(R.string.submit, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, int which) {
+                        String name = et_name.getText().toString().trim();
+                        String timing = et_time.getText().toString().trim();
+
+                        if (name.isEmpty()) {
+                            ToastUtil.showError(getActivity(), R.string.enter_name);
+                        } else if (timing.isEmpty()) {
+                            ToastUtil.showError(getActivity(), R.string.enter_date_time);
+                        } else {
+                            service.collectTray(user.getRoomno(), name, timing).enqueue(new Callback<RequestResponse>() {
+                                @Override
+                                public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
+                                    if (response.isSuccessful() && response.body() != null) {
+                                        RequestResponse requestResponse = response.body();
+
+                                        if (requestResponse.isResponce()) {
+                                            ToastUtil.showSuccess(getActivity(), requestResponse.getMessage());
+                                            dialog.dismiss();
+                                        } else {
+                                            ToastUtil.showError(getActivity(), requestResponse.getError());
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<RequestResponse> call, Throwable t) {
+
+                                }
+                            });
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        collectTrayBuilder.create().show();
     }
 }
 

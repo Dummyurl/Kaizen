@@ -72,10 +72,67 @@
                 android:id="@+id/rv_sub_category"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_place_holder" />
+                android:layout_weight="1"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_service_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin4dp"
+                    android:layout_marginBottom="@dimen/margin4dp"
+                    android:background="@color/blue"
+                    android:textColor="@android:color/white"
+                    android:drawableLeft="@drawable/ic_stove"
+                    android:drawablePadding="@dimen/margin8dp"
+                    android:drawableStart="@drawable/ic_stove"
+                    android:padding="@dimen/margin16dp"
+                    android:textSize="16sp"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_feed_back"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/margin4dp"
+                        android:layout_marginRight="@dimen/margin4dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue"
+                        android:drawableLeft="@drawable/ic_feedback"
+                        android:drawableStart="@drawable/ic_feedback"
+                        android:gravity="center"
+                        android:padding="@dimen/margin16dp"
+                        android:text="@string/feedback"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_collect_tray"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/margin4dp"
+                        android:layout_marginRight="@dimen/margin4dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue"
+                        android:drawableLeft="@drawable/ic_delete"
+                        android:drawableStart="@drawable/ic_delete"
+                        android:gravity="center"
+                        android:padding="@dimen/margin16dp"
+                        android:text="@string/collect_tray"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

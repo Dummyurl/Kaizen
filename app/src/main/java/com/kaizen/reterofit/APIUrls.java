@@ -49,6 +49,8 @@ public class APIUrls {
 
     public static final String FOOD_ITEM_LIST = BASE_URL + "index.php/api/getFitemslist";
 
+    public static final String SETTINGS = BASE_URL + "index.php/api/getSettings";
+
     public static final String LOCAL_NEWS = "v2/top-headlines?country=sa&apiKey=fa8e9468e3d84560984225b0f459e15e";
 
     public static final String GLOBAL_NEWS = "v2/top-headlines?sources=google-news&apiKey=fa8e9468e3d84560984225b0f459e15e ";

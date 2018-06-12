@@ -12,6 +12,7 @@ import com.kaizen.models.FoodSubcategoryResponse;
 import com.kaizen.models.ListChildCategoryResponse;
 import com.kaizen.models.ReportsResponse;
 import com.kaizen.models.RequestResponse;
+import com.kaizen.models.SettingsResponse;
 import com.kaizen.models.SubcategoryResponse;
 import com.kaizen.models.UserResponse;
 
@@ -88,4 +89,7 @@ public interface RetrofitService {
 
     @GET(APIUrls.GLOBAL_NEWS)
     Call<ArticleResponse> getGlobalNews();
+
+    @GET(APIUrls.SETTINGS)
+    Call<SettingsResponse> getSettings();
 }
