@@ -21,6 +21,7 @@ import com.kaizen.fragments.CartFragment;
 import com.kaizen.fragments.CategoryFragment;
 import com.kaizen.fragments.FoodCategoryFragment;
 import com.kaizen.fragments.HomeFragment;
+import com.kaizen.fragments.MoreFragment;
 import com.kaizen.listeners.ISetOnCategoryClickListener;
 import com.kaizen.listeners.ISetOnChildClickListener;
 import com.kaizen.models.Category;
@@ -111,6 +112,8 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
             fT.replace(R.id.frame_layout, FoodCategoryFragment.newInstance(category), FoodCategoryFragment.class.getSimpleName());
         } else if (category.getMainCategoryTitle().equalsIgnoreCase("cart")) {
             fT.replace(R.id.frame_layout, new CartFragment(), CartFragment.class.getSimpleName());
+        } else if (category.getMainCategoryTitle().equalsIgnoreCase("more")) {
+            fT.replace(R.id.frame_layout, MoreFragment.newInstance(category), MoreFragment.class.getSimpleName());
         } else {
             fT.replace(R.id.frame_layout, CategoryFragment.newInstance(category), CategoryFragment.class.getSimpleName());
         }

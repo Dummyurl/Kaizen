@@ -1,5 +1,6 @@
 package com.kaizen.reterofit;
 
+import com.kaizen.models.ArticleResponse;
 import com.kaizen.models.Banner;
 import com.kaizen.models.BannerResponse;
 import com.kaizen.models.CategoryResponse;
@@ -81,4 +82,10 @@ public interface RetrofitService {
 
     @GET(APIUrls.EMERGENCY)
     Call<RequestResponse> sendEmergency(@Query("roomno") String roomno);
+
+    @GET(APIUrls.LOCAL_NEWS)
+    Call<ArticleResponse> getLocalNews();
+
+    @GET(APIUrls.GLOBAL_NEWS)
+    Call<ArticleResponse> getGlobalNews();
 }
