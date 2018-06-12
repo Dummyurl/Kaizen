@@ -24,12 +24,14 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.kaizen.activities.MainActivity;
 import com.kaizen.R;
+import com.kaizen.listeners.DateTimeSetListener;
 import com.kaizen.models.ListChildCategory;
 import com.kaizen.models.RequestResponse;
 import com.kaizen.models.User;
 import com.kaizen.reterofit.APIUrls;
 import com.kaizen.reterofit.RetrofitInstance;
 import com.kaizen.reterofit.RetrofitService;
+import com.kaizen.utils.DateTimeUtil;
 import com.kaizen.utils.PreferenceUtil;
 import com.kaizen.utils.ToastUtil;
 
@@ -128,7 +130,19 @@ public class ChildCategoryFragment extends Fragment {
         final User user = PreferenceUtil.getUser(getContext());
         View collectTrayView = getLayoutInflater().inflate(R.layout.dialog_collect_tray, null);
         final EditText et_name = collectTrayView.findViewById(R.id.et_name);
-        final AppCompatSpinner spinner_collect_tray = collectTrayView.findViewById(R.id.spinner_collect_tray);
+        final EditText et_time = collectTrayView.findViewById(R.id.et_time);
+
+        et_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DateTimeUtil().datePicker(getContext(), new DateTimeSetListener() {
+                    @Override
+                    public void onDateTimeSet(String date) {
+                        et_time.setText(date);
+                    }
+                });
+            }
+        });
 
         AlertDialog.Builder collectTrayBuilder = new AlertDialog.Builder(getContext())
                 .setTitle(R.string.send_request)
@@ -137,10 +151,12 @@ public class ChildCategoryFragment extends Fragment {
                     @Override
                     public void onClick(final DialogInterface dialog, int which) {
                         String name = et_name.getText().toString().trim();
-                        String timing = (String) spinner_collect_tray.getSelectedItem();
+                        String timing = et_time.getText().toString().trim();
 
                         if (name.isEmpty()) {
                             ToastUtil.showError(getActivity(), R.string.enter_name);
+                        } else if (timing.isEmpty()) {
+                            ToastUtil.showError(getActivity(), R.string.enter_date_time);
                         } else {
                             RetrofitService service = RetrofitInstance.createService(RetrofitService.class);
                             service.sendQuery(user.getRoomno(), listChildCategory.getMainCatId(), name, timing).enqueue(new Callback<RequestResponse>() {

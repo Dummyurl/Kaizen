@@ -588,7 +588,19 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
     private void collectTray(final User user) {
         View collectTrayView = getLayoutInflater().inflate(R.layout.dialog_collect_tray, null);
         final EditText et_name = collectTrayView.findViewById(R.id.et_name);
-        final AppCompatSpinner spinner_collect_tray = collectTrayView.findViewById(R.id.spinner_collect_tray);
+        final EditText et_time = collectTrayView.findViewById(R.id.et_time);
+
+        et_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DateTimeUtil().datePicker(getContext(), new DateTimeSetListener() {
+                    @Override
+                    public void onDateTimeSet(String date) {
+                        et_time.setText(date);
+                    }
+                });
+            }
+        });
 
         AlertDialog.Builder collectTrayBuilder = new AlertDialog.Builder(getContext())
                 .setTitle(R.string.collect_tray)
@@ -597,10 +609,12 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                     @Override
                     public void onClick(final DialogInterface dialog, int which) {
                         String name = et_name.getText().toString().trim();
-                        String timing = (String) spinner_collect_tray.getSelectedItem();
+                        String timing = et_time.getText().toString().trim();
 
                         if (name.isEmpty()) {
                             ToastUtil.showError(getActivity(), R.string.enter_name);
+                        } else if (timing.isEmpty()) {
+                            ToastUtil.showError(getActivity(), R.string.enter_date_time);
                         } else {
                             service.collectTray(user.getRoomno(), name, timing).enqueue(new Callback<RequestResponse>() {
                                 @Override

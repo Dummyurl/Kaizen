@@ -13,12 +13,13 @@
         android:hint="@string/enter_name"
         android:textSize="16sp" />
 
-    <android.support.v7.widget.AppCompatSpinner
-        android:id="@+id/spinner_collect_tray"
+    <EditText
+        android:id="@+id/et_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/margin16dp"
-        android:paddingBottom="@dimen/margin16dp"
-        android:entries="@array/collect_tray"/>
+        android:layout_marginTop="@dimen/margin8dp"
+        android:focusable="false"
+        android:hint="@string/enter_date_time"
+        android:textSize="16sp" />
 
 </LinearLayout>
