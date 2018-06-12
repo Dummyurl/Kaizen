@@ -21,14 +21,16 @@ import com.google.gson.Gson;
 import com.kaizen.activities.MainActivity;
 import com.kaizen.R;
 import com.kaizen.adapters.ChildCategoryPager;
-import com.kaizen.adapters.FoodSubcategoryAdapter;
-import com.kaizen.adapters.FoodSubcategoryPager;
+import com.kaizen.adapters.FoodCategoryAdapter;
+import com.kaizen.adapters.FoodItemPager;
 import com.kaizen.listeners.ISetOnFoodChildClickListener;
 import com.kaizen.models.Banner;
 import com.kaizen.models.BannerResponse;
 import com.kaizen.models.Category;
 import com.kaizen.models.FoodCategory;
 import com.kaizen.models.FoodCategoryResponse;
+import com.kaizen.models.FoodItem;
+import com.kaizen.models.FoodItemListResponse;
 import com.kaizen.models.FoodItemResponse;
 import com.kaizen.models.FoodSubcategory;
 import com.kaizen.models.ListChildCategory;
@@ -151,14 +153,14 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rv_sub_category.setLayoutManager(layoutManager);
-        final FoodSubcategoryAdapter foodSubcategoryAdapter = new FoodSubcategoryAdapter(category, subCatId, childId, this);
-        rv_sub_category.setAdapter(foodSubcategoryAdapter);
+        final FoodCategoryAdapter foodCategoryAdapter = new FoodCategoryAdapter(category, subCatId, childId, this);
+        rv_sub_category.setAdapter(foodCategoryAdapter);
 
         service.getFoodCategory().enqueue(new Callback<FoodCategoryResponse>() {
             @Override
             public void onResponse(Call<FoodCategoryResponse> call, Response<FoodCategoryResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    foodSubcategoryAdapter.addItems(response.body().getFoodmaincategory());
+                    foodCategoryAdapter.addItems(response.body().getFoodmaincategory());
                 } else {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                 }
@@ -245,30 +247,41 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     }
 
     @Override
-    public void onChildCategoryClick(Category category, FoodCategory foodCategory, FoodSubcategory foodSubcategory) {
+    public void onFoodItemClick(FoodItem foodItem) {
         try {
-            service.getFoodItems(foodCategory.getId(), foodSubcategory.getId()).enqueue(new Callback<FoodItemResponse>() {
-                @Override
-                public void onResponse(Call<FoodItemResponse> call, Response<FoodItemResponse> response) {
-                    if (response.body() != null && response.isSuccessful()) {
-                        FoodSubcategoryPager childCategoryPager = new FoodSubcategoryPager(getChildFragmentManager(), response.body().getFooditemslist());
-                        view_pager.setAdapter(childCategoryPager);
-                    } else {
-                        ToastUtil.showError(getActivity(), R.string.something_went_wrong);
-                    }
-                }
+            FoodItemPager childCategoryPager = (FoodItemPager) view_pager.getAdapter();
 
-                @Override
-                public void onFailure(Call<FoodItemResponse> call, Throwable t) {
-                    ToastUtil.showError(getActivity(), R.string.something_went_wrong);
-                }
-            });
+            if (childCategoryPager != null) {
+                int position = childCategoryPager.getFoodItem(foodItem.getId());
+                view_pager.setCurrentItem(position);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         childId = null;
         subCatId = null;
+    }
+
+    @Override
+    public void onSubCategoryClick(FoodCategory foodCategory) {
+        service.getFoodItems(foodCategory.getId()).enqueue(new Callback<FoodItemListResponse>() {
+            @Override
+            public void onResponse(Call<FoodItemListResponse> call, Response<FoodItemListResponse> response) {
+                if (response.body() != null && response.isSuccessful()) {
+                    FoodItemPager childCategoryPager = new FoodItemPager(getChildFragmentManager(), response.body().getFooditemlist());
+                    view_pager.setAdapter(childCategoryPager);
+                } else {
+                    ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FoodItemListResponse> call, Throwable t) {
+                ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+            }
+        });
     }
 }
 

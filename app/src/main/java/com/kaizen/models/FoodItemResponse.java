@@ -1,5 +1,6 @@
 package com.kaizen.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FoodItemResponse {
@@ -15,6 +16,12 @@ public class FoodItemResponse {
     }
 
     public List<FoodItem> getFooditemslist() {
+
+        if(fooditemslist==null)
+        {
+            fooditemslist=new ArrayList<>();
+        }
+
         return fooditemslist;
     }
 

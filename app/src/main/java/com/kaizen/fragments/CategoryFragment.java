@@ -186,8 +186,10 @@ public class CategoryFragment extends Fragment implements ISetOnChildClickListen
             @Override
             public void onResponse(Call<ListChildCategoryResponse> call, Response<ListChildCategoryResponse> response) {
                 if (response.body() != null && response.isSuccessful()) {
-                    ChildCategoryPager childCategoryPager = new ChildCategoryPager(getChildFragmentManager(), response.body().getListchildcategory());
-                    view_pager.setAdapter(childCategoryPager);
+                    if (getActivity() != null && !getActivity().isFinishing()) {
+                        ChildCategoryPager childCategoryPager = new ChildCategoryPager(getChildFragmentManager(), response.body().getListchildcategory());
+                        view_pager.setAdapter(childCategoryPager);
+                    }
                 } else {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                 }

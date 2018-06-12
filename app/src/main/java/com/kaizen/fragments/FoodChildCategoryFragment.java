@@ -102,12 +102,12 @@ public class FoodChildCategoryFragment extends Fragment {
         TextView tv_discount_price = view.findViewById(R.id.tv_discount_price);
 
         if (TextUtils.isEmpty(foodItem.getFood_discount_price())) {
-            tv_discount_price.setText(String.format("\uFDFC %s", foodItem.getFood_discount_price()));
+            tv_discount_price.setText(String.format("SR %s", foodItem.getFood_discount_price()));
             tv_price.setVisibility(View.GONE);
         } else {
             tv_price.setVisibility(View.VISIBLE);
-            tv_price.setText(String.format("(\uFDFC %s)", foodItem.getFood_price()));
-            tv_discount_price.setText(String.format("\uFDFC %s", foodItem.getFood_discount_price()));
+            tv_price.setText(String.format("(SR %s)", foodItem.getFood_price()));
+            tv_discount_price.setText(String.format("SR %s", foodItem.getFood_discount_price()));
         }
     }
 }

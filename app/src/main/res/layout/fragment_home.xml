@@ -68,7 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin4dp"
-                    android:background="@android:color/holo_red_light"
+                    android:background="@color/colorAccent"
                     android:gravity="center"
                     android:padding="@dimen/margin8dp"
                     android:text="@string/emergency"

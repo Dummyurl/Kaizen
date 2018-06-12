@@ -81,12 +81,12 @@ public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
             Glide.with(context).setDefaultRequestOptions(requestOptions).load(APIUrls.FOOD_IMAGE_URL + foodItem.getBannerImg()).into(iv_food);
 
             if (TextUtils.isEmpty(foodItem.getFood_discount_price())) {
-                tv_discount_price.setText(String.format("\uFDFC %s", foodItem.getFood_discount_price()));
+                tv_discount_price.setText(String.format("SR %s", foodItem.getFood_discount_price()));
                 tv_price.setVisibility(View.GONE);
             } else {
                 tv_price.setVisibility(View.VISIBLE);
-                tv_price.setText(String.format("(\uFDFC %s)", foodItem.getFood_price()));
-                tv_discount_price.setText(String.format("\uFDFC %s", foodItem.getFood_discount_price()));
+                tv_price.setText(String.format("(SR %s)", foodItem.getFood_price()));
+                tv_discount_price.setText(String.format("SR %s", foodItem.getFood_discount_price()));
             }
 
         }

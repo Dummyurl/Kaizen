@@ -11,10 +11,10 @@ import com.kaizen.models.FoodSubcategory;
 
 import java.util.List;
 
-public class FoodSubcategoryPager extends FragmentStatePagerAdapter {
+public class FoodItemPager extends FragmentStatePagerAdapter {
     private List<FoodItem> foodItems;
 
-    public FoodSubcategoryPager(FragmentManager fm, List<FoodItem> foodItems) {
+    public FoodItemPager(FragmentManager fm, List<FoodItem> foodItems) {
         super(fm);
         this.foodItems = foodItems;
     }
@@ -30,5 +30,18 @@ public class FoodSubcategoryPager extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return foodItems.size();
+    }
+
+    public int getFoodItem(long id) {
+
+        for (int i = 0; i < foodItems.size(); i++) {
+            FoodItem foodItem = foodItems.get(i);
+
+            if (id == foodItem.getId()) {
+                return i;
+            }
+        }
+
+        return 0;
     }
 }
