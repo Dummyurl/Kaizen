@@ -94,7 +94,7 @@ public class CartFragment extends Fragment implements CartAdapter.ICartActions {
                     }
 
                     RetrofitService service = RetrofitInstance.createService(RetrofitService.class);
-                    service.orderItem(PreferenceUtil.getLanguage(getContext()),user.getRoomno(), passArray.toString()).enqueue(new Callback<RequestResponse>() {
+                    service.orderItem(PreferenceUtil.getLanguage(getContext()), user.getRoomno(), passArray.toString()).enqueue(new Callback<RequestResponse>() {
                         @Override
                         public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                             if (response.body() != null && response.isSuccessful()) {
@@ -146,8 +146,6 @@ public class CartFragment extends Fragment implements CartAdapter.ICartActions {
         List<FoodItem> foodItems = FoodItem.listAll(FoodItem.class);
 
         long count = FoodItem.count(FoodItem.class);
-        tv_count.setText(String.format("Count : %s", count));
-
         int total = 0;
 
 
@@ -155,7 +153,15 @@ public class CartFragment extends Fragment implements CartAdapter.ICartActions {
             total = total + (Integer.valueOf(foodItem.getFood_discount_price()) * foodItem.getQuantity());
         }
 
-        tv_pay.setText(String.format("PAY (%s)", total));
+        int language = PreferenceUtil.getLanguage(getContext());
+
+        if (language == 1) {
+            tv_count.setText(String.format(getString(R.string.count), String.valueOf(count)));
+            tv_pay.setText(String.format(getString(R.string.pay), String.valueOf(total)));
+        } else {
+            tv_count.setText(String.format(getString(R.string.count_arabic), String.valueOf(count)));
+            tv_pay.setText(String.format(getString(R.string.pay_arabic), String.valueOf(total)));
+        }
     }
 
     @Override

@@ -103,11 +103,9 @@ public interface RetrofitService {
     Call<RequestResponse> sendEmergency(@Field("languageid") int languageId, @Query("roomno") String roomno);
 
     @POST(APIUrls.LOCAL_NEWS)
-    @FormUrlEncoded
     Call<ArticleResponse> getLocalNews();
 
     @POST(APIUrls.GLOBAL_NEWS)
-    @FormUrlEncoded
     Call<ArticleResponse> getGlobalNews();
 
     @POST(APIUrls.SETTINGS)

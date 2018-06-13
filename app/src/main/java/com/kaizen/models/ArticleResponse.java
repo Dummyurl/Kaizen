@@ -7,6 +7,15 @@ public class ArticleResponse {
     private List<Articles> articles;
     private String totalResults;
     private String status;
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public List<Articles> getArticles() {
 

@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -94,7 +95,7 @@ public class MoreCategoryFragment extends Fragment {
 
         RecyclerView rv_news = view.findViewById(R.id.rv_news);
         rv_news.setLayoutManager(new LinearLayoutManager(getContext()));
-       final NewsAdapter newsAdapter = new NewsAdapter();
+        final NewsAdapter newsAdapter = new NewsAdapter();
         rv_news.setAdapter(newsAdapter);
 
         Retrofit.Builder builder =
@@ -103,14 +104,34 @@ public class MoreCategoryFragment extends Fragment {
                         .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
 
-        if (listChildCategory.getAliasName().equals("Saudi")) {
+        if (listChildCategory.getAliasName().equals("Saudi") || listChildCategory.getAliasName().equals("سعودي")) {
             retrofit.create(RetrofitService.class).getLocalNews().enqueue(new Callback<ArticleResponse>() {
                 @Override
                 public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
                     if (response.body() != null && response.isSuccessful()) {
-                        newsAdapter.addItems(response.body().getArticles());
+                        ArticleResponse articleResponse = response.body();
+
+                        if (articleResponse.getStatus().equalsIgnoreCase("ok")) {
+                            newsAdapter.addItems(response.body().getArticles());
+                        } else {
+                            if (articleResponse.getMessage() != null) {
+                                ToastUtil.showError(getActivity(), articleResponse.getMessage());
+                            } else {
+                                ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+                            }
+                        }
                     } else {
-                        ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+                        ArticleResponse articleResponse = response.body();
+
+                        if (articleResponse == null) {
+                            ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+                        } else {
+                            if (articleResponse.getMessage() != null) {
+                                ToastUtil.showError(getActivity(), articleResponse.getMessage());
+                            } else {
+                                ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+                            }
+                        }
                     }
                 }
 
@@ -119,16 +140,35 @@ public class MoreCategoryFragment extends Fragment {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                 }
             });
-        }
-        else
-        {
+        } else {
             retrofit.create(RetrofitService.class).getGlobalNews().enqueue(new Callback<ArticleResponse>() {
                 @Override
                 public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
                     if (response.body() != null && response.isSuccessful()) {
-                        newsAdapter.addItems(response.body().getArticles());
+                        ArticleResponse articleResponse = response.body();
+
+                        if (articleResponse.getStatus().equalsIgnoreCase("ok")) {
+                            newsAdapter.addItems(response.body().getArticles());
+                        } else {
+                            if (articleResponse.getMessage() != null) {
+                                ToastUtil.showError(getActivity(), articleResponse.getMessage());
+                            } else {
+                                ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+                            }
+                        }
+
                     } else {
-                        ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+                        ArticleResponse articleResponse = response.body();
+
+                        if (articleResponse == null) {
+                            ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+                        } else {
+                            if (articleResponse.getMessage() != null) {
+                                ToastUtil.showError(getActivity(), articleResponse.getMessage());
+                            } else {
+                                ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+                            }
+                        }
                     }
                 }
 

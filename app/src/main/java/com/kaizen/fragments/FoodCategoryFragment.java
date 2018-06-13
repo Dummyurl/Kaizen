@@ -125,7 +125,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
         });
 
         service = RetrofitInstance.createService(RetrofitService.class);
-        service.getBanners(PreferenceUtil.getLanguage(getContext()),category.getId()).enqueue(new Callback<BannerResponse>() {
+        service.getBanners(PreferenceUtil.getLanguage(getContext()), category.getId()).enqueue(new Callback<BannerResponse>() {
             @Override
             public void onResponse(Call<BannerResponse> call, Response<BannerResponse> response) {
                 if (response.body() != null && response.isSuccessful()) {
@@ -185,7 +185,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
             }
         });
 
-        service.getSubCategories(PreferenceUtil.getLanguage(getContext()),category.getId()).enqueue(new Callback<SubcategoryResponse>() {
+        service.getSubCategories(PreferenceUtil.getLanguage(getContext()), category.getId()).enqueue(new Callback<SubcategoryResponse>() {
             @Override
             public void onResponse(Call<SubcategoryResponse> call, Response<SubcategoryResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -213,8 +213,20 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
         });
 
         final TextView tv_service_time = view.findViewById(R.id.tv_service_time);
-        view.findViewById(R.id.tv_feed_back).setOnClickListener(this);
-        view.findViewById(R.id.tv_collect_tray).setOnClickListener(this);
+        TextView tv_feed_back = view.findViewById(R.id.tv_feed_back);
+        tv_feed_back.setOnClickListener(this);
+        TextView tv_collect_tray = view.findViewById(R.id.tv_collect_tray);
+        tv_collect_tray.setOnClickListener(this);
+
+        int language = PreferenceUtil.getLanguage(getContext());
+
+        if (language == 1) {
+            tv_feed_back.setText(R.string.feedback);
+            tv_collect_tray.setText(R.string.collect_tray);
+        } else {
+            tv_feed_back.setText(R.string.feedback_arabic);
+            tv_collect_tray.setText(R.string.collect_tray_arabic);
+        }
 
         service.getSettings(PreferenceUtil.getLanguage(getContext())).enqueue(new Callback<SettingsResponse>() {
             @Override
@@ -224,7 +236,14 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
 
                     if (settingsResponse.getSettings().size() > 0) {
                         Settings settings = settingsResponse.getSettings().get(0);
-                        tv_service_time.setText("Service Time: " + settings.getName());
+
+                        int language = PreferenceUtil.getLanguage(getContext());
+
+                        if (language == 1) {
+                            tv_service_time.setText(String.format(getString(R.string.service_time), settings.getName()));
+                        } else {
+                            tv_service_time.setText(String.format(getString(R.string.service_time_arabic), settings.getName()));
+                        }
                     }
                 }
             }
@@ -302,7 +321,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
 
     @Override
     public void onSubCategoryClick(FoodCategory foodCategory) {
-        service.getFoodItems(PreferenceUtil.getLanguage(getContext()),foodCategory.getId()).enqueue(new Callback<FoodItemListResponse>() {
+        service.getFoodItems(PreferenceUtil.getLanguage(getContext()), foodCategory.getId()).enqueue(new Callback<FoodItemListResponse>() {
             @Override
             public void onResponse(Call<FoodItemListResponse> call, Response<FoodItemListResponse> response) {
                 if (response.body() != null && response.isSuccessful()) {
@@ -353,7 +372,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
                         } else if (description.isEmpty()) {
                             ToastUtil.showError(getActivity(), R.string.enter_description);
                         } else {
-                            service.sendFeedBack(PreferenceUtil.getLanguage(getContext()),user.getRoomno(), name, description).enqueue(new Callback<RequestResponse>() {
+                            service.sendFeedBack(PreferenceUtil.getLanguage(getContext()), user.getRoomno(), name, description).enqueue(new Callback<RequestResponse>() {
                                 @Override
                                 public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                                     if (response.isSuccessful() && response.body() != null) {
@@ -417,7 +436,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
                         } else if (timing.isEmpty()) {
                             ToastUtil.showError(getActivity(), R.string.enter_date_time);
                         } else {
-                            service.collectTray(PreferenceUtil.getLanguage(getContext()),user.getRoomno(), name, timing).enqueue(new Callback<RequestResponse>() {
+                            service.collectTray(PreferenceUtil.getLanguage(getContext()), user.getRoomno(), name, timing).enqueue(new Callback<RequestResponse>() {
                                 @Override
                                 public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                                     if (response.isSuccessful() && response.body() != null) {

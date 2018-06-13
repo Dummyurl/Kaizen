@@ -158,12 +158,38 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
             }
         }, 10);
 
-        view.findViewById(R.id.tv_feed_back).setOnClickListener(this);
-        view.findViewById(R.id.tv_check_out).setOnClickListener(this);
-        view.findViewById(R.id.tv_internet).setOnClickListener(this);
-        view.findViewById(R.id.tv_collect_tray).setOnClickListener(this);
-        view.findViewById(R.id.tv_prayer).setOnClickListener(this);
-        view.findViewById(R.id.tv_emergency).setOnClickListener(this);
+        TextView tv_feed_back = view.findViewById(R.id.tv_feed_back);
+        tv_feed_back.setOnClickListener(this);
+        TextView tv_check_out = view.findViewById(R.id.tv_check_out);
+        tv_check_out.setOnClickListener(this);
+        TextView tv_internet = view.findViewById(R.id.tv_internet);
+        tv_internet.setOnClickListener(this);
+        TextView tv_collect_tray = view.findViewById(R.id.tv_collect_tray);
+        tv_collect_tray.setOnClickListener(this);
+        TextView tv_prayer = view.findViewById(R.id.tv_prayer);
+        tv_prayer.setOnClickListener(this);
+        TextView tv_emergency = view.findViewById(R.id.tv_emergency);
+        tv_emergency.setOnClickListener(this);
+
+
+        int language = PreferenceUtil.getLanguage(getContext());
+
+        if (language == 1) {
+            tv_feed_back.setText(R.string.feedback);
+            tv_collect_tray.setText(R.string.collect_tray);
+            tv_check_out.setText(R.string.check_out);
+            tv_internet.setText(R.string.internet);
+            tv_prayer.setText(R.string.prayer_timings);
+            tv_emergency.setText(R.string.emergency);
+        } else {
+            tv_feed_back.setText(R.string.feedback_arabic);
+            tv_collect_tray.setText(R.string.collect_tray_arabic);
+            tv_check_out.setText(R.string.check_out_arabic);
+            tv_internet.setText(R.string.internet_arabic);
+            tv_prayer.setText(R.string.prayer_timings_arabic);
+            tv_emergency.setText(R.string.emergency_arabic);
+        }
+
 
         view.findViewById(R.id.iv_left).setOnClickListener(new View.OnClickListener() {
             @Override
