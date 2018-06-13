@@ -64,7 +64,7 @@ public class LoginActivity extends BaseActivity implements EasyPermissions.Permi
             } else if (password.isEmpty()) {
                 showErrorToast(R.string.password_empty);
             } else {
-                service.login(roomNo, password).enqueue(new Callback<UserResponse>() {
+                service.login(PreferenceUtil.getLanguage(this),roomNo, password).enqueue(new Callback<UserResponse>() {
                     @Override
                     public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                         if (response.isSuccessful() && response.body() != null) {

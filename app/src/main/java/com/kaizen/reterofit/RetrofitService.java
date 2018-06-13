@@ -17,6 +17,7 @@ import com.kaizen.models.SubcategoryResponse;
 import com.kaizen.models.UserResponse;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -29,67 +30,87 @@ import retrofit2.http.Query;
 
 public interface RetrofitService {
 
-    @GET(APIUrls.CATEGORY)
-    Call<CategoryResponse> getCategories();
+    @POST(APIUrls.CATEGORY)
+    @FormUrlEncoded
+    Call<CategoryResponse> getCategories(@Field("languageid") int languageid);
 
-    @GET(APIUrls.SUB_CATEGORY)
-    Call<SubcategoryResponse> getSubCategories(@Query("menuid") String menuid);
+    @POST(APIUrls.SUB_CATEGORY)
+    @FormUrlEncoded
+    Call<SubcategoryResponse> getSubCategories(@Field("languageid") int languageId, @Query("menuid") String menuid);
 
-    @GET(APIUrls.CHILD_CATEGORY)
-    Call<ChildCategoryResponse> getChildCategory(@Query("menuid") String menuid, @Query("subid") String subid);
+    @POST(APIUrls.CHILD_CATEGORY)
+    @FormUrlEncoded
+    Call<ChildCategoryResponse> getChildCategory(@Field("languageid") int languageId, @Query("menuid") String menuid, @Query("subid") String subid);
 
-    @GET(APIUrls.LIST_CHILD_CATEGORY)
-    Call<ListChildCategoryResponse> getListChildCategory(@Query("menuid") String menuid, @Query("subid") String subid, @Query("childid") String childid);
+    @POST(APIUrls.LIST_CHILD_CATEGORY)
+    @FormUrlEncoded
+    Call<ListChildCategoryResponse> getListChildCategory(@Field("languageid") int languageId, @Query("menuid") String menuid, @Query("subid") String subid, @Query("childid") String childid);
 
-    @GET(APIUrls.LOGIN)
-    Call<UserResponse> login(@Query("roomno") String roomno, @Query("password") String password);
+    @POST(APIUrls.LOGIN)
+    @FormUrlEncoded
+    Call<UserResponse> login(@Field("languageid") int languageId, @Query("roomno") String roomno, @Query("password") String password);
 
-    @GET(APIUrls.BANNER_LIST)
-    Call<BannerResponse> getBanners(@Query("menuid") String menuid);
+    @POST(APIUrls.BANNER_LIST)
+    @FormUrlEncoded
+    Call<BannerResponse> getBanners(@Field("languageid") int languageId, @Query("menuid") String menuid);
 
-    @GET(APIUrls.FEEDBACK)
-    Call<RequestResponse> sendFeedBack(@Query("roomno") String roomno, @Query("name") String name, @Query("description") String description);
+    @POST(APIUrls.FEEDBACK)
+    @FormUrlEncoded
+    Call<RequestResponse> sendFeedBack(@Field("languageid") int languageId, @Query("roomno") String roomno, @Query("name") String name, @Query("description") String description);
 
-    @GET(APIUrls.CHECKOUT)
-    Call<RequestResponse> checkoutTime(@Query("roomno") String roomno, @Query("name") String name, @Query("checktime") String checktime);
+    @POST(APIUrls.CHECKOUT)
+    @FormUrlEncoded
+    Call<RequestResponse> checkoutTime(@Field("languageid") int languageId, @Query("roomno") String roomno, @Query("name") String name, @Query("checktime") String checktime);
 
-    @GET(APIUrls.INTERNET)
-    Call<RequestResponse> askForInternet(@Query("roomno") String roomno, @Query("name") String name);
+    @POST(APIUrls.INTERNET)
+    @FormUrlEncoded
+    Call<RequestResponse> askForInternet(@Field("languageid") int languageId, @Query("roomno") String roomno, @Query("name") String name);
 
-    @GET(APIUrls.COLLECTTRAY)
-    Call<RequestResponse> collectTray(@Query("roomno") String roomno, @Query("name") String name, @Query("timing") String timing);
+    @POST(APIUrls.COLLECTTRAY)
+    @FormUrlEncoded
+    Call<RequestResponse> collectTray(@Field("languageid") int languageId, @Query("roomno") String roomno, @Query("name") String name, @Query("timing") String timing);
 
-    @GET(APIUrls.SENDENQUERY)
-    Call<RequestResponse> sendQuery(@Query("userid") String userid, @Query("catid") String catid, @Query("name") String name, @Query("timeperiod") String timeperiod);
+    @POST(APIUrls.SENDENQUERY)
+    @FormUrlEncoded
+    Call<RequestResponse> sendQuery(@Field("languageid") int languageId, @Query("userid") String userid, @Query("catid") String catid, @Query("name") String name, @Query("timeperiod") String timeperiod);
 
-    @GET(APIUrls.BANNER_LINK)
-    Call<ReportsResponse> getBanner(@Query("cid") String cid, @Query("subid") String subid, @Query("subsubid") String subsubid);
+    @POST(APIUrls.BANNER_LINK)
+    @FormUrlEncoded
+    Call<ReportsResponse> getBanner(@Field("languageid") int languageId, @Query("cid") String cid, @Query("subid") String subid, @Query("subsubid") String subsubid);
 
-    @GET(APIUrls.FOOD_CATEGORY)
-    Call<FoodCategoryResponse> getFoodCategory();
+    @POST(APIUrls.FOOD_CATEGORY)
+    @FormUrlEncoded
+    Call<FoodCategoryResponse> getFoodCategory(@Field("languageid") int languageId);
 
-    @GET(APIUrls.FOOD_SUB_CATEGORY)
-    Call<FoodSubcategoryResponse> getFoodSubcategory(@Query("cid") String cid);
+    @POST(APIUrls.FOOD_SUB_CATEGORY)
+    @FormUrlEncoded
+    Call<FoodSubcategoryResponse> getFoodSubcategory(@Field("languageid") int languageId, @Query("cid") String cid);
 
-    @GET(APIUrls.FOOD_ITEM_LIST)
-    Call<FoodItemResponse> getFoodItems(@Query("cid") String cid,@Query("subid") String subid);
+    @POST(APIUrls.FOOD_ITEM_LIST)
+    @FormUrlEncoded
+    Call<FoodItemResponse> getFoodItems(@Field("languageid") int languageId, @Query("cid") String cid, @Query("subid") String subid);
 
-    @GET(APIUrls.FOOD_ITEMS)
-    Call<FoodItemListResponse> getFoodItems(@Query("cid") String cid);
+    @POST(APIUrls.FOOD_ITEMS)
+    @FormUrlEncoded
+    Call<FoodItemListResponse> getFoodItems(@Field("languageid") int languageId, @Query("cid") String cid);
 
     @POST(APIUrls.ORDER_ITEM)
     @FormUrlEncoded
-    Call<RequestResponse> orderItem(@Query("roomno") String roomno, @Field("data") String items);
+    Call<RequestResponse> orderItem(@Field("languageid") int languageId, @Query("roomno") String roomno, @Field("data") String items);
 
-    @GET(APIUrls.EMERGENCY)
-    Call<RequestResponse> sendEmergency(@Query("roomno") String roomno);
+    @POST(APIUrls.EMERGENCY)
+    @FormUrlEncoded
+    Call<RequestResponse> sendEmergency(@Field("languageid") int languageId, @Query("roomno") String roomno);
 
-    @GET(APIUrls.LOCAL_NEWS)
+    @POST(APIUrls.LOCAL_NEWS)
+    @FormUrlEncoded
     Call<ArticleResponse> getLocalNews();
 
-    @GET(APIUrls.GLOBAL_NEWS)
+    @POST(APIUrls.GLOBAL_NEWS)
+    @FormUrlEncoded
     Call<ArticleResponse> getGlobalNews();
 
-    @GET(APIUrls.SETTINGS)
-    Call<SettingsResponse> getSettings();
+    @POST(APIUrls.SETTINGS)
+    @FormUrlEncoded
+    Call<SettingsResponse> getSettings(@Field("languageid") int languageId);
 }

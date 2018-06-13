@@ -32,6 +32,7 @@ import com.kaizen.models.Subcategory;
 import com.kaizen.reterofit.RetrofitInstance;
 import com.kaizen.reterofit.RetrofitService;
 import com.kaizen.utils.LocaleHelper;
+import com.kaizen.utils.PreferenceUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -69,7 +70,7 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
         rv_category.setAdapter(categoryAdapter);
 
         service = RetrofitInstance.createService(RetrofitService.class);
-        service.getCategories().enqueue(new Callback<CategoryResponse>() {
+        service.getCategories(PreferenceUtil.getLanguage(this)).enqueue(new Callback<CategoryResponse>() {
             @Override
             public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -106,13 +107,13 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
         FragmentManager fM = getSupportFragmentManager();
         FragmentTransaction fT = fM.beginTransaction();
 
-        if (category.getMainCategoryTitle().equalsIgnoreCase("home")) {
+        if (category.getMainCategoryTitle().equalsIgnoreCase("home") || category.getMainCategoryTitle().equalsIgnoreCase("الصفحة الرئيسية")) {
             fT.replace(R.id.frame_layout, HomeFragment.newInstance(category), HomeFragment.class.getSimpleName());
-        } else if (category.getMainCategoryTitle().equalsIgnoreCase("room services")) {
+        } else if (category.getMainCategoryTitle().equalsIgnoreCase("room services") || category.getMainCategoryTitle().equalsIgnoreCase("خدمة الغرف")) {
             fT.replace(R.id.frame_layout, FoodCategoryFragment.newInstance(category), FoodCategoryFragment.class.getSimpleName());
-        } else if (category.getMainCategoryTitle().equalsIgnoreCase("cart")) {
+        } else if (category.getMainCategoryTitle().equalsIgnoreCase("cart") || category.getMainCategoryTitle().equalsIgnoreCase("عربة التسوق")) {
             fT.replace(R.id.frame_layout, new CartFragment(), CartFragment.class.getSimpleName());
-        } else if (category.getMainCategoryTitle().equalsIgnoreCase("more")) {
+        } else if (category.getMainCategoryTitle().equalsIgnoreCase("more") || category.getMainCategoryTitle().equalsIgnoreCase("أكثر من")) {
             fT.replace(R.id.frame_layout, MoreFragment.newInstance(category), MoreFragment.class.getSimpleName());
         } else {
             fT.replace(R.id.frame_layout, CategoryFragment.newInstance(category), CategoryFragment.class.getSimpleName());

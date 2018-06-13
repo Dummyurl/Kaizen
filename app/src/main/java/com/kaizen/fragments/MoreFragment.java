@@ -35,6 +35,7 @@ import com.kaizen.models.SubcategoryResponse;
 import com.kaizen.reterofit.APIUrls;
 import com.kaizen.reterofit.RetrofitInstance;
 import com.kaizen.reterofit.RetrofitService;
+import com.kaizen.utils.PreferenceUtil;
 import com.kaizen.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MoreFragment  extends Fragment implements ISetOnChildClickListener {
+public class MoreFragment extends Fragment implements ISetOnChildClickListener {
 
     private static final String CATEGORY = "CATEGORY";
     private ImageView iv_category;
@@ -109,7 +110,7 @@ public class MoreFragment  extends Fragment implements ISetOnChildClickListener 
         });
 
         service = RetrofitInstance.createService(RetrofitService.class);
-        service.getBanners(category.getId()).enqueue(new Callback<BannerResponse>() {
+        service.getBanners(PreferenceUtil.getLanguage(getContext()), category.getId()).enqueue(new Callback<BannerResponse>() {
             @Override
             public void onResponse(Call<BannerResponse> call, Response<BannerResponse> response) {
                 if (response.body() != null && response.isSuccessful()) {
@@ -153,7 +154,7 @@ public class MoreFragment  extends Fragment implements ISetOnChildClickListener 
         final SubcategoryAdapter subcategoryAdapter = new SubcategoryAdapter(category, subCatId, childId, this);
         rv_sub_category.setAdapter(subcategoryAdapter);
 
-        service.getSubCategories(category.getId()).enqueue(new Callback<SubcategoryResponse>() {
+        service.getSubCategories(PreferenceUtil.getLanguage(getContext()), category.getId()).enqueue(new Callback<SubcategoryResponse>() {
             @Override
             public void onResponse(Call<SubcategoryResponse> call, Response<SubcategoryResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -183,7 +184,7 @@ public class MoreFragment  extends Fragment implements ISetOnChildClickListener 
 
     @Override
     public void onChildCategoryClick(Category category, Subcategory subcategory, final ChildCategory childCategory) {
-        service.getListChildCategory(category.getId(), subcategory.getId(), childCategory.getId()).enqueue(new Callback<ListChildCategoryResponse>() {
+        service.getListChildCategory(PreferenceUtil.getLanguage(getContext()), category.getId(), subcategory.getId(), childCategory.getId()).enqueue(new Callback<ListChildCategoryResponse>() {
             @Override
             public void onResponse(Call<ListChildCategoryResponse> call, Response<ListChildCategoryResponse> response) {
                 if (response.body() != null && response.isSuccessful()) {

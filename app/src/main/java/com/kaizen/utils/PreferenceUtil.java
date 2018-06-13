@@ -26,4 +26,15 @@ public class PreferenceUtil {
         String value = new Gson().toJson(user);
         PreferenceManager.getDefaultSharedPreferences(context).edit().putString("user", value).apply();
     }
+
+    public static void setLanguage(Context context, int language) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putInt("language", language).apply();
+    }
+
+    public static int getLanguage(Context context) {
+        if (context != null) {
+            return PreferenceManager.getDefaultSharedPreferences(context).getInt("language", 1);
+        }
+        return 1;
+    }
 }

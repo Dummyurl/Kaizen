@@ -94,7 +94,7 @@ public class CartFragment extends Fragment implements CartAdapter.ICartActions {
                     }
 
                     RetrofitService service = RetrofitInstance.createService(RetrofitService.class);
-                    service.orderItem(user.getRoomno(), passArray.toString()).enqueue(new Callback<RequestResponse>() {
+                    service.orderItem(PreferenceUtil.getLanguage(getContext()),user.getRoomno(), passArray.toString()).enqueue(new Callback<RequestResponse>() {
                         @Override
                         public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                             if (response.body() != null && response.isSuccessful()) {

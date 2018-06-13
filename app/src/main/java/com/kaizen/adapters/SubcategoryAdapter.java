@@ -17,6 +17,7 @@ import com.kaizen.models.ChildCategoryResponse;
 import com.kaizen.models.Subcategory;
 import com.kaizen.reterofit.RetrofitInstance;
 import com.kaizen.reterofit.RetrofitService;
+import com.kaizen.utils.PreferenceUtil;
 import com.kaizen.utils.ToastUtil;
 
 import retrofit2.Call;
@@ -92,7 +93,7 @@ public class SubcategoryAdapter extends CommonRecyclerAdapter<Subcategory> {
             rv_child_category.setAdapter(childCategoryAdapter);
 
             RetrofitService service = RetrofitInstance.createService(RetrofitService.class);
-            service.getChildCategory(category.getId(), subcategory.getId()).enqueue(new Callback<ChildCategoryResponse>() {
+            service.getChildCategory(PreferenceUtil.getLanguage(context),category.getId(), subcategory.getId()).enqueue(new Callback<ChildCategoryResponse>() {
                 @Override
                 public void onResponse(Call<ChildCategoryResponse> call, Response<ChildCategoryResponse> response) {
                     if (response.body() != null && response.isSuccessful()) {

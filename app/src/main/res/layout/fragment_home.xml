@@ -333,7 +333,7 @@
                     android:drawablePadding="@dimen/margin8dp"
                     android:drawableRight="@drawable/ic_menu_down"
                     android:drawableStart="@drawable/ic_translet"
-                    android:padding="@dimen/margin24dp"
+                    android:padding="@dimen/margin16dp"
                     android:text="@string/english"
                     android:textSize="16sp"
                     android:theme="@style/SpinnerItemStyle" />

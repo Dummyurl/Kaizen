@@ -204,7 +204,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
         });
 
         service = RetrofitInstance.createService(RetrofitService.class);
-        service.getBanners(category.getId()).enqueue(new Callback<BannerResponse>() {
+        service.getBanners(PreferenceUtil.getLanguage(getContext()), category.getId()).enqueue(new Callback<BannerResponse>() {
             @Override
             public void onResponse(Call<BannerResponse> call, Response<BannerResponse> response) {
                 if (response.body() != null && response.isSuccessful()) {
@@ -244,6 +244,13 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
         setupAutoPager();
 
         final TextView tv_language = view.findViewById(R.id.tv_language);
+
+        if (PreferenceUtil.getLanguage(getContext()) == 1) {
+            tv_language.setText(R.string.english);
+        } else {
+            tv_language.setText(R.string.arabic);
+        }
+
         tv_language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -258,15 +265,20 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                         Activity activity = getActivity();
 
                         if (activity != null && !activity.isFinishing()) {
-                            MainActivity mainActivity = (MainActivity) activity;
+                            String language = "en";
 
                             if (item.getItemId() == 1478) {
-                                mainActivity.updateViews("en");
+
+                                PreferenceUtil.setLanguage(getContext(), 1);
                                 tv_language.setText(R.string.english);
                             } else {
-                                mainActivity.updateViews("ar");
+                                PreferenceUtil.setLanguage(getContext(), 2);
                                 tv_language.setText(R.string.arabic);
+                                language = "ar";
                             }
+
+                            MainActivity mainActivity = (MainActivity) activity;
+                            mainActivity.recreate();
                         }
 
                         return true;
@@ -372,7 +384,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                 }
                 break;
             case R.id.tv_emergency:
-                service.sendEmergency(user.getRoomno()).enqueue(new Callback<RequestResponse>() {
+                service.sendEmergency(PreferenceUtil.getLanguage(getContext()), user.getRoomno()).enqueue(new Callback<RequestResponse>() {
                     @Override
                     public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                         if (response.body() != null && response.isSuccessful()) {
@@ -444,7 +456,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                         } else if (description.isEmpty()) {
                             ToastUtil.showError(getActivity(), R.string.enter_description);
                         } else {
-                            service.sendFeedBack(user.getRoomno(), name, description).enqueue(new Callback<RequestResponse>() {
+                            service.sendFeedBack(PreferenceUtil.getLanguage(getContext()), user.getRoomno(), name, description).enqueue(new Callback<RequestResponse>() {
                                 @Override
                                 public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                                     if (response.isSuccessful() && response.body() != null) {
@@ -506,7 +518,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                         } else if (dateTime.isEmpty()) {
                             ToastUtil.showError(getActivity(), R.string.enter_date_time);
                         } else {
-                            service.checkoutTime(user.getRoomno(), name, dateTime).enqueue(new Callback<RequestResponse>() {
+                            service.checkoutTime(PreferenceUtil.getLanguage(getContext()), user.getRoomno(), name, dateTime).enqueue(new Callback<RequestResponse>() {
                                 @Override
                                 public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                                     if (response.isSuccessful() && response.body() != null) {
@@ -553,7 +565,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                         if (name.isEmpty()) {
                             ToastUtil.showError(getActivity(), R.string.enter_name);
                         } else {
-                            service.askForInternet(user.getRoomno(), name).enqueue(new Callback<RequestResponse>() {
+                            service.askForInternet(PreferenceUtil.getLanguage(getContext()), user.getRoomno(), name).enqueue(new Callback<RequestResponse>() {
                                 @Override
                                 public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                                     if (response.isSuccessful() && response.body() != null) {
@@ -616,7 +628,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                         } else if (timing.isEmpty()) {
                             ToastUtil.showError(getActivity(), R.string.enter_date_time);
                         } else {
-                            service.collectTray(user.getRoomno(), name, timing).enqueue(new Callback<RequestResponse>() {
+                            service.collectTray(PreferenceUtil.getLanguage(getContext()), user.getRoomno(), name, timing).enqueue(new Callback<RequestResponse>() {
                                 @Override
                                 public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                                     if (response.isSuccessful() && response.body() != null) {

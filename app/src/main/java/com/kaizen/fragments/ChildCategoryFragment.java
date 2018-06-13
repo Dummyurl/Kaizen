@@ -159,7 +159,7 @@ public class ChildCategoryFragment extends Fragment {
                             ToastUtil.showError(getActivity(), R.string.enter_date_time);
                         } else {
                             RetrofitService service = RetrofitInstance.createService(RetrofitService.class);
-                            service.sendQuery(user.getRoomno(), listChildCategory.getMainCatId(), name, timing).enqueue(new Callback<RequestResponse>() {
+                            service.sendQuery(PreferenceUtil.getLanguage(getContext()),user.getRoomno(), listChildCategory.getMainCatId(), name, timing).enqueue(new Callback<RequestResponse>() {
                                 @Override
                                 public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                                     if (response.isSuccessful() && response.body() != null) {
