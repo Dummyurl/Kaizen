@@ -89,6 +89,7 @@ public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
                 tv_discount_price.setText(String.format("SR %s", foodItem.getFood_discount_price()));
             }
 
+            tv_content.setText(String.valueOf(foodItem.getQuantity()));
         }
 
         @Override
@@ -104,7 +105,7 @@ public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
                     int increment = content + 1;
                     tv_content.setText(String.valueOf(increment));
                     foodItem.setQuantity(increment);
-                    FoodItem.update(foodItem);
+                    foodItem.save();
                     iCartActions.onCartUpdated();
                     break;
                 case R.id.iv_remove:
@@ -118,6 +119,7 @@ public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
                             public void onClick(DialogInterface dialog, int which) {
                                 foodItem.delete();
                                 removeItem(position);
+                                iCartActions.onCartUpdated();
                                 dialog.dismiss();
                             }
                         }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -129,10 +131,9 @@ public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
                     } else {
                         tv_content.setText(String.valueOf(decrement));
                         foodItem.setQuantity(decrement);
-                        FoodItem.update(foodItem);
+                        foodItem.save();
+                        iCartActions.onCartUpdated();
                     }
-
-                    iCartActions.onCartUpdated();
                     break;
             }
         }

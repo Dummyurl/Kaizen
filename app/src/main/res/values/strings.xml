@@ -36,9 +36,11 @@
     <string name="your_request_has_been_successfully_submitted">your request has been successfully submitted</string>
     <string name="close">Close</string>
     <string name="add_to_cart">Add to Cart</string>
+    <string name="add_to_cart_arabic">أضف إلى السلة</string>
     <string name="unable_to_add_to_cart">Unable to add item to cart</string>
     <string name="item_add_to_cart">Item added to cart</string>
     <string name="_1">1</string>
+    <string name="no_items_available_arabic">لا توجد عناصر متاحة</string>
     <string name="no_items_available">No items available</string>
     <string name="remove_from_cart">Remove Item from cart?</string>
     <string name="yes">Yes</string>
@@ -61,6 +63,7 @@
     <string name="pay_arabic">دفع (%s)</string>
     <string name="service_time">Service Time : %s</string>
     <string name="service_time_arabic">وقت الخدمة : %s</string>
+    <string name="sr">(SR %s)</string>
 
     <string-array name="collect_tray">
         <item>Immidiate</item>

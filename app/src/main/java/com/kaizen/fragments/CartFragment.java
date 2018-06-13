@@ -39,7 +39,7 @@ import retrofit2.Response;
 
 public class CartFragment extends Fragment implements CartAdapter.ICartActions {
 
-    private TextView tv_count, tv_pay;
+    private TextView tv_count, tv_pay, tv_empty;
 
     @Nullable
     @Override
@@ -51,7 +51,8 @@ public class CartFragment extends Fragment implements CartAdapter.ICartActions {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final TextView tv_empty = view.findViewById(R.id.tv_empty);
+        tv_empty = view.findViewById(R.id.tv_empty);
+
         RecyclerView rv_cart = view.findViewById(R.id.rv_cart);
         rv_cart.setLayoutManager(new GridLayoutManager(getContext(), 4));
 
@@ -145,6 +146,10 @@ public class CartFragment extends Fragment implements CartAdapter.ICartActions {
     private void updateCount() {
         List<FoodItem> foodItems = FoodItem.listAll(FoodItem.class);
 
+        if (foodItems.size() == 0) {
+            tv_empty.setVisibility(View.VISIBLE);
+        }
+
         long count = FoodItem.count(FoodItem.class);
         int total = 0;
 
@@ -156,9 +161,11 @@ public class CartFragment extends Fragment implements CartAdapter.ICartActions {
         int language = PreferenceUtil.getLanguage(getContext());
 
         if (language == 1) {
+            tv_empty.setText(R.string.no_items_available);
             tv_count.setText(String.format(getString(R.string.count), String.valueOf(count)));
             tv_pay.setText(String.format(getString(R.string.pay), String.valueOf(total)));
         } else {
+            tv_empty.setText(R.string.no_items_available_arabic);
             tv_count.setText(String.format(getString(R.string.count_arabic), String.valueOf(count)));
             tv_pay.setText(String.format(getString(R.string.pay_arabic), String.valueOf(total)));
         }

@@ -22,6 +22,7 @@ import com.kaizen.R;
 import com.kaizen.models.FoodItem;
 import com.kaizen.models.FoodSubcategory;
 import com.kaizen.reterofit.APIUrls;
+import com.kaizen.utils.PreferenceUtil;
 import com.kaizen.utils.ToastUtil;
 
 public class FoodChildCategoryFragment extends Fragment {
@@ -62,6 +63,12 @@ public class FoodChildCategoryFragment extends Fragment {
         ImageView iv_child_category = view.findViewById(R.id.iv_child_category);
         RelativeLayout rl_content = view.findViewById(R.id.rl_content);
         TextView tv_add_to_cart = view.findViewById(R.id.tv_add_to_cart);
+
+        if (PreferenceUtil.getLanguage(getContext()) == 1) {
+            tv_add_to_cart.setText(R.string.add_to_cart);
+        } else {
+            tv_add_to_cart.setText(R.string.add_to_cart_arabic);
+        }
 
         RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.drawable.ic_place_holder)

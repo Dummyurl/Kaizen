@@ -325,8 +325,10 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
             @Override
             public void onResponse(Call<FoodItemListResponse> call, Response<FoodItemListResponse> response) {
                 if (response.body() != null && response.isSuccessful()) {
-                    FoodItemPager childCategoryPager = new FoodItemPager(getChildFragmentManager(), response.body().getFooditemlist());
-                    view_pager.setAdapter(childCategoryPager);
+                    if (getActivity() != null && !getActivity().isFinishing()) {
+                        FoodItemPager childCategoryPager = new FoodItemPager(getChildFragmentManager(), response.body().getFooditemlist());
+                        view_pager.setAdapter(childCategoryPager);
+                    }
                 } else {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                 }

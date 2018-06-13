@@ -116,6 +116,8 @@ public class MoreCategoryFragment extends Fragment {
                         } else {
                             if (articleResponse.getMessage() != null) {
                                 ToastUtil.showError(getActivity(), articleResponse.getMessage());
+                            } else if (response.message() != null) {
+                                ToastUtil.showError(getActivity(), response.message());
                             } else {
                                 ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                             }
@@ -128,6 +130,8 @@ public class MoreCategoryFragment extends Fragment {
                         } else {
                             if (articleResponse.getMessage() != null) {
                                 ToastUtil.showError(getActivity(), articleResponse.getMessage());
+                            } else if (response.message() != null) {
+                                ToastUtil.showError(getActivity(), response.message());
                             } else {
                                 ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                             }
@@ -152,6 +156,8 @@ public class MoreCategoryFragment extends Fragment {
                         } else {
                             if (articleResponse.getMessage() != null) {
                                 ToastUtil.showError(getActivity(), articleResponse.getMessage());
+                            } else if (response.message() != null) {
+                                ToastUtil.showError(getActivity(), response.message());
                             } else {
                                 ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                             }
@@ -165,6 +171,8 @@ public class MoreCategoryFragment extends Fragment {
                         } else {
                             if (articleResponse.getMessage() != null) {
                                 ToastUtil.showError(getActivity(), articleResponse.getMessage());
+                            } else if (response.message() != null) {
+                                ToastUtil.showError(getActivity(), response.message());
                             } else {
                                 ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                             }
