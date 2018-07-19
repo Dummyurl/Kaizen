@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kaizen.R;
+import com.kaizen.fragments.FoodFragment;
 import com.kaizen.listeners.ISetOnFoodChildClickListener;
 import com.kaizen.models.Category;
 import com.kaizen.models.FoodCategory;
@@ -38,6 +39,9 @@ public class FoodCategoryAdapter extends CommonRecyclerAdapter<FoodCategory> {
         this.category = category;
         this.subId = subId;
         this.childId = childId;
+    }
+
+    public FoodCategoryAdapter(FoodFragment foodFragment) {
     }
 
     @Override

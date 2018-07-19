@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -68,7 +67,6 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     private static final String CATEGORY = "CATEGORY";
 
     private RequestOptions requestOptions;
-
     private RetrofitService service;
     private Category category;
     private String subCatId, childId;
@@ -100,11 +98,14 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView rv_foodcata= view.findViewById(R.id.rv_foodcata);
-        rv_foodcata.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        final FoodCategoryAdapter foodCategoryAdapter= new FoodCategoryAdapter(category, subCatId, childId,this);
-        List<FoodItem> foodItems = FoodItem.listAll(FoodItem.class);
 
+
+
+
+        requestOptions = new RequestOptions()
+                .placeholder(R.drawable.ic_place_holder)
+                .error(R.drawable.ic_place_holder)
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
 
 
 
@@ -149,7 +150,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rv_sub_category.setLayoutManager(layoutManager);
-
+        final FoodCategoryAdapter foodCategoryAdapter = new FoodCategoryAdapter(category, subCatId, childId, this);
         rv_sub_category.setAdapter(foodCategoryAdapter);
 
         service.getFoodCategory(PreferenceUtil.getLanguage(getContext())).enqueue(new Callback<FoodCategoryResponse>() {
@@ -242,8 +243,6 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     @Override
     public void onFoodItemClick(FoodItem foodItem) {
         try {
-
-
 
 
         } catch (Exception e) {
