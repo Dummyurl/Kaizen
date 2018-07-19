@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -65,9 +66,9 @@ import retrofit2.Response;
 public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildClickListener, View.OnClickListener {
 
     private static final String CATEGORY = "CATEGORY";
-    private ImageView iv_category;
+
     private RequestOptions requestOptions;
-    private ViewPager view_pager;
+
     private RetrofitService service;
     private Category category;
     private String subCatId, childId;
@@ -99,30 +100,13 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        RecyclerView rv_foodcata= view.findViewById(R.id.rv_foodcata);
+        rv_foodcata.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        final FoodCategoryAdapter foodCategoryAdapter= new FoodCategoryAdapter(category, subCatId, childId,this);
+        List<FoodItem> foodItems = FoodItem.listAll(FoodItem.class);
 
-        view_pager = view.findViewById(R.id.view_pager);
-        TabLayout tab_layout = view.findViewById(R.id.tab_layout);
-        tab_layout.setupWithViewPager(view_pager);
 
-        iv_category = view.findViewById(R.id.iv_category);
-        requestOptions = new RequestOptions()
-                .placeholder(R.drawable.ic_place_holder)
-                .error(R.drawable.ic_place_holder)
-                .diskCacheStrategy(DiskCacheStrategy.ALL);
 
-        view.findViewById(R.id.iv_left).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view_pager.setCurrentItem(getItem(-1), true);
-            }
-        });
-
-        view.findViewById(R.id.iv_right).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view_pager.setCurrentItem(getItem(+1), true);
-            }
-        });
 
         service = RetrofitInstance.createService(RetrofitService.class);
         service.getBanners(PreferenceUtil.getLanguage(getContext()), category.getId()).enqueue(new Callback<BannerResponse>() {
@@ -147,7 +131,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
 
                     if (getActivity() != null && !getActivity().isFinishing()) {
                         ChildCategoryPager childCategoryPager = new ChildCategoryPager(getChildFragmentManager(), listChildCategorys);
-                        view_pager.setAdapter(childCategoryPager);
+
                     }
                 } else {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
@@ -160,13 +144,12 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
             }
         });
 
-        Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.CATEGORY_IMAGE_URL + category.getCategory_image()).into(iv_category);
 
         RecyclerView rv_sub_category = view.findViewById(R.id.rv_sub_category);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rv_sub_category.setLayoutManager(layoutManager);
-        final FoodCategoryAdapter foodCategoryAdapter = new FoodCategoryAdapter(category, subCatId, childId, this);
+
         rv_sub_category.setAdapter(foodCategoryAdapter);
 
         service.getFoodCategory(PreferenceUtil.getLanguage(getContext())).enqueue(new Callback<FoodCategoryResponse>() {
@@ -200,17 +183,9 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
             }
         });
 
-        setupAutoPager();
 
-        iv_category.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                if (mainActivity != null && !mainActivity.isFinishing()) {
-                    mainActivity.openChildMenu(category.getMainCatId(), category.getSubCatId(), category.getCatId());
-                }
-            }
-        });
+
+
 
         final TextView tv_service_time = view.findViewById(R.id.tv_service_time);
         TextView tv_feed_back = view.findViewById(R.id.tv_feed_back);
@@ -255,46 +230,9 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
         });
     }
 
-    private void setupAutoPager() {
-        final Handler handler = new Handler();
-
-        final Runnable update = new Runnable() {
-            public void run() {
-
-                if (view_pager != null) {
-                    int currentPage = view_pager.getCurrentItem();
-
-                    int count = 0;
-
-                    if (view_pager.getAdapter() != null) {
-                        count = view_pager.getAdapter().getCount();
-                    }
-
-                    if (currentPage == count - 1) {
-                        currentPage = 0;
-                    } else {
-                        currentPage++;
-                    }
-
-                    view_pager.setCurrentItem(currentPage);
-                }
-            }
-        };
 
 
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
 
-            @Override
-            public void run() {
-                handler.post(update);
-            }
-        }, 5000, 5000);
-    }
-
-    private int getItem(int i) {
-        return view_pager.getCurrentItem() + i;
-    }
 
     public void openMenu(String subCatId, String childId) {
         this.subCatId = subCatId;
@@ -304,12 +242,9 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     @Override
     public void onFoodItemClick(FoodItem foodItem) {
         try {
-            FoodItemPager childCategoryPager = (FoodItemPager) view_pager.getAdapter();
 
-            if (childCategoryPager != null) {
-                int position = childCategoryPager.getFoodItem(foodItem.getId());
-                view_pager.setCurrentItem(position);
-            }
+
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -327,7 +262,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
                 if (response.body() != null && response.isSuccessful()) {
                     if (getActivity() != null && !getActivity().isFinishing()) {
                         FoodItemPager childCategoryPager = new FoodItemPager(getChildFragmentManager(), response.body().getFooditemlist());
-                        view_pager.setAdapter(childCategoryPager);
+
                     }
                 } else {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);

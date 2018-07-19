@@ -111,7 +111,7 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
             fT.replace(R.id.frame_layout, HomeFragment.newInstance(category), HomeFragment.class.getSimpleName());
         } else if (category.getMainCategoryTitle().equalsIgnoreCase("room services") || category.getMainCategoryTitle().equalsIgnoreCase("خدمة الغرف")) {
             fT.replace(R.id.frame_layout, FoodCategoryFragment.newInstance(category), FoodCategoryFragment.class.getSimpleName());
-        } else if (category.getMainCategoryTitle().equalsIgnoreCase("cart") || category.getMainCategoryTitle().equalsIgnoreCase("عربة التسوق")) {
+        } else if (category.getMainCategoryTitle().equalsIgnoreCase("FoodCart") || category.getMainCategoryTitle().equalsIgnoreCase("عربة التسوق")) {
             fT.replace(R.id.frame_layout, new CartFragment(), CartFragment.class.getSimpleName());
         } else if (category.getMainCategoryTitle().equalsIgnoreCase("more") || category.getMainCategoryTitle().equalsIgnoreCase("أكثر من")) {
             fT.replace(R.id.frame_layout, MoreFragment.newInstance(category), MoreFragment.class.getSimpleName());

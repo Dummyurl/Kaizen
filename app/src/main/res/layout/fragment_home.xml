@@ -263,7 +263,8 @@
                         android:padding="@dimen/margin16dp"
                         android:text="@string/feedback"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/tv_check_out"
@@ -279,7 +280,8 @@
                         android:padding="@dimen/margin16dp"
                         android:text="@string/check_out"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 
@@ -302,7 +304,8 @@
                         android:padding="@dimen/margin16dp"
                         android:text="@string/collect_tray"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/tv_internet"
@@ -318,7 +321,8 @@
                         android:padding="@dimen/margin16dp"
                         android:text="@string/internet"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 
@@ -336,7 +340,8 @@
                     android:padding="@dimen/margin16dp"
                     android:text="@string/english"
                     android:textSize="16sp"
-                    android:theme="@style/SpinnerItemStyle" />
+                    android:theme="@style/SpinnerItemStyle"
+                    />
 
             </LinearLayout>
 

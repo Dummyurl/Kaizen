@@ -2,101 +2,79 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/rl_content"
     android:layout_height="match_parent">
-
     <ImageView
         android:id="@+id/iv_child_category"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_above="@+id/rl_cart"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/rl_content"
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_cart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/margin8dp"
-            android:layout_marginTop="@dimen/margin8dp"
-            android:layout_weight="0.75"
-            android:background="#80000000">
+            android:layout_height="match_parent" />
 
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:padding="@dimen/margin16dp"
-                android:textColor="@android:color/white"
-                android:textSize="48sp"
-                android:textStyle="bold"
-                tools:text="Full english break fast" />
-
-            <View
-                android:id="@+id/view_divider"
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_below="@+id/tv_title"
-                android:background="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/tv_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/view_divider"
-                android:layout_marginTop="@dimen/margin16dp"
-                android:padding="@dimen/margin16dp"
-                android:textColor="@android:color/white"
-                android:textSize="16sp" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            tools:background="@color/blue" />
     </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/tv_add_to_cart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:background="@color/colorAccent"
-        android:padding="@dimen/margin8dp"
-        android:text="@string/add_to_cart"
-        android:textColor="@android:color/white"
-        android:textSize="18sp" />
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:background="@color/colorAccent"
-        android:padding="@dimen/margin8dp">
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin4dp">
 
         <TextView
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18sp"
+            tools:text="10rs"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_discount_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin4dp"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:layout_marginStart="@dimen/margin4dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            tools:text="20rs"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
 
+
+    <TextView
+        android:id="@+id/tv_add_to_cart"
+        android:layout_width="54dp"
+        android:layout_height="38dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/colorAccent"
+        android:padding="16dp"
+        android:text="@string/add_to_cart"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:visibility="gone"/>
 </RelativeLayout>
+
+
+

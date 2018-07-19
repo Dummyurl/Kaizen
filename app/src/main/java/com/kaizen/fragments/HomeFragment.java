@@ -277,6 +277,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
             tv_language.setText(R.string.arabic);
         }
 
+
         tv_language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -284,6 +285,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                 PopupMenu menu = new PopupMenu(getContext(), v);
                 menu.getMenu().add(0, 1478, 0, R.string.english);
                 menu.getMenu().add(0, 1479, 0, R.string.arabic);
+
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -297,11 +299,12 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
 
                                 PreferenceUtil.setLanguage(getContext(), 1);
                                 tv_language.setText(R.string.english);
-                            } else {
+                            } else  {
                                 PreferenceUtil.setLanguage(getContext(), 2);
                                 tv_language.setText(R.string.arabic);
                                 language = "ar";
                             }
+
 
                             MainActivity mainActivity = (MainActivity) activity;
                             mainActivity.recreate();
@@ -410,9 +413,14 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                 }
                 break;
             case R.id.tv_emergency:
+                progressDialog = new ProgressDialog(getContext());
+                progressDialog.setMessage(getString(R.string.loading));
+                progressDialog.show();
+
                 service.sendEmergency(PreferenceUtil.getLanguage(getContext()), user.getRoomno()).enqueue(new Callback<RequestResponse>() {
                     @Override
                     public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
+
                         if (response.body() != null && response.isSuccessful()) {
                             RequestResponse requestResponse = response.body();
 

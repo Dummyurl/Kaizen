@@ -42,11 +42,11 @@
 
         <TextView
             android:id="@+id/tv_count"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_capsule"
             android:paddingBottom="@dimen/margin8dp"
-            android:paddingLeft="@dimen/margin16dp"
+            android:paddingLeft="32dp"
             android:paddingRight="@dimen/margin16dp"
             android:paddingTop="@dimen/margin8dp"
             android:textColor="@android:color/white"
@@ -55,18 +55,18 @@
 
         <TextView
             android:id="@+id/tv_pay"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:background="@drawable/ic_capsule"
             android:paddingBottom="@dimen/margin8dp"
-            android:paddingLeft="@dimen/margin16dp"
+            android:paddingLeft="32dp"
             android:paddingRight="@dimen/margin16dp"
             android:paddingTop="@dimen/margin8dp"
             android:textColor="@android:color/white"
             android:textSize="16sp"
-            tools:text="Count 10" />
+            tools:text="Count 10"
+            android:layout_alignParentRight="true" />
 
     </RelativeLayout>
 </RelativeLayout>

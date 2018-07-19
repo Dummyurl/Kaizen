@@ -75,6 +75,7 @@ public class SubcategoryAdapter extends CommonRecyclerAdapter<Subcategory> {
                 selectedSubcategory = subcategory;
                 showRecyclerView(subcategory);
             } else {
+                tv_sub_category.setVisibility(View.VISIBLE);
                 rv_child_category.setVisibility(View.GONE);
             }
         }
@@ -116,6 +117,14 @@ public class SubcategoryAdapter extends CommonRecyclerAdapter<Subcategory> {
             tv_selected = tv_sub_category;
             selectedSubcategory = subcategory;
             showRecyclerView(subcategory);
+            if(tv_sub_category.getVisibility() == View.VISIBLE)
+            {
+                rv_child_category.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                rv_child_category.setVisibility(View.GONE);
+            }
         }
     }
 }

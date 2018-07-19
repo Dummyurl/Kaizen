@@ -187,18 +187,5 @@ public class MoreCategoryFragment extends Fragment {
             });
         }
 
-        if (listChildCategory.isEnableClick()) {
-            iv_child_category.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MainActivity mainActivity = (MainActivity) getActivity();
-                    if (mainActivity != null && !mainActivity.isFinishing()) {
-                        mainActivity.openChildMenu(listChildCategory.getMainCatId(), listChildCategory.getSubCatId(), listChildCategory.getCatId());
-                    }
-                }
-            });
-        } else {
-            iv_child_category.setOnClickListener(null);
-        }
     }
 }

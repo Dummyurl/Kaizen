@@ -77,7 +77,13 @@ public class DateTimeUtil {
                         }
                     }, year, month, day);
 
+            Calendar addCalendar = Calendar.getInstance();
+            addCalendar.setTime(new Date());
+            addCalendar.add(Calendar.DATE, 30);
+
             datePickerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+            datePickerDialog.getDatePicker().setMaxDate(addCalendar.getTimeInMillis());
             datePickerDialog.show();
         } catch (Exception e) {
 
@@ -152,5 +158,20 @@ public class DateTimeUtil {
         }
 
         return dateWithoutTimeStamp;
+    }
+    public int getAge(Date date) {
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.setTime(date);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
+            age--;
+        }
+
+
+        return age;
     }
 }

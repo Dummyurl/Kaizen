@@ -58,8 +58,8 @@ public class FoodChildCategoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView tv_title = view.findViewById(R.id.tv_title);
-        TextView tv_description = view.findViewById(R.id.tv_description);
+
+
         ImageView iv_child_category = view.findViewById(R.id.iv_child_category);
         RelativeLayout rl_content = view.findViewById(R.id.rl_content);
         TextView tv_add_to_cart = view.findViewById(R.id.tv_add_to_cart);
@@ -84,11 +84,7 @@ public class FoodChildCategoryFragment extends Fragment {
             rl_content.setVisibility(View.VISIBLE);
         }
 
-        if (foodItem.getAliasName() != null) {
-            tv_title.setText(Html.fromHtml(foodItem.getAliasName()));
-        }
 
-        tv_description.setText(Html.fromHtml(foodItem.getDescription()));
 
         tv_add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override

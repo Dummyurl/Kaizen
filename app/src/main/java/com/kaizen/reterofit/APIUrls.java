@@ -3,7 +3,7 @@ package com.kaizen.reterofit;
 public class APIUrls {
 
 
-    public static final String BASE_URL = "http://sncryptocurrency.com.md-52.webhostbox.net/kaizen/";
+    public static final String BASE_URL = "http://kaizenmy.com/";
 
     public static final String NEWS_URL = "https://newsapi.org/";
 
