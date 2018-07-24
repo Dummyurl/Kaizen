@@ -75,6 +75,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     private Category category;
     private String subCatId, childId;
     CartFoodAdapter cartFoodAdapter;
+    RecyclerView rv_foodcata;
 
     public static FoodCategoryFragment newInstance(Category category)
     {
@@ -106,7 +107,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView rv_foodcata = view.findViewById(R.id.rv_foodcata);
+         rv_foodcata = view.findViewById(R.id.rv_foodcata);
         rv_foodcata.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
 
@@ -281,7 +282,8 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
                 if (response.body() != null && response.isSuccessful()) {
                     if (getActivity() != null && !getActivity().isFinishing()) {
                         //FoodItemPager childCategoryPager = new FoodItemPager(getChildFragmentManager(), response.body().getFooditemlist());
-                        cartFoodAdapter=new CartFoodAdapter(,response.body().getFooditemlist());
+                        cartFoodAdapter=new CartFoodAdapter(getContext(),response.body().getFooditemlist());
+                        rv_foodcata.setAdapter(cartFoodAdapter);
                     }
                 } else {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
