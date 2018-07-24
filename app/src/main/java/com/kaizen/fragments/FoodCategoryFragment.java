@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.kaizen.activities.MainActivity;
 import com.kaizen.R;
+import com.kaizen.adapters.CartFoodAdapter;
 import com.kaizen.adapters.ChildCategoryPager;
 import com.kaizen.adapters.FoodCategoryAdapter;
 import com.kaizen.adapters.FoodItemPager;
@@ -34,6 +36,7 @@ import com.kaizen.listeners.ISetOnFoodChildClickListener;
 import com.kaizen.models.Banner;
 import com.kaizen.models.BannerResponse;
 import com.kaizen.models.Category;
+import com.kaizen.models.ChildCategoryResponse;
 import com.kaizen.models.FoodCategory;
 import com.kaizen.models.FoodCategoryResponse;
 import com.kaizen.models.FoodItem;
@@ -41,6 +44,7 @@ import com.kaizen.models.FoodItemListResponse;
 import com.kaizen.models.FoodItemResponse;
 import com.kaizen.models.FoodSubcategory;
 import com.kaizen.models.ListChildCategory;
+import com.kaizen.models.ListChildCategoryResponse;
 import com.kaizen.models.RequestResponse;
 import com.kaizen.models.Settings;
 import com.kaizen.models.SettingsResponse;
@@ -70,8 +74,10 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     private RetrofitService service;
     private Category category;
     private String subCatId, childId;
+    CartFoodAdapter cartFoodAdapter;
 
-    public static FoodCategoryFragment newInstance(Category category) {
+    public static FoodCategoryFragment newInstance(Category category)
+    {
         FoodCategoryFragment categoryFragment = new FoodCategoryFragment();
 
         Bundle bundle = new Bundle();
@@ -96,9 +102,12 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
         super.onViewCreated(view, savedInstanceState);
 
+        RecyclerView rv_foodcata = view.findViewById(R.id.rv_foodcata);
+        rv_foodcata.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
 
 
@@ -110,10 +119,15 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
 
 
         service = RetrofitInstance.createService(RetrofitService.class);
-        service.getBanners(PreferenceUtil.getLanguage(getContext()), category.getId()).enqueue(new Callback<BannerResponse>() {
+
+
+        service.getBanners(PreferenceUtil.getLanguage(getContext()), category.getId()).enqueue(new Callback<BannerResponse>()
+        {
             @Override
-            public void onResponse(Call<BannerResponse> call, Response<BannerResponse> response) {
-                if (response.body() != null && response.isSuccessful()) {
+            public void onResponse(Call<BannerResponse> call, Response<BannerResponse> response)
+            {
+                if (response.body() != null && response.isSuccessful())
+                {
                     List<ListChildCategory> listChildCategorys = new ArrayList<>();
 
                     for (Banner banner : response.body().getReports()) {
@@ -130,13 +144,17 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
                         listChildCategorys.add(listChildCategory);
                     }
 
-                    if (getActivity() != null && !getActivity().isFinishing()) {
+                    if (getActivity() != null && !getActivity().isFinishing())
+                    {
                         ChildCategoryPager childCategoryPager = new ChildCategoryPager(getChildFragmentManager(), listChildCategorys);
 
                     }
-                } else {
+                }
+                else
+                    {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                 }
+
             }
 
             @Override
@@ -158,6 +176,8 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
             public void onResponse(Call<FoodCategoryResponse> call, Response<FoodCategoryResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     foodCategoryAdapter.addItems(response.body().getFoodmaincategory());
+
+
                 } else {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                 }
@@ -260,8 +280,8 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
             public void onResponse(Call<FoodItemListResponse> call, Response<FoodItemListResponse> response) {
                 if (response.body() != null && response.isSuccessful()) {
                     if (getActivity() != null && !getActivity().isFinishing()) {
-                        FoodItemPager childCategoryPager = new FoodItemPager(getChildFragmentManager(), response.body().getFooditemlist());
-
+                        //FoodItemPager childCategoryPager = new FoodItemPager(getChildFragmentManager(), response.body().getFooditemlist());
+                        cartFoodAdapter=new CartFoodAdapter(,response.body().getFooditemlist());
                     }
                 } else {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);

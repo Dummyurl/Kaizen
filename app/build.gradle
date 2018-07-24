@@ -20,6 +20,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:cardview-v7:27.1.1'
@@ -29,6 +30,7 @@ dependencies {
     implementation 'zh.wang.android:yweathergetter4a:1.3.0'
     implementation 'pub.devrel:easypermissions:1.2.0'
     implementation 'com.github.satyan:sugar:1.5'
+    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.google.android.gms:play-services-location:15.0.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 }
