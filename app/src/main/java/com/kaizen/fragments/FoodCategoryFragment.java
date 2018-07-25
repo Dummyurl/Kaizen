@@ -27,6 +27,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.kaizen.activities.MainActivity;
 import com.kaizen.R;
+import com.kaizen.adapters.CartAdapter;
 import com.kaizen.adapters.CartFoodAdapter;
 import com.kaizen.adapters.ChildCategoryPager;
 import com.kaizen.adapters.FoodCategoryAdapter;
@@ -107,8 +108,8 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     {
         super.onViewCreated(view, savedInstanceState);
 
-         rv_foodcata = view.findViewById(R.id.rv_foodcata);
-        rv_foodcata.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        rv_foodcata = view.findViewById(R.id.rv_foodcata);
+        rv_foodcata.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
 
 
@@ -152,7 +153,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
                     }
                 }
                 else
-                    {
+                {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                 }
 
@@ -282,7 +283,12 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
                 if (response.body() != null && response.isSuccessful()) {
                     if (getActivity() != null && !getActivity().isFinishing()) {
                         //FoodItemPager childCategoryPager = new FoodItemPager(getChildFragmentManager(), response.body().getFooditemlist());
-                        cartFoodAdapter=new CartFoodAdapter(getContext(),response.body().getFooditemlist());
+                        cartFoodAdapter=new CartFoodAdapter(getContext(), response.body().getFooditemlist(), new CartAdapter.ICartActions() {
+                            @Override
+                            public void onCartUpdated() {
+
+                            }
+                        });
                         rv_foodcata.setAdapter(cartFoodAdapter);
                     }
                 } else {

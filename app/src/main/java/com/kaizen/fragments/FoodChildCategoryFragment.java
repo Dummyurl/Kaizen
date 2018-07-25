@@ -27,14 +27,14 @@ import com.kaizen.utils.ToastUtil;
 
 public class FoodChildCategoryFragment extends Fragment {
 
-    public static final String CHILD_CATEGORY = "CHILD_CATEGORY";
+    public static final String SHOP_ITEMS = "SHOP_ITEMS";
     private FoodItem foodItem;
 
     public static FoodChildCategoryFragment newInstance(String value) {
         FoodChildCategoryFragment fragment = new FoodChildCategoryFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putString(CHILD_CATEGORY, value);
+        bundle.putString(SHOP_ITEMS, value);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -43,7 +43,7 @@ public class FoodChildCategoryFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String value = getArguments().getString(CHILD_CATEGORY);
+        String value = getArguments().getString(SHOP_ITEMS);
 
         foodItem = new Gson().fromJson(value, FoodItem.class);
     }

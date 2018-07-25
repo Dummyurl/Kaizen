@@ -94,7 +94,7 @@ public class FoodCategoryAdapter extends CommonRecyclerAdapter<FoodCategory> {
             rv_child_category.setAdapter(childCategoryAdapter);
 
             RetrofitService service = RetrofitInstance.createService(RetrofitService.class);
-            service.getFoodSubcategory(PreferenceUtil.getLanguage(context),foodCategory.getId()).enqueue(new Callback<FoodSubcategoryResponse>() {
+            service.getFoodSubcategory(PreferenceUtil.getLanguage(context), foodCategory.getId()).enqueue(new Callback<FoodSubcategoryResponse>() {
                 @Override
                 public void onResponse(Call<FoodSubcategoryResponse> call, Response<FoodSubcategoryResponse> response) {
                     if (response.body() != null && response.isSuccessful()) {
@@ -113,11 +113,17 @@ public class FoodCategoryAdapter extends CommonRecyclerAdapter<FoodCategory> {
 
         @Override
         public void onClick(View v) {
-            FoodCategory subcategory = getItem(getAdapterPosition());
-            tv_selected = tv_sub_category;
-            selectedFoodCategory = subcategory;
-            showRecyclerView(subcategory);
-            iSetOnChildClickListener.onSubCategoryClick(subcategory);
+            if (rv_child_category.getVisibility() == View.GONE) {
+                FoodCategory subcategory = getItem(getAdapterPosition());
+                tv_selected = tv_sub_category;
+                selectedFoodCategory = subcategory;
+                showRecyclerView(subcategory);
+                iSetOnChildClickListener.onSubCategoryClick(subcategory);
+            } else {
+                tv_selected = null;
+                selectedFoodCategory = null;
+                rv_child_category.setVisibility(View.GONE);
+            }
         }
     }
 }

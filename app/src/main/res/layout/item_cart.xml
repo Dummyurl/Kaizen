@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="265dp">
 
         <ImageView
             android:id="@+id/iv_food"
@@ -39,46 +39,51 @@
                 android:textSize="18sp"
                 tools:text="Sample" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/rl_food"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin4dp"
+            android:layout_alignParentLeft="true">
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:ellipsize="end"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/margin4dp">
+                android:maxLines="1"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="18sp"
+                tools:text="10rs" />
 
-                <TextView
-                    android:id="@+id/tv_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="18sp"
-                    tools:text="10rs" />
+            <TextView
+                android:id="@+id/tv_discount_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin4dp"
+                android:layout_marginStart="@dimen/margin4dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                tools:text="20rs" />
 
-                <TextView
-                    android:id="@+id/tv_discount_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin4dp"
-                    android:layout_marginStart="@dimen/margin4dp"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    tools:text="20rs" />
-
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_food"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:paddingBottom="@dimen/margin8dp">
 

@@ -54,4 +54,12 @@ public class APIUrls {
     public static final String LOCAL_NEWS = "v2/top-headlines?country=sa&apiKey=fa8e9468e3d84560984225b0f459e15e";
 
     public static final String GLOBAL_NEWS = "v2/top-headlines?sources=google-news&apiKey=fa8e9468e3d84560984225b0f459e15e ";
+
+    public static final String SHOP_CATEGORY = BASE_URL + "index.php/api/getShopcategory";
+
+    public static final String SHOP_SUB_CATEGORY = BASE_URL + "index.php/api/getShopsubcategory";
+
+    public static final String SHOP_ITEMS = BASE_URL + "index.php/api/getShopitemslist";
+
+    public static final String SHOP_IMAGE_URL = BASE_URL + "administrator/uploads/shop/";
 }

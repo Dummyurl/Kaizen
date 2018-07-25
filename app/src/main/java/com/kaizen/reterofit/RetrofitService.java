@@ -1,7 +1,6 @@
 package com.kaizen.reterofit;
 
 import com.kaizen.models.ArticleResponse;
-import com.kaizen.models.Banner;
 import com.kaizen.models.BannerResponse;
 import com.kaizen.models.CategoryResponse;
 import com.kaizen.models.ChildCategoryResponse;
@@ -13,11 +12,13 @@ import com.kaizen.models.ListChildCategoryResponse;
 import com.kaizen.models.ReportsResponse;
 import com.kaizen.models.RequestResponse;
 import com.kaizen.models.SettingsResponse;
+import com.kaizen.models.ShopCategoryResponse;
+import com.kaizen.models.ShopItemResponse;
+import com.kaizen.models.ShopSubCategoryResponse;
 import com.kaizen.models.SubcategoryResponse;
 import com.kaizen.models.UserResponse;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -111,4 +112,18 @@ public interface RetrofitService {
     @POST(APIUrls.SETTINGS)
     @FormUrlEncoded
     Call<SettingsResponse> getSettings(@Field("languageid") int languageId);
+
+    @POST(APIUrls.SHOP_CATEGORY)
+    @FormUrlEncoded
+    Call<ShopCategoryResponse> getShopCategory(@Field("languageid") int languageId);
+
+    @POST(APIUrls.SHOP_SUB_CATEGORY)
+    @FormUrlEncoded
+    Call<ShopSubCategoryResponse> getShopSubcategory(@Field("languageid") int languageId, @Query("cid") String cid);
+
+    @POST(APIUrls.SHOP_ITEMS)
+    @FormUrlEncoded
+    Call<ShopItemResponse> getShopItems(@Field("languageid") int languageId, @Query("cid") String cid);
+
+
 }
