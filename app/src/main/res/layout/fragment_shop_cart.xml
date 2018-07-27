@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_items"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rl_cart"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/no_items_available"
+            android:textColor="@color/colorAccent"
+            android:textSize="36sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_cart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_cart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/blue"
+        android:paddingBottom="@dimen/margin4dp"
+        android:paddingLeft="@dimen/margin16dp"
+        android:paddingRight="@dimen/margin16dp"
+        android:paddingTop="@dimen/margin4dp">
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_capsule"
+            android:paddingBottom="@dimen/margin8dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="@dimen/margin16dp"
+            android:paddingTop="@dimen/margin8dp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            tools:text="Count 10" />
+
+        <TextView
+            android:id="@+id/tv_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ic_capsule"
+            android:paddingBottom="@dimen/margin8dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="@dimen/margin16dp"
+            android:paddingTop="@dimen/margin8dp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            tools:text="Total 10" />
+
+        <TextView
+            android:id="@+id/tv_pay"
+            android:layout_width="187dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/ic_capsule"
+            android:paddingBottom="@dimen/margin8dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="@dimen/margin16dp"
+            android:paddingTop="@dimen/margin8dp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="Count 10" />
+
+    </RelativeLayout>
+</RelativeLayout>
