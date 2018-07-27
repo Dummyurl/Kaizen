@@ -7,10 +7,12 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -86,7 +88,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
     public static final int RC_LOCATION = 4586;
     private static final String CATEGORY = "CATEGORY";
     private TextView tv_time, tv_location, tv_temperature, tv_high_temperature, tv_low_temperature,
-            tv_type, tv_tomorrow_high_temperature, tv_tomorrow_low_temperature;
+            tv_type, tv_tomorrow_high_temperature, tv_tomorrow_low_temperature,tv_alarm;
 
     private ImageView iv_temperature, iv_tomorrow_temperature;
     private YahooWeather mYahooWeather = YahooWeather.getInstance(5000, true);
@@ -148,6 +150,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
         tv_tomorrow_low_temperature = view.findViewById(R.id.tv_tomorrow_low_temperature);
         iv_temperature = view.findViewById(R.id.iv_temperature);
         iv_tomorrow_temperature = view.findViewById(R.id.iv_tomorrow_temperature);
+        tv_alarm = view.findViewById(R.id.tv_alarm);
 
         final Handler someHandler = new Handler(getActivity().getMainLooper());
         someHandler.postDelayed(new Runnable() {
@@ -170,6 +173,8 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
         tv_prayer.setOnClickListener(this);
         TextView tv_emergency = view.findViewById(R.id.tv_emergency);
         tv_emergency.setOnClickListener(this);
+        TextView tv_alarm = view.findViewById(R.id.tv_alarm);
+        tv_alarm.setOnClickListener(this);
 
 
         int language = PreferenceUtil.getLanguage(getContext());
@@ -271,10 +276,17 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
 
         final TextView tv_language = view.findViewById(R.id.tv_language);
 
-        if (PreferenceUtil.getLanguage(getContext()) == 1) {
+        if (PreferenceUtil.getLanguage(getContext()) == 0) {
             tv_language.setText(R.string.english);
-        } else {
+        } else if(PreferenceUtil.getLanguage(getContext()) == 1){
             tv_language.setText(R.string.arabic);
+        } else if(PreferenceUtil.getLanguage(getContext()) == 2){
+            tv_language.setText(R.string.french);
+        } else if(PreferenceUtil.getLanguage(getContext()) == 3){
+            tv_language.setText(R.string.urdu);
+        }else
+        {
+            tv_language.setText(R.string.turkish);
         }
 
 
@@ -284,7 +296,10 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
 
                 PopupMenu menu = new PopupMenu(getContext(), v);
                 menu.getMenu().add(0, 1478, 0, R.string.english);
-                menu.getMenu().add(0, 1479, 0, R.string.arabic);
+                menu.getMenu().add(0, 1479, 1, R.string.arabic);
+                menu.getMenu().add(0, 1480, 2, R.string.french);
+                menu.getMenu().add(0, 1481, 3, R.string.urdu);
+                menu.getMenu().add(0, 1482, 4, R.string.turkish);
 
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -299,10 +314,25 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
 
                                 PreferenceUtil.setLanguage(getContext(), 1);
                                 tv_language.setText(R.string.english);
-                            } else  {
+                            } else if(item.getItemId() == 1479)  {
                                 PreferenceUtil.setLanguage(getContext(), 2);
                                 tv_language.setText(R.string.arabic);
                                 language = "ar";
+                            }
+                            else if(item.getItemId() == 1480)  {
+                                PreferenceUtil.setLanguage(getContext(), 3);
+                                tv_language.setText(R.string.french);
+                                language = "fr";
+                            }
+                            else if(item.getItemId() == 1481)  {
+                                PreferenceUtil.setLanguage(getContext(), 4);
+                                tv_language.setText(R.string.urdu);
+                                language = "ur";
+                            }
+                            else  {
+                                PreferenceUtil.setLanguage(getContext(), 5);
+                                tv_language.setText(R.string.turkish);
+                                language = "tr";
                             }
 
 
@@ -389,6 +419,11 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
         final User user = PreferenceUtil.getUser(getContext());
 
         switch (v.getId()) {
+            case R.id.tv_alarm:
+                Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
+                startActivity(i);
+                break;
+
             case R.id.tv_feed_back:
                 sendFeedBack(user);
                 break;
@@ -413,50 +448,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                 }
                 break;
             case R.id.tv_emergency:
-                progressDialog = new ProgressDialog(getContext());
-                progressDialog.setMessage(getString(R.string.loading));
-                progressDialog.show();
-
-                service.sendEmergency(PreferenceUtil.getLanguage(getContext()), user.getRoomno()).enqueue(new Callback<RequestResponse>() {
-                    @Override
-                    public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
-
-                        if (response.body() != null && response.isSuccessful()) {
-                            RequestResponse requestResponse = response.body();
-
-                            if (requestResponse.isResponce()) {
-                                View emergencyView = getLayoutInflater().inflate(R.layout.dialog_thanks, null);
-                                TextView tv_thanks = emergencyView.findViewById(R.id.tv_thanks);
-                                TextView tv_description = emergencyView.findViewById(R.id.tv_description);
-
-                                tv_thanks.setText(R.string.success);
-                                tv_description.setText(R.string.emergency_desc);
-
-                                final Dialog thanksDialog = new Dialog(getContext());
-                                thanksDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                thanksDialog.setContentView(emergencyView);
-                                emergencyView.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        thanksDialog.dismiss();
-                                    }
-                                });
-
-                                thanksDialog.show();
-                            } else {
-                                ToastUtil.showError(getActivity(), R.string.something_went_wrong);
-                            }
-
-                        } else {
-                            ToastUtil.showError(getActivity(), R.string.something_went_wrong);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<RequestResponse> call, Throwable t) {
-                        ToastUtil.showError(getActivity(), R.string.something_went_wrong);
-                    }
-                });
+                sendEmergency(user);
                 break;
         }
     }
@@ -469,6 +461,73 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
         } else {
             EasyPermissions.requestPermissions(getActivity(), getString(R.string.location_rationale), RC_LOCATION, perms);
         }
+    }
+
+    private void sendEmergency(final User user) {
+        View feedBackView = getLayoutInflater().inflate(R.layout.dialog_feedback, null);
+        final EditText et_name = feedBackView.findViewById(R.id.et_name);
+        final EditText et_description = feedBackView.findViewById(R.id.et_description);
+
+        AlertDialog.Builder feedBackBuilder = new AlertDialog.Builder(getContext())
+                .setTitle(R.string.emergency)
+                .setView(feedBackView)
+                .setPositiveButton(R.string.submit, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, int which) {
+                        String name = et_name.getText().toString().trim();
+                        String description = et_description.getText().toString().trim();
+
+                        if (name.isEmpty()) {
+                            ToastUtil.showError(getActivity(), R.string.enter_name);
+                        } else if (description.isEmpty()) {
+                            ToastUtil.showError(getActivity(), R.string.enter_description);
+                        } else {
+                            service.sendEmergency(PreferenceUtil.getLanguage(getContext()), user.getRoomno(), name, description).enqueue(new Callback<RequestResponse>() {
+                                @Override
+                                public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
+                                    if (response.isSuccessful() && response.body() != null) {
+                                        RequestResponse requestResponse = response.body();
+
+                                        if (requestResponse.isResponce()) {
+                                            View emergencyView = getLayoutInflater().inflate(R.layout.dialog_thanks, null);
+                                            TextView tv_thanks = emergencyView.findViewById(R.id.tv_thanks);
+                                            TextView tv_description = emergencyView.findViewById(R.id.tv_description);
+
+                                            tv_thanks.setText(R.string.success);
+                                            tv_description.setText(R.string.emergency_desc);
+
+                                            final Dialog thanksDialog = new Dialog(getContext());
+                                            thanksDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                            thanksDialog.setContentView(emergencyView);
+                                            emergencyView.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    thanksDialog.dismiss();
+                                                }
+                                            });
+
+                                            thanksDialog.show();
+                                        } else {
+                                            ToastUtil.showError(getActivity(), requestResponse.getError());
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<RequestResponse> call, Throwable t) {
+
+                                }
+                            });
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        feedBackBuilder.create().show();
     }
 
     private void sendFeedBack(final User user) {

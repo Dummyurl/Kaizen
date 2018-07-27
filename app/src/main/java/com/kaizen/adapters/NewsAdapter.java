@@ -67,8 +67,8 @@ public class NewsAdapter extends CommonRecyclerAdapter<Articles> {
         public void onClick(View v) {
             Articles articles = getItem(getAdapterPosition());
 
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(articles.getUrl()));
-            context.startActivity(browserIntent);
+            //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(articles.getUrl()));
+            //context.startActivity(browserIntent);
         }
     }
 }

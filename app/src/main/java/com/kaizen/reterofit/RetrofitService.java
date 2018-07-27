@@ -13,7 +13,10 @@ import com.kaizen.models.ReportsResponse;
 import com.kaizen.models.RequestResponse;
 import com.kaizen.models.SettingsResponse;
 import com.kaizen.models.ShopCategoryResponse;
+import com.kaizen.models.ShopChildCategoryResponse;
+import com.kaizen.models.ShopItemListResponse;
 import com.kaizen.models.ShopItemResponse;
+import com.kaizen.models.ShopOrder;
 import com.kaizen.models.ShopSubCategoryResponse;
 import com.kaizen.models.SubcategoryResponse;
 import com.kaizen.models.UserResponse;
@@ -101,7 +104,8 @@ public interface RetrofitService {
 
     @POST(APIUrls.EMERGENCY)
     @FormUrlEncoded
-    Call<RequestResponse> sendEmergency(@Field("languageid") int languageId, @Query("roomno") String roomno);
+    Call<RequestResponse> sendEmergency(@Field("languageid") int languageId, @Query("roomno") String roomno, @Query("name") String name, @Query("description") String description);
+
 
     @GET(APIUrls.LOCAL_NEWS)
     Call<ArticleResponse> getLocalNews();
@@ -121,9 +125,23 @@ public interface RetrofitService {
     @FormUrlEncoded
     Call<ShopSubCategoryResponse> getShopSubcategory(@Field("languageid") int languageId, @Query("cid") String cid);
 
+    @POST(APIUrls.SHOP_ITEM_LIST)
+    @FormUrlEncoded
+    Call<ShopItemResponse> getShopItems(@Field("languageid") int languageId, @Query("cid") String cid, @Query("subid") String subid);
+
+
+    @POST(APIUrls.SHOP_CHILD_CATEGORY)
+    @FormUrlEncoded
+    Call<ShopChildCategoryResponse> getShopChildSubcategory(@Field("languageid") int languageId, @Query("cid") String cid);
+
     @POST(APIUrls.SHOP_ITEMS)
     @FormUrlEncoded
-    Call<ShopItemResponse> getShopItems(@Field("languageid") int languageId, @Query("cid") String cid);
+    Call<ShopItemListResponse> getShopItems(@Field("languageid") int languageId, @Query("cid") String cid);
+
+    @POST(APIUrls.SHOP_ORDER_ITEM)
+    @FormUrlEncoded
+    Call<ShopOrder> shoporderItem(@Field("languageid") int languageId, @Query("roomno") String roomno, @Field("data") String items);
+
 
 
 }

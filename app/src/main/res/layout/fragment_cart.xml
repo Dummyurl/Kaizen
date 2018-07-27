@@ -54,10 +54,11 @@
             tools:text="Count 10" />
 
         <TextView
-            android:id="@+id/tv_pay"
-            android:layout_width="130dp"
+            android:id="@+id/tv_total"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/ic_capsule"
             android:paddingBottom="@dimen/margin8dp"
             android:paddingLeft="32dp"
@@ -65,8 +66,23 @@
             android:paddingTop="@dimen/margin8dp"
             android:textColor="@android:color/white"
             android:textSize="16sp"
-            tools:text="Count 10"
-            android:layout_alignParentRight="true" />
+            tools:text="Total 10" />
+
+        <TextView
+            android:id="@+id/tv_pay"
+            android:layout_width="187dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/ic_capsule"
+            android:paddingBottom="@dimen/margin8dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="@dimen/margin16dp"
+            android:paddingTop="@dimen/margin8dp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="Count 10" />
 
     </RelativeLayout>
 </RelativeLayout>

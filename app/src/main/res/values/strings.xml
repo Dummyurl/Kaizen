@@ -59,16 +59,20 @@
     <string name="enter_time">Enter Time</string>
     <string name="count">Count : %s</string>
     <string name="count_arabic">عد : %s</string>
-    <string name="pay">ORDER (%s)</string>
+    <string name="pay">PLACE ORDER</string>
+    <string name="total">Total Amount: SR (%s)</string>
     <string name="pay_arabic">دفع (%s)</string>
     <string name="service_time">Service Time : %s</string>
     <string name="service_time_arabic">وقت الخدمة : %s</string>
     <string name="sr">(SR %s)</string>
-    <string name="reservation">Reservation</string>
+    <string name="reservation">Send Request</string>
     <string name="french">French</string>
     <string name="urdu">Urdu</string>
     <string name="turkish">Turkish</string>
     <string name="book_sallon">Booking Salon</string>
+    <string name="Add">Item Added to cart</string>
+    <string name="alaram_clock">Alaram Clock</string>
+    <string name="alarm_clock">Alarm</string>
 
     <string-array name="collect_tray">
         <item>Immidiate</item>
@@ -80,5 +84,9 @@
     <string-array name="language">
         <item>English</item>
         <item>Arabic</item>
+        <item>French</item>
+        <item>Urdu</item>
+        <item>Turkish</item>
+
     </string-array>
 </resources>

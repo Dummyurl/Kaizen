@@ -282,6 +282,22 @@
                         android:textColor="@android:color/white"
                         android:textSize="16sp"
                         android:visibility="gone"/>
+                    <TextView
+                        android:id="@+id/tv_alarm"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin4dp"
+                        android:layout_marginStart="@dimen/margin4dp"
+                        android:layout_weight="1"
+                        android:background="@color/blue"
+                        android:drawableLeft="@drawable/ic_alarm"
+                        android:drawableStart="@drawable/ic_alarm"
+                        android:gravity="center"
+                        android:padding="@dimen/margin16dp"
+                        android:text="@string/alarm_clock"
+                        android:textColor="@android:color/white"
+                        android:textSize="22sp"
+                       />
 
                 </LinearLayout>
 

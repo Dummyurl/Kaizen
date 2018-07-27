@@ -22,6 +22,7 @@ import com.kaizen.fragments.CategoryFragment;
 import com.kaizen.fragments.FoodCategoryFragment;
 import com.kaizen.fragments.HomeFragment;
 import com.kaizen.fragments.MoreFragment;
+import com.kaizen.fragments.ShopCartFragment;
 import com.kaizen.fragments.ShopCategoryFragment;
 import com.kaizen.listeners.ISetOnCategoryClickListener;
 import com.kaizen.listeners.ISetOnChildClickListener;
@@ -116,7 +117,9 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
             fT.replace(R.id.frame_layout, ShopCategoryFragment.newInstance(category), ShopCategoryFragment.class.getSimpleName());
         }else if (category.getMainCategoryTitle().equalsIgnoreCase("FoodCart") || category.getMainCategoryTitle().equalsIgnoreCase("عربة التسوق")) {
             fT.replace(R.id.frame_layout, new CartFragment(), CartFragment.class.getSimpleName());
-        } else if (category.getMainCategoryTitle().equalsIgnoreCase("more") || category.getMainCategoryTitle().equalsIgnoreCase("أكثر من")) {
+        } else if (category.getMainCategoryTitle().equalsIgnoreCase("ShopCart") || category.getMainCategoryTitle().equalsIgnoreCase("عربة التسوق")) {
+            fT.replace(R.id.frame_layout, new ShopCartFragment(), ShopCartFragment.class.getSimpleName());
+        }else if (category.getMainCategoryTitle().equalsIgnoreCase("more") || category.getMainCategoryTitle().equalsIgnoreCase("أكثر من")) {
             fT.replace(R.id.frame_layout, MoreFragment.newInstance(category), MoreFragment.class.getSimpleName());
         } else {
             fT.replace(R.id.frame_layout, CategoryFragment.newInstance(category), CategoryFragment.class.getSimpleName());

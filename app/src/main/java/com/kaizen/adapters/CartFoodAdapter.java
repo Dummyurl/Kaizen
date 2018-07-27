@@ -21,61 +21,30 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class CartFoodAdapter extends RecyclerView.Adapter<CartFoodAdapter.MyViewHolder> implements View.OnClickListener {
-    TextView tv_food1, tv_content1, tv_price1, tv_discount_price1;
-    ImageView iv_food1;
-    List<FoodItem> foodList;
-    Context context;
-    private CartAdapter.ICartActions iCartActions;
-    static int position1;
+public class CartFoodAdapter extends CommonRecyclerAdapter<FoodItem> {
 
-    public CartFoodAdapter(Context context, List<FoodItem> foodList, CartAdapter.ICartActions iCartActions) {
-        this.foodList = foodList;
-        this.context = context;
-        this.iCartActions = iCartActions;
-    }
+    private Context context;
 
-
-    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CartFoodViewHolder onCreateBasicItemViewHolder(ViewGroup parent, int viewType) {
+        context = parent.getContext();
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_food, parent, false);
-        return new MyViewHolder(view);
+        return new CartFoodViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-
-        position1 = position;
-        tv_food1.setText(foodList.get(position).getAliasName());
-        tv_content1.setText(String.valueOf(foodList.get(position).getQuantity()));
-        tv_price1.setText(String.format("(SR %s)", foodList.get(position).getFood_price()));
-        tv_discount_price1.setText(String.format("SR %s", foodList.get(position).getFood_discount_price()));
-        // Picasso.get().load(foodList.get(position).getBannerImg()).into(iv_food1);
-        RequestOptions requestOptions = new RequestOptions()
-                .placeholder(R.drawable.ic_place_holder)
-                .error(R.drawable.ic_place_holder)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .skipMemoryCache(true);
-
-        Glide.with(context).setDefaultRequestOptions(requestOptions).load(APIUrls.FOOD_IMAGE_URL + foodList.get(position).getBannerImg()).into(iv_food1);
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return foodList.size();
-    }
-
-    @Override
-    public void onClick(View view) {
-
-
+    public void onBindBasicItemView(RecyclerView.ViewHolder holder, int position) {
+        CartFoodViewHolder viewHolder = (CartFoodViewHolder) holder;
+        viewHolder.bindData(position);
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public MyViewHolder(View view) {
+    public class CartFoodViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView tv_food1, tv_content1, tv_price1, tv_discount_price1;
+        ImageView iv_food1;
+
+        public CartFoodViewHolder(View view) {
             super(view);
             tv_food1 = view.findViewById(R.id.tv_food1);
             tv_content1 = view.findViewById(R.id.tv_content);
@@ -86,12 +55,30 @@ public class CartFoodAdapter extends RecyclerView.Adapter<CartFoodAdapter.MyView
             view.findViewById(R.id.iv_remove1).setOnClickListener(this);
         }
 
+        public void bindData(int position) {
+            FoodItem foodItem = getItem(position);
+
+            tv_food1.setText(foodItem.getAliasName());
+            tv_content1.setText(String.valueOf(foodItem.getQuantity()));
+            tv_price1.setText(String.format("(SR %s)", foodItem.getFood_price()));
+            tv_discount_price1.setText(String.format("SR %s", foodItem.getFood_discount_price()));
+            // Picasso.get().load(foodList.get(position).getBannerImg()).into(iv_food1);
+            RequestOptions requestOptions = new RequestOptions()
+                    .placeholder(R.drawable.ic_place_holder)
+                    .error(R.drawable.ic_place_holder)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .skipMemoryCache(true);
+
+            Glide.with(context).setDefaultRequestOptions(requestOptions).load(APIUrls.FOOD_IMAGE_URL + foodItem.getBannerImg()).into(iv_food1);
+
+        }
+
         @Override
         public void onClick(View view) {
             String value = tv_content1.getText().toString();
             final int position = getAdapterPosition();
             final int content = Integer.parseInt(value);
-            final FoodItem foodItem = foodList.get(position);
+            final FoodItem foodItem = getItem(position);
 
             switch (view.getId()) {
 
@@ -100,8 +87,6 @@ public class CartFoodAdapter extends RecyclerView.Adapter<CartFoodAdapter.MyView
                     tv_content1.setText(String.valueOf(increment));
                     foodItem.setQuantity(increment);
                     foodItem.save();
-                    foodList.add(position,foodItem);
-                    iCartActions.onCartUpdated();
                     break;
                 case R.id.iv_remove1:
                     int decrement = content - 1;
@@ -113,8 +98,7 @@ public class CartFoodAdapter extends RecyclerView.Adapter<CartFoodAdapter.MyView
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 foodItem.delete();
-                                foodList.remove(position);
-                                iCartActions.onCartUpdated();
+                                removeItem(position);
                                 dialog.dismiss();
                             }
                         }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -127,7 +111,6 @@ public class CartFoodAdapter extends RecyclerView.Adapter<CartFoodAdapter.MyView
                         tv_content1.setText(String.valueOf(decrement));
                         foodItem.setQuantity(decrement);
                         foodItem.save();
-                        iCartActions.onCartUpdated();
                     }
 
                     break;

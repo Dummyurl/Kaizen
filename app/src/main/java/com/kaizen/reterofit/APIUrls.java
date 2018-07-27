@@ -3,7 +3,7 @@ package com.kaizen.reterofit;
 public class APIUrls {
 
 
-    public static final String BASE_URL = "http://kaizenmy.com/";
+    public static final String BASE_URL = "http://sncryptocurrency.com.md-52.webhostbox.net/kaizenbeta/";
 
     public static final String NEWS_URL = "https://newsapi.org/";
 
@@ -59,7 +59,16 @@ public class APIUrls {
 
     public static final String SHOP_SUB_CATEGORY = BASE_URL + "index.php/api/getShopsubcategory";
 
-    public static final String SHOP_ITEMS = BASE_URL + "index.php/api/getShopitemslist";
+    public static final String SHOP_CHILD_CATEGORY = BASE_URL + "index.php/api/getShopsubcategory";
+
+    public static final String SHOP_ITEM_LIST = BASE_URL + "index.php/api/getShopitemslist";
+
+    public static final String SHOP_ITEMS = BASE_URL + "index.php/api/getImageslistshop";
 
     public static final String SHOP_IMAGE_URL = BASE_URL + "administrator/uploads/shop/";
+
+    public static final String SHOP_ORDER_ITEM = BASE_URL + "index.php/api/getShopPlaceOrder";
+
+
+
 }

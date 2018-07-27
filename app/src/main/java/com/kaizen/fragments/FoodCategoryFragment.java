@@ -78,8 +78,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     CartFoodAdapter cartFoodAdapter;
     RecyclerView rv_foodcata;
 
-    public static FoodCategoryFragment newInstance(Category category)
-    {
+    public static FoodCategoryFragment newInstance(Category category) {
         FoodCategoryFragment categoryFragment = new FoodCategoryFragment();
 
         Bundle bundle = new Bundle();
@@ -104,13 +103,11 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
-    {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         rv_foodcata = view.findViewById(R.id.rv_foodcata);
         rv_foodcata.setLayoutManager(new GridLayoutManager(getContext(), 2));
-
 
 
         requestOptions = new RequestOptions()
@@ -119,17 +116,13 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
 
-
         service = RetrofitInstance.createService(RetrofitService.class);
 
 
-        service.getBanners(PreferenceUtil.getLanguage(getContext()), category.getId()).enqueue(new Callback<BannerResponse>()
-        {
+        service.getBanners(PreferenceUtil.getLanguage(getContext()), category.getId()).enqueue(new Callback<BannerResponse>() {
             @Override
-            public void onResponse(Call<BannerResponse> call, Response<BannerResponse> response)
-            {
-                if (response.body() != null && response.isSuccessful())
-                {
+            public void onResponse(Call<BannerResponse> call, Response<BannerResponse> response) {
+                if (response.body() != null && response.isSuccessful()) {
                     List<ListChildCategory> listChildCategorys = new ArrayList<>();
 
                     for (Banner banner : response.body().getReports()) {
@@ -146,14 +139,11 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
                         listChildCategorys.add(listChildCategory);
                     }
 
-                    if (getActivity() != null && !getActivity().isFinishing())
-                    {
+                    if (getActivity() != null && !getActivity().isFinishing()) {
                         ChildCategoryPager childCategoryPager = new ChildCategoryPager(getChildFragmentManager(), listChildCategorys);
 
                     }
-                }
-                else
-                {
+                } else {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                 }
 
@@ -207,9 +197,6 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
         });
 
 
-
-
-
         final TextView tv_service_time = view.findViewById(R.id.tv_service_time);
         TextView tv_feed_back = view.findViewById(R.id.tv_feed_back);
         tv_feed_back.setOnClickListener(this);
@@ -254,9 +241,6 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     }
 
 
-
-
-
     public void openMenu(String subCatId, String childId) {
         this.subCatId = subCatId;
         this.childId = childId;
@@ -283,13 +267,9 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
                 if (response.body() != null && response.isSuccessful()) {
                     if (getActivity() != null && !getActivity().isFinishing()) {
                         //FoodItemPager childCategoryPager = new FoodItemPager(getChildFragmentManager(), response.body().getFooditemlist());
-                        cartFoodAdapter=new CartFoodAdapter(getContext(), response.body().getFooditemlist(), new CartAdapter.ICartActions() {
-                            @Override
-                            public void onCartUpdated() {
-
-                            }
-                        });
+                        cartFoodAdapter = new CartFoodAdapter();
                         rv_foodcata.setAdapter(cartFoodAdapter);
+                        cartFoodAdapter.addItems(response.body().getFooditemlist());
                     }
                 } else {
                     ToastUtil.showError(getActivity(), R.string.something_went_wrong);
