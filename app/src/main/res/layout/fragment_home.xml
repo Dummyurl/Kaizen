@@ -236,134 +236,155 @@
 
 
             <LinearLayout
-                android:id="@+id/ll_buttons"
+            android:id="@+id/ll_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin4dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_buttons">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/margin4dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_buttons">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tv_feed_back"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="@dimen/margin4dp"
-                        android:layout_marginRight="@dimen/margin4dp"
-                        android:layout_weight="1"
-                        android:background="@color/blue"
-                        android:drawableLeft="@drawable/ic_feedback"
-                        android:drawableStart="@drawable/ic_feedback"
-                        android:gravity="center"
-                        android:padding="@dimen/margin16dp"
-                        android:text="@string/feedback"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:visibility="gone"/>
-
-                    <TextView
-                        android:id="@+id/tv_check_out"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/margin4dp"
-                        android:layout_marginStart="@dimen/margin4dp"
-                        android:layout_weight="1"
-                        android:background="@color/blue"
-                        android:drawableLeft="@drawable/ic_alarm"
-                        android:drawableStart="@drawable/ic_alarm"
-                        android:gravity="center"
-                        android:padding="@dimen/margin16dp"
-                        android:text="@string/check_out"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:visibility="gone"/>
-                    <TextView
-                        android:id="@+id/tv_alarm"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/margin4dp"
-                        android:layout_marginStart="@dimen/margin4dp"
-                        android:layout_weight="1"
-                        android:background="@color/blue"
-                        android:drawableLeft="@drawable/ic_alarm"
-                        android:drawableStart="@drawable/ic_alarm"
-                        android:gravity="center"
-                        android:padding="@dimen/margin16dp"
-                        android:text="@string/alarm_clock"
-                        android:textColor="@android:color/white"
-                        android:textSize="22sp"
-                       />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin4dp">
-
-                    <TextView
-                        android:id="@+id/tv_collect_tray"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="@dimen/margin4dp"
-                        android:layout_marginRight="@dimen/margin4dp"
-                        android:layout_weight="1"
-                        android:background="@color/blue"
-                        android:drawableLeft="@drawable/ic_delete"
-                        android:drawableStart="@drawable/ic_delete"
-                        android:gravity="center"
-                        android:padding="@dimen/margin16dp"
-                        android:text="@string/collect_tray"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:visibility="gone"/>
-
-                    <TextView
-                        android:id="@+id/tv_internet"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/margin4dp"
-                        android:layout_marginStart="@dimen/margin4dp"
-                        android:layout_weight="1"
-                        android:background="@color/blue"
-                        android:drawableLeft="@drawable/ic_internet"
-                        android:drawableStart="@drawable/ic_internet"
-                        android:gravity="center"
-                        android:padding="@dimen/margin16dp"
-                        android:text="@string/internet"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:visibility="gone"/>
-
-                </LinearLayout>
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/tv_language"
+                    android:id="@+id/tv_feed_back"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin4dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/margin4dp"
+                    android:layout_marginRight="@dimen/margin4dp"
+                    android:layout_weight="1"
                     android:background="@color/blue"
-                    android:drawableEnd="@drawable/ic_menu_down"
-                    android:drawableLeft="@drawable/ic_translet"
-                    android:drawablePadding="@dimen/margin8dp"
-                    android:drawableRight="@drawable/ic_menu_down"
-                    android:drawableStart="@drawable/ic_translet"
+                    android:drawableLeft="@drawable/ic_feedback"
+                    android:drawableStart="@drawable/ic_feedback"
+                    android:gravity="center"
                     android:padding="@dimen/margin16dp"
-                    android:text="@string/english"
+                    android:text="@string/feedback"
+                    android:textColor="@android:color/white"
                     android:textSize="16sp"
-                    android:theme="@style/SpinnerItemStyle"
                     />
 
+                <TextView
+                    android:id="@+id/tv_check_out"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin4dp"
+                    android:layout_marginStart="@dimen/margin4dp"
+                    android:layout_weight="1"
+                    android:background="@color/blue"
+                    android:drawableLeft="@drawable/ic_alarm"
+                    android:drawableStart="@drawable/ic_alarm"
+                    android:gravity="center"
+                    android:padding="@dimen/margin16dp"
+                    android:text="@string/check_out"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    />
+
+
             </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="1sp"/>
+
+                <LinearLayout
+                    android:id="@+id/ll2_buttons"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/margin4dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_buttons">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_alarm"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="@dimen/margin4dp"
+                            android:layout_marginRight="@dimen/margin4dp"
+                            android:layout_weight="1"
+                            android:background="@color/blue"
+                            android:drawableLeft="@drawable/ic_alarm"
+                            android:drawableStart="@drawable/ic_alarm"
+                            android:gravity="center"
+                            android:padding="@dimen/margin16dp"
+                            android:text="@string/alarm_clock"
+                            android:textColor="@android:color/white"
+                            android:textSize="16sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_collect_tray"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/margin4dp"
+                            android:layout_marginStart="@dimen/margin4dp"
+                            android:layout_weight="1"
+                            android:background="@color/blue"
+                            android:drawableLeft="@drawable/ic_delete"
+                            android:drawableStart="@drawable/ic_delete"
+                            android:gravity="center"
+                            android:padding="@dimen/margin16dp"
+                            android:text="@string/collect_tray"
+                            android:textColor="@android:color/white"
+                            android:textSize="16sp"
+                            />
+                        <TextView
+                            android:id="@+id/tv_internet"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/margin4dp"
+                            android:layout_marginStart="@dimen/margin4dp"
+                            android:layout_weight="1"
+                            android:background="@color/blue"
+                            android:drawableLeft="@drawable/ic_internet"
+                            android:drawableStart="@drawable/ic_internet"
+                            android:gravity="center"
+                            android:padding="@dimen/margin16dp"
+                            android:text="@string/internet"
+                            android:textColor="@android:color/white"
+                            android:textSize="16sp"
+                            android:visibility="gone"/>
+
+
+                    </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/tv_language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin4dp"
+                android:background="@color/blue"
+                android:drawableEnd="@drawable/ic_menu_down"
+                android:drawableLeft="@drawable/ic_translet"
+                android:drawablePadding="@dimen/margin8dp"
+                android:drawableRight="@drawable/ic_menu_down"
+                android:drawableStart="@drawable/ic_translet"
+                android:padding="@dimen/margin16dp"
+                android:text="@string/english"
+                android:textSize="16sp"
+                android:theme="@style/SpinnerItemStyle"
+                />
+
+
+        </LinearLayout>
 
         </LinearLayout>
 
 
     </LinearLayout>
 
+</LinearLayout>
 </LinearLayout>

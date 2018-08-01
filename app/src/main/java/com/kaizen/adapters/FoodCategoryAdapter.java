@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kaizen.R;
-
 import com.kaizen.listeners.ISetOnFoodChildClickListener;
 import com.kaizen.models.Category;
 import com.kaizen.models.FoodCategory;

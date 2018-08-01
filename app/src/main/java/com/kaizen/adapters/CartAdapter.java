@@ -1,6 +1,5 @@
 package com.kaizen.adapters;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,17 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.kaizen.R;
 import com.kaizen.models.FoodItem;
-import com.kaizen.models.RequestResponse;
-import com.kaizen.models.User;
 import com.kaizen.reterofit.APIUrls;
-import com.kaizen.reterofit.RetrofitInstance;
-import com.kaizen.reterofit.RetrofitService;
-import com.kaizen.utils.PreferenceUtil;
-import com.kaizen.utils.ToastUtil;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
     private Context context;

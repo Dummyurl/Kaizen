@@ -38,7 +38,7 @@
     <string name="add_to_cart">Add to Cart</string>
     <string name="add_to_cart_arabic">أضف إلى السلة</string>
     <string name="unable_to_add_to_cart">Unable to add item to cart</string>
-    <string name="item_add_to_cart">Item added to cart</string>
+    <string name="item_add_to_cart">Add Item to Foodcart</string>
     <string name="_1">1</string>
     <string name="no_items_available_arabic">لا توجد عناصر متاحة</string>
     <string name="no_items_available">No items available</string>
@@ -65,7 +65,7 @@
     <string name="service_time">Service Time : %s</string>
     <string name="service_time_arabic">وقت الخدمة : %s</string>
     <string name="sr">(SR %s)</string>
-    <string name="reservation">Send Request</string>
+    <string name="reservation">Reservation</string>
     <string name="french">French</string>
     <string name="urdu">Urdu</string>
     <string name="turkish">Turkish</string>

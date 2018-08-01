@@ -31,14 +31,16 @@ public abstract class CommonRecyclerAdapter<T> extends RecyclerView.Adapter<Recy
         dataSet = new ArrayList<>();
     }
 
-    public CommonRecyclerAdapter(RecyclerView recyclerView, @NonNull OnLoadMoreListener onLoadMoreListener) {
+    public CommonRecyclerAdapter(RecyclerView recyclerView, @NonNull OnLoadMoreListener onLoadMoreListener)
+    {
         dataSet = new ArrayList<>();
         this.onLoadMoreListener = onLoadMoreListener;
         this.recyclerView = recyclerView;
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    {
         RecyclerView.ViewHolder viewHolder;
         if (viewType == ITEM_VIEW_TYPE_PROGRESS_FOOTER) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_progress_bar, parent, false);

@@ -111,11 +111,22 @@ public class ShopSubCategoryAdapter extends CommonRecyclerAdapter<ShopSubCategor
         }
 
         @Override
-        public void onClick(View v) {
-            ShopSubCategory subcategory = getItem(getAdapterPosition());
-            tv_selected = tv_sub_category;
-            selectedShopCategory = subcategory;
-            showRecyclerView(subcategory);
+        public void onClick(View v)
+        {
+            if (rv_child_category.getVisibility() == View.GONE)
+            {
+                ShopSubCategory subcategory = getItem(getAdapterPosition());
+                tv_selected = tv_sub_category;
+                selectedShopCategory = subcategory;
+                showRecyclerView(subcategory);
+                iSetOnChildClickListener.onSubCategoryClick(shopCategory);
+            }
+            else
+            {
+                tv_selected = null;
+                selectedShopCategory = null;
+                rv_child_category.setVisibility(View.GONE);
+            }
         }
     }
 }

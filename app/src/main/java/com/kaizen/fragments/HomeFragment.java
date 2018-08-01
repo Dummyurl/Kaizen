@@ -10,8 +10,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -54,6 +56,8 @@ import com.kaizen.models.Banner;
 import com.kaizen.models.BannerResponse;
 import com.kaizen.models.Category;
 import com.kaizen.models.ListChildCategory;
+import com.kaizen.models.NotificationResponse;
+import com.kaizen.models.Notifications;
 import com.kaizen.models.RequestResponse;
 import com.kaizen.models.User;
 import com.kaizen.reterofit.APIUrls;
@@ -96,6 +100,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
     private GoogleApiClient googleApiClient;
     private RetrofitService service;
     private Category category;
+    private Notifications notifications;
     private List<String> prayerTimes, prayerNames;
     private ProgressDialog progressDialog;
 
@@ -115,6 +120,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
 
         String value = getArguments().getString(CATEGORY);
         category = new Gson().fromJson(value, Category.class);
+        notifications = new Gson().fromJson(value, Notifications.class);
     }
 
     @Nullable
@@ -274,19 +280,33 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
 
         setupAutoPager();
 
+        service = RetrofitInstance.createService(RetrofitService.class);
+        service.notification(PreferenceUtil.getLanguage(getContext()), notifications.getId()).enqueue(new Callback<NotificationResponse>() {
+            @Override
+            public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> response) {
+                if (response.body() != null && response.isSuccessful()) {
+                    List<NotificationResponse> listNotification = new ArrayList<>();
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NotificationResponse> call, Throwable t) {
+                ToastUtil.showError(getActivity(), R.string.something_went_wrong);
+            }
+        });
+
+        Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.CATEGORY_IMAGE_URL + category.getCategory_image()).into(iv_category);
+
+        setupAutoPager();
+
         final TextView tv_language = view.findViewById(R.id.tv_language);
 
-        if (PreferenceUtil.getLanguage(getContext()) == 0) {
+        if (PreferenceUtil.getLanguage(getContext()) == 1) {
             tv_language.setText(R.string.english);
-        } else if(PreferenceUtil.getLanguage(getContext()) == 1){
+        } else {
             tv_language.setText(R.string.arabic);
-        } else if(PreferenceUtil.getLanguage(getContext()) == 2){
-            tv_language.setText(R.string.french);
-        } else if(PreferenceUtil.getLanguage(getContext()) == 3){
-            tv_language.setText(R.string.urdu);
-        }else
-        {
-            tv_language.setText(R.string.turkish);
         }
 
 
@@ -296,10 +316,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
 
                 PopupMenu menu = new PopupMenu(getContext(), v);
                 menu.getMenu().add(0, 1478, 0, R.string.english);
-                menu.getMenu().add(0, 1479, 1, R.string.arabic);
-                menu.getMenu().add(0, 1480, 2, R.string.french);
-                menu.getMenu().add(0, 1481, 3, R.string.urdu);
-                menu.getMenu().add(0, 1482, 4, R.string.turkish);
+                menu.getMenu().add(0, 1479, 0, R.string.arabic);
 
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -314,25 +331,11 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
 
                                 PreferenceUtil.setLanguage(getContext(), 1);
                                 tv_language.setText(R.string.english);
-                            } else if(item.getItemId() == 1479)  {
+                            } else {
                                 PreferenceUtil.setLanguage(getContext(), 2);
+
                                 tv_language.setText(R.string.arabic);
                                 language = "ar";
-                            }
-                            else if(item.getItemId() == 1480)  {
-                                PreferenceUtil.setLanguage(getContext(), 3);
-                                tv_language.setText(R.string.french);
-                                language = "fr";
-                            }
-                            else if(item.getItemId() == 1481)  {
-                                PreferenceUtil.setLanguage(getContext(), 4);
-                                tv_language.setText(R.string.urdu);
-                                language = "ur";
-                            }
-                            else  {
-                                PreferenceUtil.setLanguage(getContext(), 5);
-                                tv_language.setText(R.string.turkish);
-                                language = "tr";
                             }
 
 
@@ -855,6 +858,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
             });
         }
     }
+
 
     private int getItem(int i) {
         return view_pager.getCurrentItem() + i;

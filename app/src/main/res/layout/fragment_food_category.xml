@@ -39,12 +39,11 @@
             android:orientation="vertical">
 
 
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_sub_category"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_height="900dp"
+                android:layout_weight="1" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,15 +55,15 @@
                     android:id="@+id/tv_service_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin4dp"
                     android:layout_marginBottom="@dimen/margin4dp"
+                    android:layout_marginTop="@dimen/margin4dp"
                     android:background="@color/blue"
-                    android:textColor="@android:color/white"
                     android:drawableLeft="@drawable/ic_stove"
                     android:drawablePadding="@dimen/margin8dp"
                     android:drawableStart="@drawable/ic_stove"
                     android:padding="@dimen/margin16dp"
-                    android:textSize="16sp"/>
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
 
 
                 <LinearLayout

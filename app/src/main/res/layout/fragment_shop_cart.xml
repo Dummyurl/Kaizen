@@ -29,21 +29,47 @@
 
     </LinearLayout>
 
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/rl_cart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="122dp"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
         android:background="@color/blue"
         android:paddingBottom="@dimen/margin4dp"
         android:paddingLeft="@dimen/margin16dp"
         android:paddingRight="@dimen/margin16dp"
-        android:paddingTop="@dimen/margin4dp">
+        android:paddingTop="@dimen/margin4dp"
+        android:layout_alignParentLeft="true">
+
+        <EditText
+            android:id="@+id/add_on"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:hint="please specify "
+
+            android:textSize="@dimen/margin24dp" />
+
 
         <TextView
             android:id="@+id/tv_count"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="25dp"
+            android:layout_marginStart="24dp"
             android:background="@drawable/ic_capsule"
             android:paddingBottom="@dimen/margin8dp"
             android:paddingLeft="32dp"
@@ -51,13 +77,15 @@
             android:paddingTop="@dimen/margin8dp"
             android:textColor="@android:color/white"
             android:textSize="16sp"
-            tools:text="Count 10" />
+            tools:text="Count 10"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="24dp" />
 
         <TextView
             android:id="@+id/tv_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_alignTop="@+id/tv_count"
             android:layout_centerHorizontal="true"
             android:background="@drawable/ic_capsule"
             android:paddingBottom="@dimen/margin8dp"
@@ -73,7 +101,7 @@
             android:layout_width="187dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv_count"
             android:background="@drawable/ic_capsule"
             android:paddingBottom="@dimen/margin8dp"
             android:paddingLeft="32dp"
@@ -82,7 +110,8 @@
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold"
-            tools:text="Count 10" />
+            tools:text="Count 10"
+            android:layout_alignParentRight="true" />
 
     </RelativeLayout>
 </RelativeLayout>

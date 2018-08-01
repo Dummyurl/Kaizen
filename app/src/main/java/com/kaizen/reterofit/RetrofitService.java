@@ -9,6 +9,7 @@ import com.kaizen.models.FoodItemListResponse;
 import com.kaizen.models.FoodItemResponse;
 import com.kaizen.models.FoodSubcategoryResponse;
 import com.kaizen.models.ListChildCategoryResponse;
+import com.kaizen.models.NotificationResponse;
 import com.kaizen.models.ReportsResponse;
 import com.kaizen.models.RequestResponse;
 import com.kaizen.models.SettingsResponse;
@@ -19,6 +20,7 @@ import com.kaizen.models.ShopItemResponse;
 import com.kaizen.models.ShopOrder;
 import com.kaizen.models.ShopSubCategoryResponse;
 import com.kaizen.models.SubcategoryResponse;
+import com.kaizen.models.User;
 import com.kaizen.models.UserResponse;
 
 import retrofit2.Call;
@@ -141,6 +143,10 @@ public interface RetrofitService {
     @POST(APIUrls.SHOP_ORDER_ITEM)
     @FormUrlEncoded
     Call<ShopOrder> shoporderItem(@Field("languageid") int languageId, @Query("roomno") String roomno, @Field("data") String items);
+
+    @POST(APIUrls.NOTIFICATION_URL)
+    @FormUrlEncoded
+    Call<NotificationResponse> notification(@Field("languageid") int languageId, @Query("url") String status);
 
 
 

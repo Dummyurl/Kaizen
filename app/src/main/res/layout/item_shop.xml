@@ -89,8 +89,8 @@
 
             <ImageView
                 android:id="@+id/iv_add"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:src="@drawable/ic_plus" />
 
             <TextView
@@ -100,12 +100,12 @@
                 android:layout_marginLeft="@dimen/margin16dp"
                 android:layout_marginRight="@dimen/margin16dp"
                 android:text="@string/_1"
-                android:textSize="18sp" />
+                android:textSize="22sp" />
 
             <ImageView
                 android:id="@+id/iv_remove"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:src="@drawable/ic_minus" />
         </LinearLayout>
 

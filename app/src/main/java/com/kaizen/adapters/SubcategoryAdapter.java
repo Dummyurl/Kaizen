@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kaizen.R;
+import com.kaizen.listeners.ISetOnCategoryClickListener;
 import com.kaizen.listeners.ISetOnChildClickListener;
 import com.kaizen.models.Category;
 import com.kaizen.models.ChildCategoryResponse;
@@ -27,6 +28,7 @@ import retrofit2.Response;
 public class SubcategoryAdapter extends CommonRecyclerAdapter<Subcategory> {
     private Context context;
     private ISetOnChildClickListener iSetOnChildClickListener;
+
     private Subcategory selectedSubcategory;
     private TextView tv_selected;
     private Category category;
@@ -113,16 +115,18 @@ public class SubcategoryAdapter extends CommonRecyclerAdapter<Subcategory> {
 
         @Override
         public void onClick(View v) {
+            if(tv_sub_category.getVisibility() == View.VISIBLE)
+            {
             Subcategory subcategory = getItem(getAdapterPosition());
             tv_selected = tv_sub_category;
             selectedSubcategory = subcategory;
             showRecyclerView(subcategory);
-            if(tv_sub_category.getVisibility() == View.VISIBLE)
-            {
-                rv_child_category.setVisibility(View.VISIBLE);
+
             }
             else
             {
+                tv_selected = null;
+                selectedSubcategory = null;
                 rv_child_category.setVisibility(View.GONE);
             }
         }

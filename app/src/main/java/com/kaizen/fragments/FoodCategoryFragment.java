@@ -1,57 +1,42 @@
 package com.kaizen.fragments;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
-import com.kaizen.activities.MainActivity;
 import com.kaizen.R;
-import com.kaizen.adapters.CartAdapter;
 import com.kaizen.adapters.CartFoodAdapter;
 import com.kaizen.adapters.ChildCategoryPager;
 import com.kaizen.adapters.FoodCategoryAdapter;
-import com.kaizen.adapters.FoodItemPager;
 import com.kaizen.listeners.DateTimeSetListener;
 import com.kaizen.listeners.ISetOnFoodChildClickListener;
 import com.kaizen.models.Banner;
 import com.kaizen.models.BannerResponse;
 import com.kaizen.models.Category;
-import com.kaizen.models.ChildCategoryResponse;
 import com.kaizen.models.FoodCategory;
 import com.kaizen.models.FoodCategoryResponse;
 import com.kaizen.models.FoodItem;
 import com.kaizen.models.FoodItemListResponse;
-import com.kaizen.models.FoodItemResponse;
-import com.kaizen.models.FoodSubcategory;
 import com.kaizen.models.ListChildCategory;
-import com.kaizen.models.ListChildCategoryResponse;
 import com.kaizen.models.RequestResponse;
 import com.kaizen.models.Settings;
 import com.kaizen.models.SettingsResponse;
 import com.kaizen.models.SubcategoryResponse;
 import com.kaizen.models.User;
-import com.kaizen.reterofit.APIUrls;
 import com.kaizen.reterofit.RetrofitInstance;
 import com.kaizen.reterofit.RetrofitService;
 import com.kaizen.utils.DateTimeUtil;
@@ -60,12 +45,11 @@ import com.kaizen.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import android.widget.RelativeLayout;
 
 public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildClickListener, View.OnClickListener {
 
@@ -76,7 +60,9 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     private Category category;
     private String subCatId, childId;
     CartFoodAdapter cartFoodAdapter;
+
     RecyclerView rv_foodcata;
+    private RelativeLayout rl_selected;
 
     public static FoodCategoryFragment newInstance(Category category) {
         FoodCategoryFragment categoryFragment = new FoodCategoryFragment();
@@ -141,6 +127,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
 
                     if (getActivity() != null && !getActivity().isFinishing()) {
                         ChildCategoryPager childCategoryPager = new ChildCategoryPager(getChildFragmentManager(), listChildCategorys);
+                        rv_foodcata.setAdapter(cartFoodAdapter);
 
                     }
                 } else {

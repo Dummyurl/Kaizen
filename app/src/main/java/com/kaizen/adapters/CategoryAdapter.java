@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.kaizen.R;
 import com.kaizen.listeners.ISetOnCategoryClickListener;
 import com.kaizen.models.Category;
+import com.kaizen.models.FoodSubcategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +84,7 @@ public class CategoryAdapter extends CommonRecyclerAdapter<Category> {
 
         @Override
         public void onClick(View v) {
+
             Category category = getItem(getAdapterPosition());
             iSetOnCategoryClickListener.onCategoryClick(category);
 

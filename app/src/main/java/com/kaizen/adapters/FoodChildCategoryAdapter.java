@@ -15,7 +15,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.kaizen.R;
 import com.kaizen.listeners.ISetOnFoodChildClickListener;
-import com.kaizen.models.Category;
 import com.kaizen.models.FoodCategory;
 import com.kaizen.models.FoodItem;
 import com.kaizen.models.FoodSubcategory;

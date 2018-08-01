@@ -5,16 +5,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.kaizen.R;
+import com.kaizen.activities.BaseActivity;
 import com.kaizen.models.FoodItem;
 import com.kaizen.models.ShopItem;
 import com.kaizen.reterofit.APIUrls;
@@ -22,12 +25,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class CartShopAdapter extends CommonRecyclerAdapter<ShopItem> {
+public class CartShopAdapter extends CommonRecyclerAdapter<ShopItem>  {
 
     private Context context;
 
     @Override
-    public CartShopViewHolder onCreateBasicItemViewHolder(ViewGroup parent, int viewType) {
+    public CartShopViewHolder onCreateBasicItemViewHolder(ViewGroup parent, int viewType)
+    {
         context = parent.getContext();
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_food, parent, false);
@@ -35,7 +39,8 @@ public class CartShopAdapter extends CommonRecyclerAdapter<ShopItem> {
     }
 
     @Override
-    public void onBindBasicItemView(RecyclerView.ViewHolder holder, int position) {
+    public void onBindBasicItemView(RecyclerView.ViewHolder holder, int position)
+    {
         CartShopViewHolder viewHolder = (CartShopViewHolder) holder;
         viewHolder.bindData(position);
     }
@@ -45,7 +50,8 @@ public class CartShopAdapter extends CommonRecyclerAdapter<ShopItem> {
         TextView tv_food1, tv_content1, tv_price1, tv_discount_price1;
         ImageView iv_food1;
 
-        public CartShopViewHolder(View view) {
+        public CartShopViewHolder(View view)
+        {
             super(view);
             tv_food1 = view.findViewById(R.id.tv_food1);
             tv_content1 = view.findViewById(R.id.tv_content);
@@ -56,7 +62,8 @@ public class CartShopAdapter extends CommonRecyclerAdapter<ShopItem> {
             view.findViewById(R.id.iv_remove1).setOnClickListener(this);
         }
 
-        public void bindData(int position) {
+        public void bindData(int position)
+        {
             ShopItem shopItem = getItem(position);
 
             tv_food1.setText(shopItem.getAliasName());
@@ -75,39 +82,31 @@ public class CartShopAdapter extends CommonRecyclerAdapter<ShopItem> {
         }
 
         @Override
-        public void onClick(View view) {
+        public void onClick(View view)
+        {
             String value = tv_content1.getText().toString();
             final int position = getAdapterPosition();
             final int content = Integer.parseInt(value);
             final ShopItem shopItem = getItem(position);
 
-            switch (view.getId()) {
+            switch (view.getId())
+            {
 
                 case R.id.iv_add1:
                     int increment = content + 1;
                     tv_content1.setText(String.valueOf(increment));
                     shopItem.setQuantity(increment);
                     shopItem.save();
+                    Toast toast= Toast.makeText(context,
+                            "Item Added To Shop Cart", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    toast.show();
                     break;
                 case R.id.iv_remove1:
                     int decrement = content - 1;
 
-                    if (decrement == 0) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setMessage(R.string.remove_from_cart);
-                        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                shopItem.delete();
-                                removeItem(position);
-                                dialog.dismiss();
-                            }
-                        }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }).create().show();
+                    if (decrement == -1) {
+                        Toast.makeText(context, "Please click + to add item to Shopcart", Toast.LENGTH_SHORT).show();
                     } else {
                         tv_content1.setText(String.valueOf(decrement));
                         shopItem.setQuantity(decrement);

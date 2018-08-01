@@ -1,10 +1,7 @@
 package com.kaizen.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,10 +15,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.kaizen.R;
-import com.kaizen.adapters.CartAdapter;
 import com.kaizen.adapters.ShopCartAdapter;
-import com.kaizen.models.FoodItem;
-import com.kaizen.models.RequestResponse;
 import com.kaizen.models.ShopItem;
 import com.kaizen.models.ShopOrder;
 import com.kaizen.models.User;
@@ -33,7 +27,6 @@ import com.kaizen.utils.ToastUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.List;
 

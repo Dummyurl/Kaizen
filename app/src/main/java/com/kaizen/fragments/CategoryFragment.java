@@ -1,7 +1,12 @@
 package com.kaizen.fragments;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -12,7 +17,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -22,6 +29,7 @@ import com.kaizen.activities.MainActivity;
 import com.kaizen.R;
 import com.kaizen.adapters.ChildCategoryPager;
 import com.kaizen.adapters.SubcategoryAdapter;
+import com.kaizen.listeners.DateTimeSetListener;
 import com.kaizen.listeners.ISetOnChildClickListener;
 import com.kaizen.models.Banner;
 import com.kaizen.models.BannerResponse;
@@ -29,11 +37,14 @@ import com.kaizen.models.Category;
 import com.kaizen.models.ChildCategory;
 import com.kaizen.models.ListChildCategory;
 import com.kaizen.models.ListChildCategoryResponse;
+import com.kaizen.models.RequestResponse;
 import com.kaizen.models.Subcategory;
 import com.kaizen.models.SubcategoryResponse;
+import com.kaizen.models.User;
 import com.kaizen.reterofit.APIUrls;
 import com.kaizen.reterofit.RetrofitInstance;
 import com.kaizen.reterofit.RetrofitService;
+import com.kaizen.utils.DateTimeUtil;
 import com.kaizen.utils.PreferenceUtil;
 import com.kaizen.utils.ToastUtil;
 
@@ -46,7 +57,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CategoryFragment extends Fragment implements ISetOnChildClickListener {
+public class CategoryFragment extends Fragment implements ISetOnChildClickListener, View.OnClickListener {
 
     private static final String CATEGORY = "CATEGORY";
     private ImageView iv_category;
@@ -143,6 +154,8 @@ public class CategoryFragment extends Fragment implements ISetOnChildClickListen
                 ToastUtil.showError(getActivity(), R.string.something_went_wrong);
             }
         });
+        TextView tv_collect_tray = view.findViewById(R.id.tv_collect_tray);
+        tv_collect_tray.setOnClickListener(this);
 
         Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.CATEGORY_IMAGE_URL + category.getCategory_image()).into(iv_category);
 
@@ -180,6 +193,7 @@ public class CategoryFragment extends Fragment implements ISetOnChildClickListen
             }
         });
     }
+
 
     @Override
     public void onChildCategoryClick(Category category, Subcategory subcategory, final ChildCategory childCategory) {
@@ -249,5 +263,80 @@ public class CategoryFragment extends Fragment implements ISetOnChildClickListen
     public void openMenu(String subCatId, String childId) {
         this.subCatId = subCatId;
         this.childId = childId;
+    }
+
+    @Override
+    public void onClick(View v) {
+        final User user = PreferenceUtil.getUser(getContext());
+
+        switch (v.getId()) {
+
+            case R.id.tv_collect_tray:
+                collectTray(user);
+                break;
+        }
+    }
+
+    private void collectTray(final User user) {
+        View collectTrayView = getLayoutInflater().inflate(R.layout.dialog_collect_tray, null);
+        final EditText et_name = collectTrayView.findViewById(R.id.et_name);
+        final EditText et_time = collectTrayView.findViewById(R.id.et_time);
+
+        et_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DateTimeUtil().datePicker(getContext(), new DateTimeSetListener() {
+                    @Override
+                    public void onDateTimeSet(String date) {
+                        et_time.setText(date);
+                    }
+                });
+            }
+        });
+
+        AlertDialog.Builder collectTrayBuilder = new AlertDialog.Builder(getContext())
+                .setTitle(R.string.collect_tray)
+                .setView(collectTrayView)
+                .setPositiveButton(R.string.submit, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, int which) {
+                        String name = et_name.getText().toString().trim();
+                        String timing = et_time.getText().toString().trim();
+
+                        if (name.isEmpty()) {
+                            ToastUtil.showError(getActivity(), R.string.enter_name);
+                        } else if (timing.isEmpty()) {
+                            ToastUtil.showError(getActivity(), R.string.enter_date_time);
+                        } else {
+                            service.collectTray(PreferenceUtil.getLanguage(getContext()), user.getRoomno(), name, timing).enqueue(new Callback<RequestResponse>() {
+                                @Override
+                                public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
+                                    if (response.isSuccessful() && response.body() != null) {
+                                        RequestResponse requestResponse = response.body();
+
+                                        if (requestResponse.isResponce()) {
+                                            ToastUtil.showSuccess(getActivity(), requestResponse.getMessage());
+                                            dialog.dismiss();
+                                        } else {
+                                            ToastUtil.showError(getActivity(), requestResponse.getError());
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<RequestResponse> call, Throwable t) {
+
+                                }
+                            });
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        collectTrayBuilder.create().show();
     }
 }

@@ -3,13 +3,14 @@ package com.kaizen.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -17,9 +18,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.kaizen.R;
 import com.kaizen.models.FoodItem;
 import com.kaizen.reterofit.APIUrls;
-import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 public class CartFoodAdapter extends CommonRecyclerAdapter<FoodItem> {
 
@@ -86,27 +84,17 @@ public class CartFoodAdapter extends CommonRecyclerAdapter<FoodItem> {
                     int increment = content + 1;
                     tv_content1.setText(String.valueOf(increment));
                     foodItem.setQuantity(increment);
+                    Toast toast= Toast.makeText(context,
+                            "Item Added To Shop Cart", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    toast.show();
                     foodItem.save();
                     break;
                 case R.id.iv_remove1:
                     int decrement = content - 1;
 
-                    if (decrement == 0) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setMessage(R.string.remove_from_cart);
-                        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                foodItem.delete();
-                                removeItem(position);
-                                dialog.dismiss();
-                            }
-                        }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }).create().show();
+                    if (decrement == -1) {
+                        Toast.makeText(context, "Please click + to add item to Shopcart", Toast.LENGTH_SHORT).show();
                     } else {
                         tv_content1.setText(String.valueOf(decrement));
                         foodItem.setQuantity(decrement);

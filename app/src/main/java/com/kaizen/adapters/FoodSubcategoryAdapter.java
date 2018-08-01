@@ -2,27 +2,18 @@ package com.kaizen.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.kaizen.R;
 import com.kaizen.listeners.ISetOnFoodChildClickListener;
-import com.kaizen.models.Category;
 import com.kaizen.models.FoodCategory;
 import com.kaizen.models.FoodItemResponse;
 import com.kaizen.models.FoodSubcategory;
-import com.kaizen.models.FoodSubcategoryResponse;
-import com.kaizen.reterofit.APIUrls;
 import com.kaizen.reterofit.RetrofitInstance;
 import com.kaizen.reterofit.RetrofitService;
 import com.kaizen.utils.PreferenceUtil;
@@ -118,10 +109,21 @@ public class FoodSubcategoryAdapter extends CommonRecyclerAdapter<FoodSubcategor
 
         @Override
         public void onClick(View v) {
-            FoodSubcategory subcategory = getItem(getAdapterPosition());
-            tv_selected = tv_sub_category;
-            selectedFoodCategory = subcategory;
-            showRecyclerView(subcategory);
+
+
+
+
+            if (rv_child_category.getVisibility() == View.GONE) {
+                FoodSubcategory subcategory = getItem(getAdapterPosition());
+                tv_selected = tv_sub_category;
+                selectedFoodCategory = subcategory;
+                showRecyclerView(subcategory);
+                iSetOnChildClickListener.onSubCategoryClick(foodCategory);
+            } else {
+                tv_selected = null;
+                selectedFoodCategory = null;
+                rv_child_category.setVisibility(View.GONE);
+            }
         }
     }
 }
