@@ -146,7 +146,7 @@ public interface RetrofitService {
 
     @POST(APIUrls.NOTIFICATION_URL)
     @FormUrlEncoded
-    Call<NotificationResponse> notification(@Field("languageid") int languageId, @Query("url") String status);
+    Call<NotificationResponse> notification(@Field("languageid") int languageId, @Query("url") String url);
 
 
 

@@ -115,13 +115,13 @@ public class SubcategoryAdapter extends CommonRecyclerAdapter<Subcategory> {
 
         @Override
         public void onClick(View v) {
-            if(tv_sub_category.getVisibility() == View.VISIBLE)
+            if(rv_child_category.getVisibility() == View.GONE)
             {
             Subcategory subcategory = getItem(getAdapterPosition());
             tv_selected = tv_sub_category;
             selectedSubcategory = subcategory;
             showRecyclerView(subcategory);
-
+             iSetOnChildClickListener.onChildCategoryClick(category);
             }
             else
             {

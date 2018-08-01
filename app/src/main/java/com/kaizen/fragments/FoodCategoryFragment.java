@@ -102,6 +102,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
 
+
         service = RetrofitInstance.createService(RetrofitService.class);
 
 

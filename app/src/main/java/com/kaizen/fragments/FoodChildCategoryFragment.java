@@ -62,13 +62,9 @@ public class FoodChildCategoryFragment extends Fragment {
 
         ImageView iv_child_category = view.findViewById(R.id.iv_child_category);
         RelativeLayout rl_content = view.findViewById(R.id.rl_content);
-        TextView tv_add_to_cart = view.findViewById(R.id.tv_add_to_cart);
 
-        if (PreferenceUtil.getLanguage(getContext()) == 1) {
-            tv_add_to_cart.setText(R.string.add_to_cart);
-        } else {
-            tv_add_to_cart.setText(R.string.add_to_cart_arabic);
-        }
+
+
 
         RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.drawable.ic_place_holder)
@@ -85,20 +81,6 @@ public class FoodChildCategoryFragment extends Fragment {
         }
 
 
-
-        tv_add_to_cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                foodItem.setQuantity(1);
-                long id = FoodItem.save(foodItem);
-
-                if (id == -1) {
-                    ToastUtil.showError(getActivity(), R.string.unable_to_add_to_cart);
-                } else {
-                    ToastUtil.showSuccess(getActivity(), R.string.item_add_to_cart);
-                }
-            }
-        });
 
         TextView tv_price = view.findViewById(R.id.tv_price);
         tv_price.setPaintFlags(tv_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);

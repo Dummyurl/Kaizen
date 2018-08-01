@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -103,7 +104,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
     private Notifications notifications;
     private List<String> prayerTimes, prayerNames;
     private ProgressDialog progressDialog;
-
+    private ImageView image;
     public static HomeFragment newInstance(Category category) {
         HomeFragment homeFragment = new HomeFragment();
 
@@ -141,7 +142,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
         tab_layout.setupWithViewPager(view_pager);
 
         ImageView iv_category = view.findViewById(R.id.iv_category);
-        RequestOptions requestOptions = new RequestOptions()
+        final RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.drawable.ic_place_holder)
                 .error(R.drawable.ic_place_holder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -157,6 +158,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
         iv_temperature = view.findViewById(R.id.iv_temperature);
         iv_tomorrow_temperature = view.findViewById(R.id.iv_tomorrow_temperature);
         tv_alarm = view.findViewById(R.id.tv_alarm);
+        image = view.findViewById(R.id.image);
 
         final Handler someHandler = new Handler(getActivity().getMainLooper());
         someHandler.postDelayed(new Runnable() {
@@ -280,26 +282,29 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
 
         setupAutoPager();
 
-        service = RetrofitInstance.createService(RetrofitService.class);
+        /*service = RetrofitInstance.createService(RetrofitService.class);
         service.notification(PreferenceUtil.getLanguage(getContext()), notifications.getId()).enqueue(new Callback<NotificationResponse>() {
             @Override
             public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> response) {
-                if (response.body() != null && response.isSuccessful()) {
-                    List<NotificationResponse> listNotification = new ArrayList<>();
+                AlertDialog.Builder alertadd = new AlertDialog.Builder(getContext());
+                LayoutInflater factory = LayoutInflater.from(getContext());
+                final View view = factory.inflate(R.layout.dialog_ad, null);
+                alertadd.setView(view);
+                alertadd.setNeutralButton("Welcome Kaizen", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dlg, int sumthin) {
 
+                    }
+                });
 
-                }
+                alertadd.show();
             }
 
             @Override
             public void onFailure(Call<NotificationResponse> call, Throwable t) {
                 ToastUtil.showError(getActivity(), R.string.something_went_wrong);
             }
-        });
+        });*/
 
-        Glide.with(this).setDefaultRequestOptions(requestOptions).load(APIUrls.CATEGORY_IMAGE_URL + category.getCategory_image()).into(iv_category);
-
-        setupAutoPager();
 
         final TextView tv_language = view.findViewById(R.id.tv_language);
 

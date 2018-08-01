@@ -27,7 +27,7 @@ public class ShopChildCategoryAdapter extends CommonRecyclerAdapter<ShopItem> {
     private ShopSubCategory shopItemSubcategory;
     private ShopItem selectedShopItem;
     private RequestOptions requestOptions;
-    private RelativeLayout rl_selected;
+    private RelativeLayout lr_shop;
     private String childId;
     private ShopCategory category;
 
@@ -77,7 +77,7 @@ public class ShopChildCategoryAdapter extends CommonRecyclerAdapter<ShopItem> {
             if ((shopItemSubcategory != null && shopItemSubcategory.getId().equals(shopItem.getId()) || (childId != null && childId.equals(shopItem.getId())))) {
                 iSetOnChildClickListener.onShopItemClick(shopItem);
                 rl_background.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
-                rl_selected = rl_background;
+                lr_shop = rl_background;
                 childId = null;
             }
 
@@ -86,10 +86,10 @@ public class ShopChildCategoryAdapter extends CommonRecyclerAdapter<ShopItem> {
 
         @Override
         public void onClick(View v) {
-            if (rl_selected != null) {
-                rl_selected.setBackgroundColor(ContextCompat.getColor(context, R.color.blue));
+            if (lr_shop != null) {
+                lr_shop.setBackgroundColor(ContextCompat.getColor(context, R.color.blue));
             }
-            rl_selected = rl_background;
+            lr_shop = rl_background;
 
             ShopItem shopItem = getItem(getAdapterPosition());
             iSetOnChildClickListener.onShopItemClick(shopItem);

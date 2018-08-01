@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.format.Time;
 import android.view.Window;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
@@ -80,6 +81,8 @@ public class DateTimeUtil {
             Calendar addCalendar = Calendar.getInstance();
             addCalendar.setTime(new Date());
             addCalendar.add(Calendar.DATE, 30);
+
+
 
             datePickerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());

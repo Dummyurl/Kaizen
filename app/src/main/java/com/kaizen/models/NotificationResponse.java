@@ -8,6 +8,16 @@ public class NotificationResponse {
 
     private String responce;
 
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public List<NotificationResponse> getNotifications ()
     {
         return notifications;
@@ -27,6 +37,7 @@ public class NotificationResponse {
     {
         this.responce = responce;
     }
+
 
     @Override
     public String toString()

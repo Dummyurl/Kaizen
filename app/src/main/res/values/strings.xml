@@ -73,6 +73,7 @@
     <string name="Add">Item Added to cart</string>
     <string name="alaram_clock">Alaram Clock</string>
     <string name="alarm_clock">Alarm</string>
+    <string name="select_language">Select Language</string>
 
     <string-array name="collect_tray">
         <item>Immidiate</item>

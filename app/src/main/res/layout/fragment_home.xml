@@ -373,7 +373,7 @@
                 android:drawableRight="@drawable/ic_menu_down"
                 android:drawableStart="@drawable/ic_translet"
                 android:padding="@dimen/margin16dp"
-                android:text="@string/english"
+                android:text="@string/select_language"
                 android:textSize="16sp"
                 android:theme="@style/SpinnerItemStyle"
                 />

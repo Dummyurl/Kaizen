@@ -9,6 +9,7 @@
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
+        android:id="@+id/lr_shop"
         android:layout_width="match_parent"
         android:layout_height="265dp">
 

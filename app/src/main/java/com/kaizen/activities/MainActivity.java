@@ -71,6 +71,8 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
         categoryAdapter = new CategoryAdapter(this);
         rv_category.setAdapter(categoryAdapter);
 
+
+
         service = RetrofitInstance.createService(RetrofitService.class);
         service.getCategories(PreferenceUtil.getLanguage(this)).enqueue(new Callback<CategoryResponse>() {
             @Override

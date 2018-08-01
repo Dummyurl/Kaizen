@@ -206,6 +206,11 @@ public class MoreFragment extends Fragment implements ISetOnChildClickListener {
         subCatId = null;
     }
 
+    @Override
+    public void onChildCategoryClick(Category category) {
+
+    }
+
     private void setupAutoPager() {
         final Handler handler = new Handler();
 
