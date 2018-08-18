@@ -3,6 +3,7 @@ package com.kaizen.fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,8 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
+
 import com.google.gson.Gson;
 import com.kaizen.R;
 import com.kaizen.adapters.CartFoodAdapter;
@@ -49,20 +49,18 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import android.widget.RelativeLayout;
+
 
 public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildClickListener, View.OnClickListener {
 
     private static final String CATEGORY = "CATEGORY";
 
-    private RequestOptions requestOptions;
     private RetrofitService service;
     private Category category;
     private String subCatId, childId;
     CartFoodAdapter cartFoodAdapter;
 
     RecyclerView rv_foodcata;
-    private RelativeLayout rl_selected;
 
     public static FoodCategoryFragment newInstance(Category category) {
         FoodCategoryFragment categoryFragment = new FoodCategoryFragment();
@@ -96,12 +94,6 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
         rv_foodcata.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
 
-        requestOptions = new RequestOptions()
-                .placeholder(R.drawable.ic_place_holder)
-                .error(R.drawable.ic_place_holder)
-                .diskCacheStrategy(DiskCacheStrategy.ALL);
-
-
 
         service = RetrofitInstance.createService(RetrofitService.class);
 
@@ -127,7 +119,7 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
                     }
 
                     if (getActivity() != null && !getActivity().isFinishing()) {
-                        ChildCategoryPager childCategoryPager = new ChildCategoryPager(getChildFragmentManager(), listChildCategorys);
+                     //   ChildCategoryPager childCategoryPager = new ChildCategoryPager(getChildFragmentManager(), listChildCategorys);
                         rv_foodcata.setAdapter(cartFoodAdapter);
 
                     }
@@ -235,9 +227,14 @@ public class FoodCategoryFragment extends Fragment implements ISetOnFoodChildCli
     }
 
     @Override
-    public void onFoodItemClick(FoodItem foodItem) {
+    public void onFoodItemClick(FoodItem foodItem,final int position) {
         try {
-
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    rv_foodcata.scrollToPosition(position);
+                }
+            }, 200);
 
         } catch (Exception e) {
             e.printStackTrace();

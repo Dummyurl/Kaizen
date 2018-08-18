@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -235,8 +236,14 @@ public class ShopCategoryFragment extends Fragment implements ISetOnShopChildCli
     }
 
     @Override
-    public void onShopItemClick(ShopItem shopItem) {
+    public void onShopItemClick(ShopItem shopItem,final int position) {
         try {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    rv_shopcata.scrollToPosition(position);
+                }
+            }, 200);
 
 
         } catch (Exception e) {

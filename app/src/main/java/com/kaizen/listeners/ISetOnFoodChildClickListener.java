@@ -7,5 +7,5 @@ import com.kaizen.models.FoodSubcategory;
 
 public interface ISetOnFoodChildClickListener {
     void onSubCategoryClick(FoodCategory foodCategory);
-    void onFoodItemClick(FoodItem foodItem);
+    void onFoodItemClick(FoodItem foodItem,int position);
 }

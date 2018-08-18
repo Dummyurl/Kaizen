@@ -4,26 +4,16 @@ import java.util.List;
 
 public class NotificationResponse {
 
-    private List<NotificationResponse> notifications;
+    private List<Notifications> notifications;
 
     private String responce;
 
-    private String message;
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public List<NotificationResponse> getNotifications ()
+    public List<Notifications> getNotifications ()
     {
         return notifications;
     }
 
-    public void setNotifications (List<NotificationResponse> notifications)
+    public void setNotifications (List<Notifications> notifications)
     {
         this.notifications = notifications;
     }
@@ -37,7 +27,6 @@ public class NotificationResponse {
     {
         this.responce = responce;
     }
-
 
     @Override
     public String toString()

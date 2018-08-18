@@ -75,7 +75,7 @@ public class FoodChildCategoryAdapter extends CommonRecyclerAdapter<FoodItem> {
             rl_background.setBackgroundColor(ContextCompat.getColor(context, R.color.blue));
 
             if ((foodItemSubcategory != null && foodItemSubcategory.getId().equals(foodItem.getId()) || (childId != null && childId.equals(foodItem.getId())))) {
-                iSetOnChildClickListener.onFoodItemClick(foodItem);
+                iSetOnChildClickListener.onFoodItemClick(foodItem, position);
                 rl_background.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
                 rl_selected = rl_background;
                 childId = null;
@@ -92,7 +92,7 @@ public class FoodChildCategoryAdapter extends CommonRecyclerAdapter<FoodItem> {
             rl_selected = rl_background;
 
             FoodItem foodItem = getItem(getAdapterPosition());
-            iSetOnChildClickListener.onFoodItemClick(foodItem);
+            iSetOnChildClickListener.onFoodItemClick(foodItem,getAdapterPosition());
             selectedFoodItem = foodItem;
             rl_background.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
         }

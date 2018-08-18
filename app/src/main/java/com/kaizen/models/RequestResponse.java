@@ -4,6 +4,7 @@ public class RequestResponse {
     private String message;
     private String error;
     private boolean responce;
+    private String sessionid;
 
     public String getMessage() {
         return message;
@@ -27,5 +28,14 @@ public class RequestResponse {
 
     public void setResponce(boolean responce) {
         this.responce = responce;
+    }
+    public String getSessionid ()
+    {
+        return sessionid;
+    }
+
+    public void setSessionid (String sessionid)
+    {
+        this.sessionid = sessionid;
     }
 }

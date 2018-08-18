@@ -73,6 +73,10 @@ public class APIUrls {
 
     public static final String NOTIFICATION_IMAGE_URL = BASE_URL + "administrator/uploads/notify/";
 
+    public static final String DESCRIPTION_URL = BASE_URL + "index.php/api/getAddescription?description";
+
+
+
 
 
 }

@@ -40,6 +40,9 @@
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:background="@color/colorAccent" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tv_date"
@@ -51,6 +54,21 @@
             android:textColor="@android:color/white"
             android:textSize="18sp"
             tools:text="Monday, 05 May 2018" />
+
+            <TextView
+                android:id="@+id/tv_room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="42dp"
+                android:padding="@dimen/margin8dp"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                tools:text="100"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="42dp" />
+        </RelativeLayout>
 
         <FrameLayout
             android:id="@+id/frame_layout"

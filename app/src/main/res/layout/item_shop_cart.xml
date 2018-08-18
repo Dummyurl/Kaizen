@@ -10,12 +10,12 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="265dp">
+        android:layout_height="300dp">
 
         <ImageView
             android:id="@+id/iv_food"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_place_holder" />
 

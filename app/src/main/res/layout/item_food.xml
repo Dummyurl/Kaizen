@@ -12,12 +12,12 @@
     <RelativeLayout
         android:id="@+id/rl_selected"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="282dp">
 
         <ImageView
             android:id="@+id/iv_food"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_place_holder" />
 
@@ -47,37 +47,46 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/rl_food"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="@dimen/margin4dp"
-            android:layout_alignParentLeft="true">
+            android:padding="@dimen/margin4dp">
 
-            <TextView
-                android:id="@+id/tv_price1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="18sp"
-                tools:text="10rs" />
+            <RelativeLayout
+                android:layout_width="319dp"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_discount_price1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin4dp"
-                android:layout_marginStart="@dimen/margin4dp"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                tools:text="20rs" />
+                <TextView
+                    android:id="@+id/tv_price1"
+                    android:layout_width="56dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="18sp"
+                    tools:text="10rs" />
+
+                <TextView
+                    android:id="@+id/tv_discount_price1"
+                    android:layout_width="58dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="72dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    tools:text="20rs" />
+            </RelativeLayout>
 
         </LinearLayout>
 
@@ -85,17 +94,16 @@
             android:id="@+id/ll_content1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="225dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/rl_food"
+            android:layout_marginEnd="49dp"
             android:paddingBottom="@dimen/margin8dp">
 
             <ImageView
                 android:id="@+id/iv_add1"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/ic_plus"
-                />
+                android:src="@drawable/ic_plus" />
 
             <TextView
                 android:id="@+id/tv_content"
@@ -110,9 +118,11 @@
                 android:id="@+id/iv_remove1"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/ic_minus"
-               />
+                android:src="@drawable/ic_minus" />
+
+
         </LinearLayout>
+
 
     </RelativeLayout>
 

@@ -75,7 +75,7 @@ public class ShopChildCategoryAdapter extends CommonRecyclerAdapter<ShopItem> {
             rl_background.setBackgroundColor(ContextCompat.getColor(context, R.color.blue));
 
             if ((shopItemSubcategory != null && shopItemSubcategory.getId().equals(shopItem.getId()) || (childId != null && childId.equals(shopItem.getId())))) {
-                iSetOnChildClickListener.onShopItemClick(shopItem);
+                iSetOnChildClickListener.onShopItemClick(shopItem, position);
                 rl_background.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
                 lr_shop = rl_background;
                 childId = null;
@@ -92,7 +92,7 @@ public class ShopChildCategoryAdapter extends CommonRecyclerAdapter<ShopItem> {
             lr_shop = rl_background;
 
             ShopItem shopItem = getItem(getAdapterPosition());
-            iSetOnChildClickListener.onShopItemClick(shopItem);
+            iSetOnChildClickListener.onShopItemClick(shopItem, getAdapterPosition());
             selectedShopItem = shopItem;
             rl_background.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
         }

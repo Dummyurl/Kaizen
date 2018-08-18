@@ -9,7 +9,7 @@
     <string name="more">More</string>
     <string name="cart">Cart</string>
     <string name="something_went_wrong">Something went wrong!</string>
-    <string name="room_number">Room Number</string>
+    <string name="room_number">101</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="room_number_empty">Enter Room Number</string>
@@ -71,9 +71,10 @@
     <string name="turkish">Turkish</string>
     <string name="book_sallon">Booking Salon</string>
     <string name="Add">Item Added to cart</string>
-    <string name="alaram_clock">Alaram Clock</string>
     <string name="alarm_clock">Alarm</string>
+    <string name="alarm_clock_arabic">منبه</string>
     <string name="select_language">Select Language</string>
+    <string name="review">Review and Order</string>
 
     <string-array name="collect_tray">
         <item>Immidiate</item>

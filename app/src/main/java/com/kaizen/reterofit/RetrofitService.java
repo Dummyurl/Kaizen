@@ -4,6 +4,7 @@ import com.kaizen.models.ArticleResponse;
 import com.kaizen.models.BannerResponse;
 import com.kaizen.models.CategoryResponse;
 import com.kaizen.models.ChildCategoryResponse;
+import com.kaizen.models.DescriptionResponse;
 import com.kaizen.models.FoodCategoryResponse;
 import com.kaizen.models.FoodItemListResponse;
 import com.kaizen.models.FoodItemResponse;
@@ -20,7 +21,6 @@ import com.kaizen.models.ShopItemResponse;
 import com.kaizen.models.ShopOrder;
 import com.kaizen.models.ShopSubCategoryResponse;
 import com.kaizen.models.SubcategoryResponse;
-import com.kaizen.models.User;
 import com.kaizen.models.UserResponse;
 
 import retrofit2.Call;
@@ -106,7 +106,7 @@ public interface RetrofitService {
 
     @POST(APIUrls.EMERGENCY)
     @FormUrlEncoded
-    Call<RequestResponse> sendEmergency(@Field("languageid") int languageId, @Query("roomno") String roomno, @Query("name") String name, @Query("description") String description);
+    Call<RequestResponse> sendEmergency(@Field("languageid") int languageId);
 
 
     @GET(APIUrls.LOCAL_NEWS)
@@ -146,7 +146,13 @@ public interface RetrofitService {
 
     @POST(APIUrls.NOTIFICATION_URL)
     @FormUrlEncoded
-    Call<NotificationResponse> notification(@Field("languageid") int languageId, @Query("url") String url);
+    Call<NotificationResponse> notification(@Field("languageid") int languageId, @Field("message") String message);
+
+    @POST(APIUrls.SHOP_ITEM_LIST)
+    @FormUrlEncoded
+    Call<DescriptionResponse> getDescription(@Field("languageid") int languageId, @Query("cid") String cid, @Query("subid") String subid);
+
+
 
 
 

@@ -5,5 +5,5 @@ import com.kaizen.models.ShopItem;
 
 public interface ISetOnShopChildClickListerner {
     void onSubCategoryClick(ShopCategory shopCategory);
-    void onShopItemClick(ShopItem shopItem);
+    void onShopItemClick(ShopItem shopItem, int postion);
 }

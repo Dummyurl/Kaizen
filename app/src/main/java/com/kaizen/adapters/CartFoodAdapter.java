@@ -1,8 +1,12 @@
 package com.kaizen.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Paint;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,10 +20,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.kaizen.R;
+import com.kaizen.activities.MainActivity;
+import com.kaizen.fragments.CartFragment;
+import com.kaizen.fragments.FoodCategoryFragment;
+import com.kaizen.models.Category;
 import com.kaizen.models.FoodItem;
 import com.kaizen.reterofit.APIUrls;
 
 public class CartFoodAdapter extends CommonRecyclerAdapter<FoodItem> {
+    private MainActivity activity;
 
     private Context context;
 
@@ -59,6 +68,7 @@ public class CartFoodAdapter extends CommonRecyclerAdapter<FoodItem> {
             tv_food1.setText(foodItem.getAliasName());
             tv_content1.setText(String.valueOf(foodItem.getQuantity()));
             tv_price1.setText(String.format("(SR %s)", foodItem.getFood_price()));
+            tv_price1.setPaintFlags(tv_price1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             tv_discount_price1.setText(String.format("SR %s", foodItem.getFood_discount_price()));
             // Picasso.get().load(foodList.get(position).getBannerImg()).into(iv_food1);
             RequestOptions requestOptions = new RequestOptions()
@@ -71,6 +81,7 @@ public class CartFoodAdapter extends CommonRecyclerAdapter<FoodItem> {
 
         }
 
+        @SuppressLint("ResourceType")
         @Override
         public void onClick(View view) {
             String value = tv_content1.getText().toString();
@@ -85,7 +96,7 @@ public class CartFoodAdapter extends CommonRecyclerAdapter<FoodItem> {
                     tv_content1.setText(String.valueOf(increment));
                     foodItem.setQuantity(increment);
                     Toast toast= Toast.makeText(context,
-                            "Item Added To Shop Cart", Toast.LENGTH_SHORT);
+                            "Item Added To Food Cart", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
                     toast.show();
                     foodItem.save();
@@ -102,11 +113,16 @@ public class CartFoodAdapter extends CommonRecyclerAdapter<FoodItem> {
                     }
 
                     break;
+                case  R.id.btn_review:
+
+
+            }
+
 
             }
         }
     }
-}
+
 
 
 

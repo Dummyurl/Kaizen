@@ -39,15 +39,9 @@
             android:orientation="vertical">
 
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_sub_category"
-                android:layout_width="match_parent"
-                android:layout_height="704dp"
-                android:layout_weight="1" />
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="393dp"
                 android:layout_weight="1.2"
                 android:orientation="vertical">
 
@@ -102,8 +96,29 @@
                         android:textColor="@android:color/white"
                         android:textSize="16sp" />
 
+
                 </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/btn_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin4dp"
+                    android:layout_marginTop="@dimen/margin4dp"
+                    android:background="@color/blue"
+                    android:drawablePadding="@dimen/margin8dp"
+                    android:padding="@dimen/margin16dp"
+                    android:text="@string/review"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
             </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_sub_category"
+                android:layout_width="match_parent"
+                android:layout_height="570dp"
+                android:layout_weight="1" />
         </LinearLayout>
 
     </LinearLayout>

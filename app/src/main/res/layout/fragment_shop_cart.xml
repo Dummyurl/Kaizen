@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:hint="please specify "
+            android:hint="Add notes for your order "
 
             android:textSize="@dimen/margin24dp" />
 

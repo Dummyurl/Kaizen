@@ -4,24 +4,20 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.location.LocationManager;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,6 +45,7 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.gson.Gson;
 import com.kaizen.R;
+import com.kaizen.activities.LoginActivity;
 import com.kaizen.activities.MainActivity;
 import com.kaizen.adapters.ChildCategoryPager;
 import com.kaizen.adapters.PrayerAdapter;
@@ -73,7 +70,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
@@ -93,7 +89,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
     public static final int RC_LOCATION = 4586;
     private static final String CATEGORY = "CATEGORY";
     private TextView tv_time, tv_location, tv_temperature, tv_high_temperature, tv_low_temperature,
-            tv_type, tv_tomorrow_high_temperature, tv_tomorrow_low_temperature,tv_alarm;
+            tv_type, tv_tomorrow_high_temperature, tv_tomorrow_low_temperature, tv_alarm, tv_room;
 
     private ImageView iv_temperature, iv_tomorrow_temperature;
     private YahooWeather mYahooWeather = YahooWeather.getInstance(5000, true);
@@ -105,6 +101,8 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
     private List<String> prayerTimes, prayerNames;
     private ProgressDialog progressDialog;
     private ImageView image;
+
+
     public static HomeFragment newInstance(Category category) {
         HomeFragment homeFragment = new HomeFragment();
 
@@ -122,6 +120,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
         String value = getArguments().getString(CATEGORY);
         category = new Gson().fromJson(value, Category.class);
         notifications = new Gson().fromJson(value, Notifications.class);
+
     }
 
     @Nullable
@@ -159,6 +158,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
         iv_tomorrow_temperature = view.findViewById(R.id.iv_tomorrow_temperature);
         tv_alarm = view.findViewById(R.id.tv_alarm);
         image = view.findViewById(R.id.image);
+        tv_room = view.findViewById(R.id.tv_room);
 
         final Handler someHandler = new Handler(getActivity().getMainLooper());
         someHandler.postDelayed(new Runnable() {
@@ -224,7 +224,8 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
         }
 
         if (!hasGPSDevice(getContext())) {
-            ToastUtil.showError(getActivity(), "Gps not Supported");
+           // ToastUtil.showError(getActivity(), "Gps not Supported");
+            getWeather();
         }
 
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER) && hasGPSDevice(getContext())) {
@@ -282,28 +283,42 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
 
         setupAutoPager();
 
-        /*service = RetrofitInstance.createService(RetrofitService.class);
+
+        service = RetrofitInstance.createService(RetrofitService.class);
         service.notification(PreferenceUtil.getLanguage(getContext()), notifications.getId()).enqueue(new Callback<NotificationResponse>() {
             @Override
             public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> response) {
-                AlertDialog.Builder alertadd = new AlertDialog.Builder(getContext());
-                LayoutInflater factory = LayoutInflater.from(getContext());
-                final View view = factory.inflate(R.layout.dialog_ad, null);
-                alertadd.setView(view);
-                alertadd.setNeutralButton("Welcome Kaizen", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dlg, int sumthin) {
+                if (response.isSuccessful() && response.body() != null) {
+                    final Dialog dialog = new Dialog(getContext());
+                    final View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_ad, null);
+                    dialog.setContentView(view);
+                    dialog.setTitle(response.body().getNotifications().get(0).getMessage());
+                    RequestOptions requestOptions = new RequestOptions()
+                            .placeholder(R.drawable.ic_place_holder)
+                            .error(R.drawable.ic_place_holder)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .skipMemoryCache(true);
 
-                    }
-                });
+                    view.findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.cancel();
+                        }
+                    });
 
-                alertadd.show();
+                    ImageView iv_image = view.findViewById(R.id.iv_image);
+
+                    Glide.with(getContext()).setDefaultRequestOptions(requestOptions).load(APIUrls.NOTIFICATION_IMAGE_URL + response.body().getNotifications().get(0).getImage()).into(iv_image);
+
+                    dialog.show();
+                }
             }
 
             @Override
             public void onFailure(Call<NotificationResponse> call, Throwable t) {
                 ToastUtil.showError(getActivity(), R.string.something_went_wrong);
             }
-        });*/
+        });
 
 
         final TextView tv_language = view.findViewById(R.id.tv_language);
@@ -490,7 +505,7 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                         } else if (description.isEmpty()) {
                             ToastUtil.showError(getActivity(), R.string.enter_description);
                         } else {
-                            service.sendEmergency(PreferenceUtil.getLanguage(getContext()), user.getRoomno(), name, description).enqueue(new Callback<RequestResponse>() {
+                            service.sendEmergency(PreferenceUtil.getLanguage(getContext())).enqueue(new Callback<RequestResponse>() {
                                 @Override
                                 public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
                                     if (response.isSuccessful() && response.body() != null) {
@@ -517,6 +532,8 @@ public class HomeFragment extends Fragment implements YahooWeatherInfoListener, 
                                             thanksDialog.show();
                                         } else {
                                             ToastUtil.showError(getActivity(), requestResponse.getError());
+                                            Intent intent = new Intent(getContext(),LoginActivity.class);
+                                            startActivity(intent);
                                         }
                                     }
                                 }

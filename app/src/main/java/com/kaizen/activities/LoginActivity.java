@@ -56,19 +56,21 @@ public class LoginActivity extends BaseActivity implements EasyPermissions.Permi
         String[] perms = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
 
         if (EasyPermissions.hasPermissions(this, perms)) {
-            String roomNo = et_room_no.getText().toString().trim();
+            final String roomNo = et_room_no.getText().toString().trim();
             String password = et_password.getText().toString().trim();
+
 
             if (roomNo.isEmpty()) {
                 showErrorToast(R.string.room_number_empty);
             } else if (password.isEmpty()) {
                 showErrorToast(R.string.password_empty);
             } else {
-                service.login(PreferenceUtil.getLanguage(this),roomNo, password).enqueue(new Callback<UserResponse>() {
+                service.login(PreferenceUtil.getLanguage(this),roomNo,password).enqueue(new Callback<UserResponse>() {
                     @Override
                     public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             UserResponse userResponse = response.body();
+
 
                             if (userResponse.getData() != null) {
                                 PreferenceUtil.setUser(LoginActivity.this, userResponse.getData());

@@ -57,36 +57,54 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:hint="please specify "
+            android:hint="Add notes for your order"
 
             android:textSize="@dimen/margin24dp" />
 
 
         <TextView
             android:id="@+id/tv_count"
-            android:layout_width="130dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="25dp"
-            android:layout_marginStart="24dp"
+            android:layout_marginBottom="31dp"
+            android:layout_marginStart="236dp"
             android:background="@drawable/ic_capsule"
             android:paddingBottom="@dimen/margin8dp"
-            android:paddingLeft="32dp"
+            android:paddingLeft="@dimen/margin16dp"
             android:paddingRight="@dimen/margin16dp"
             android:paddingTop="@dimen/margin8dp"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             tools:text="Count 10"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="24dp" />
+            android:layout_marginLeft="236dp" />
+
+        <TextView
+            android:id="@+id/tv_foody"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/tv_count"
+            android:background="@drawable/ic_capsule"
+            android:paddingBottom="@dimen/margin8dp"
+            android:paddingLeft="@dimen/margin8dp"
+            android:paddingTop="@dimen/margin8dp"
+            android:text="Back to Orders"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_alignParentLeft="true" />
 
         <TextView
             android:id="@+id/tv_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/tv_count"
-            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="180dp"
             android:background="@drawable/ic_capsule"
             android:paddingBottom="@dimen/margin8dp"
             android:paddingLeft="32dp"
@@ -94,23 +112,26 @@
             android:paddingTop="@dimen/margin8dp"
             android:textColor="@android:color/white"
             android:textSize="16sp"
-            tools:text="Total 10" />
+            tools:text="Total 10"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="180dp" />
 
         <TextView
             android:id="@+id/tv_pay"
-            android:layout_width="187dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_alignEnd="@+id/add_on"
             android:layout_alignTop="@+id/tv_count"
             android:background="@drawable/ic_capsule"
             android:paddingBottom="@dimen/margin8dp"
-            android:paddingLeft="32dp"
-            android:paddingRight="@dimen/margin16dp"
+            android:paddingLeft="@dimen/margin16dp"
             android:paddingTop="@dimen/margin8dp"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold"
-            tools:text="Count 10" />
+            tools:text="Count 10"
+            android:layout_alignRight="@+id/add_on" />
+
 
     </RelativeLayout>
 </RelativeLayout>

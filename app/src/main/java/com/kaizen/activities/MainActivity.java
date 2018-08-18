@@ -2,21 +2,16 @@ package com.kaizen.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.TextView;
 
 import com.kaizen.R;
-import com.kaizen.activities.BaseActivity;
 import com.kaizen.adapters.CategoryAdapter;
-import com.kaizen.adapters.ChildCategoryPager;
 import com.kaizen.fragments.CartFragment;
 import com.kaizen.fragments.CategoryFragment;
 import com.kaizen.fragments.FoodCategoryFragment;
@@ -25,12 +20,9 @@ import com.kaizen.fragments.MoreFragment;
 import com.kaizen.fragments.ShopCartFragment;
 import com.kaizen.fragments.ShopCategoryFragment;
 import com.kaizen.listeners.ISetOnCategoryClickListener;
-import com.kaizen.listeners.ISetOnChildClickListener;
 import com.kaizen.models.Category;
 import com.kaizen.models.CategoryResponse;
-import com.kaizen.models.ChildCategory;
-import com.kaizen.models.ListChildCategoryResponse;
-import com.kaizen.models.Subcategory;
+import com.kaizen.models.User;
 import com.kaizen.reterofit.RetrofitInstance;
 import com.kaizen.reterofit.RetrofitService;
 import com.kaizen.utils.LocaleHelper;
@@ -53,6 +45,9 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
     private RetrofitService service;
     private CategoryAdapter categoryAdapter;
     private RecyclerView rv_category;
+    private User user;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +58,8 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
         DateFormat df = new SimpleDateFormat("EEEE, MMM dd yyyy", Locale.getDefault());
         String date = df.format(new Date().getTime());
         tv_date.setText(date);
+        final TextView tv_room = findViewById(R.id.tv_room);
+
 
         rv_category = findViewById(R.id.rv_category);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -70,6 +67,10 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
 
         categoryAdapter = new CategoryAdapter(this);
         rv_category.setAdapter(categoryAdapter);
+        User user = PreferenceUtil.getUser(getBaseContext());
+        user.getRoomno();
+        tv_room.setText(user.getRoomno());
+
 
 
 
@@ -89,6 +90,7 @@ public class MainActivity extends BaseActivity implements ISetOnCategoryClickLis
                 showErrorToast(R.string.something_went_wrong);
             }
         });
+
     }
 
     @Override

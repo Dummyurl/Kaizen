@@ -1,20 +1,27 @@
 package com.kaizen.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.kaizen.R;
 import com.kaizen.adapters.CartAdapter;
+import com.kaizen.models.DescriptionResponse;
 import com.kaizen.models.FoodItem;
 import com.kaizen.models.RequestResponse;
 import com.kaizen.models.User;
@@ -35,7 +42,14 @@ import retrofit2.Response;
 
 public class CartFragment extends Fragment implements CartAdapter.ICartActions {
 
-    private TextView tv_count, tv_pay, tv_empty,tv_total;
+    private TextView tv_count;
+    private TextView tv_pay;
+    private TextView tv_empty;
+    private TextView tv_total;
+    private EditText add_on;
+    public static final String CATEGORY_ID = "CATEGORY_ID";
+    public static final String CATEGORY_TITLE = "CATEGORY_TITLE";
+
 
     @Nullable
     @Override
@@ -44,10 +58,11 @@ public class CartFragment extends Fragment implements CartAdapter.ICartActions {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         tv_empty = view.findViewById(R.id.tv_empty);
+
 
 
         RecyclerView rv_cart = view.findViewById(R.id.rv_cart);
@@ -67,8 +82,11 @@ public class CartFragment extends Fragment implements CartAdapter.ICartActions {
         tv_pay = view.findViewById(R.id.tv_pay);
         tv_count = view.findViewById(R.id.tv_count);
         tv_total = view.findViewById(R.id.tv_total);
+        add_on = view.findViewById(R.id.add_on);
 
         updateCount();
+
+
 
         tv_pay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +104,7 @@ public class CartFragment extends Fragment implements CartAdapter.ICartActions {
                             jObjP.put("id", foodItem.getId());
                             jObjP.put("quantity", foodItem.getQuantity());
                             jObjP.put("productprice", foodItem.getFood_discount_price());
+                            jObjP.put("description", foodItem.getDescription());
                             passArray.put(jObjP);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -103,6 +122,7 @@ public class CartFragment extends Fragment implements CartAdapter.ICartActions {
                                     FoodItem.deleteAll(FoodItem.class);
                                     cartAdapter.resetItems();
                                     tv_empty.setVisibility(View.VISIBLE);
+                                    add_on.setVisibility(view.GONE);
                                     updateCount();
 
                                     View thanksView = getLayoutInflater().inflate(R.layout.dialog_thanks, null);
@@ -136,11 +156,23 @@ public class CartFragment extends Fragment implements CartAdapter.ICartActions {
                             ToastUtil.showError(getActivity(), R.string.something_went_wrong);
                         }
                     });
+
+
+
                 }
+            }
+        });
+        TextView tv_foody = view.findViewById(R.id.tv_foody);
+
+        tv_foody.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
 
+    @SuppressLint("StringFormatInvalid")
     private void updateCount() {
         List<FoodItem> foodItems = FoodItem.listAll(FoodItem.class);
 
@@ -168,6 +200,7 @@ public class CartFragment extends Fragment implements CartAdapter.ICartActions {
             tv_count.setText(String.format(getString(R.string.count_arabic), String.valueOf(count)));
             tv_pay.setText(String.format(getString(R.string.pay_arabic), String.valueOf(total)));
         }
+
     }
 
     @Override

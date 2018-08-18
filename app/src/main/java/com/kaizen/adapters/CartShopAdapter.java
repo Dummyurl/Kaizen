@@ -3,6 +3,7 @@ package com.kaizen.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -56,6 +57,7 @@ public class CartShopAdapter extends CommonRecyclerAdapter<ShopItem>  {
             tv_food1 = view.findViewById(R.id.tv_food1);
             tv_content1 = view.findViewById(R.id.tv_content);
             tv_price1 = view.findViewById(R.id.tv_price1);
+            tv_price1.setPaintFlags(tv_price1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             tv_discount_price1 = view.findViewById(R.id.tv_discount_price1);
             iv_food1 = view.findViewById(R.id.iv_food);
             view.findViewById(R.id.iv_add1).setOnClickListener(this);
