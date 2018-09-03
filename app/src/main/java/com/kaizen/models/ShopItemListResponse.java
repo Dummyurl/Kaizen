@@ -6,7 +6,7 @@ import java.util.List;
 public class ShopItemListResponse {
     private String responce;
 
-    private List<ShopItem> shopitemlist;
+    private List<ShopItem> data;
 
     public String getResponce() {
         return responce;
@@ -18,14 +18,14 @@ public class ShopItemListResponse {
 
     public List<ShopItem> getShopitemlist() {
 
-        if (shopitemlist == null) {
-            shopitemlist = new ArrayList<>();
+        if (data == null) {
+            data = new ArrayList<>();
         }
 
-        return shopitemlist;
+        return data;
     }
 
     public void setShopitemlist(List<ShopItem> shopitemlist) {
-        this.shopitemlist = shopitemlist;
+        this.data = shopitemlist;
     }
 }

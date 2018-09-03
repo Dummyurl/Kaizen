@@ -151,9 +151,4 @@ public interface RetrofitService {
     @POST(APIUrls.SHOP_ITEM_LIST)
     @FormUrlEncoded
     Call<DescriptionResponse> getDescription(@Field("languageid") int languageId, @Query("cid") String cid, @Query("subid") String subid);
-
-
-
-
-
 }

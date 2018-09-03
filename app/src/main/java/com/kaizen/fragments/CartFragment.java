@@ -64,13 +64,12 @@ public class CartFragment extends Fragment implements CartAdapter.ICartActions {
         tv_empty = view.findViewById(R.id.tv_empty);
 
 
-
         RecyclerView rv_cart = view.findViewById(R.id.rv_cart);
         rv_cart.setLayoutManager(new GridLayoutManager(getContext(), 4));
 
         final CartAdapter cartAdapter = new CartAdapter(this);
         rv_cart.setAdapter(cartAdapter);
-        List<FoodItem> foodItems = FoodItem.listAll(FoodItem.class);
+   /*     List<FoodItem> foodItems = FoodItem.listAll(FoodItem.class);
 
         if (foodItems.size() > 0) {
             cartAdapter.addItems(foodItems);
@@ -205,6 +204,14 @@ public class CartFragment extends Fragment implements CartAdapter.ICartActions {
 
     @Override
     public void onCartUpdated() {
-        updateCount();
+        updateCount();*/
+    }
+
+    @Override
+    public void onCartUpdated() {
+
     }
 }
+
+
+

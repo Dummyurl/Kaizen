@@ -96,7 +96,7 @@ public class ShopCategoryFragment extends Fragment implements ISetOnShopChildCli
         super.onViewCreated(view, savedInstanceState);
 
         rv_shopcata = view.findViewById(R.id.rv_shopcata);
-        rv_shopcata.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rv_shopcata.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
 
         requestOptions = new RequestOptions()

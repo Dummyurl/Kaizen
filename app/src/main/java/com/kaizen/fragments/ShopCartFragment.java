@@ -28,6 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,7 +37,7 @@ import retrofit2.Response;
 
 public class ShopCartFragment extends Fragment implements ShopCartAdapter.ICartActions {
 
-    private TextView tv_count, tv_pay, tv_empty,tv_total;
+    private TextView tv_count, tv_pay, tv_empty, tv_total;
 
     @Nullable
     @Override
@@ -56,7 +57,12 @@ public class ShopCartFragment extends Fragment implements ShopCartAdapter.ICartA
 
         final ShopCartAdapter shopcartAdapter = new ShopCartAdapter(this);
         rv_cart.setAdapter(shopcartAdapter);
-        List<ShopItem> shopItems = ShopItem.listAll(ShopItem.class);
+        List<ShopItem> shopItems = new ArrayList<>();
+
+        try {
+            shopItems = ShopItem.listAll(ShopItem.class);
+        } catch (Exception ignore) {
+        }
 
         if (shopItems.size() > 0) {
             shopcartAdapter.addItems(shopItems);
@@ -145,7 +151,13 @@ public class ShopCartFragment extends Fragment implements ShopCartAdapter.ICartA
 
     @SuppressLint("StringFormatInvalid")
     private void updateCount() {
-        List<ShopItem> shopItems = ShopItem.listAll(ShopItem.class);
+        List<ShopItem> shopItems = new ArrayList<>();
+
+        try {
+            shopItems = ShopItem.listAll(ShopItem.class);
+        } catch (Exception ignore) {
+
+        }
 
         if (shopItems.size() == 0) {
             tv_empty.setVisibility(View.VISIBLE);
@@ -155,9 +167,9 @@ public class ShopCartFragment extends Fragment implements ShopCartAdapter.ICartA
         int total = 0;
 
 
-        for (ShopItem shopItem : shopItems) {
-            total = total + (Integer.valueOf(shopItem.getShop_discount_price()) * shopItem.getQuantity());
-        }
+//        for (ShopItem shopItem : shopItems) {
+//            total = total + (Integer.valueOf(shopItem.getShop_discount_price()) * shopItem.getQuantity());
+//        }
 
         int language = PreferenceUtil.getLanguage(getContext());
 

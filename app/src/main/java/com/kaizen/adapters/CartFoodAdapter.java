@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -94,22 +95,45 @@ public class CartFoodAdapter extends CommonRecyclerAdapter<FoodItem> {
                 case R.id.iv_add1:
                     int increment = content + 1;
                     tv_content1.setText(String.valueOf(increment));
-                    foodItem.setQuantity(increment);
-                    Toast toast= Toast.makeText(context,
-                            "Item Added To Food Cart", Toast.LENGTH_SHORT);
+ //                   foodItem.setQuantity(increment);
+                  // Toast toast= Toast.makeText(context,
+                   //         "Item Added To Food Cart", Toast.LENGTH_SHORT);
+                   // toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
+                   // toast.show();
+                    Toast toast = Toast.makeText(context, "Item Added To FoodCart", Toast.LENGTH_SHORT);
+                    View toastView = toast.getView(); // This'll return the default View of the Toast.
+
+                    /* And now you can get the TextView of the default View of the Toast. */
+                    TextView toastMessage = (TextView) toastView.findViewById(android.R.id.message);
+                    toastMessage.setTextSize(20);
+                    toastMessage.setTextColor(Color.WHITE);
                     toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    toastMessage.setCompoundDrawablePadding(20);
+                    toastView.setBackgroundColor(Color.GRAY);
                     toast.show();
-                    foodItem.save();
+  //                  foodItem.save();
                     break;
                 case R.id.iv_remove1:
                     int decrement = content - 1;
 
                     if (decrement == -1) {
-                        Toast.makeText(context, "Please click + to add item to Shopcart", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(context, "Please click + to add item to Shopcart", Toast.LENGTH_SHORT).show();
+                        Toast toast1 = Toast.makeText(context, "Please click + to add item to FoodCart", Toast.LENGTH_SHORT);
+                        View toastView1 = toast1.getView(); // This'll return the default View of the Toast.
+
+                        /* And now you can get the TextView of the default View of the Toast. */
+                        TextView toastMessage1 = (TextView) toastView1.findViewById(android.R.id.message);
+                        toastMessage1.setTextSize(20);
+                        toastMessage1.setTextColor(Color.WHITE);
+                        toastMessage1.setGravity(Gravity.CENTER);
+                        toastMessage1.setCompoundDrawablePadding(20);
+                        toastView1.setBackgroundColor(Color.GRAY);
+                        toast1.show();
+ //                       foodItem.save();
                     } else {
                         tv_content1.setText(String.valueOf(decrement));
                         foodItem.setQuantity(decrement);
-                        foodItem.save();
+ //                       foodItem.save();
                     }
 
                     break;

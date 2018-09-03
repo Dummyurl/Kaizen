@@ -89,7 +89,7 @@ public class ShopChildCategoryFragment extends Fragment {
         tv_add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shopItem.setQuantity(1);
+//                shopItem.setQuantity(1);
 
             }
         });

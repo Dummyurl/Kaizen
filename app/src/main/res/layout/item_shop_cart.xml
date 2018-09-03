@@ -10,12 +10,28 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="313dp">
+
+        <TextView
+            android:id="@+id/tv_food"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="@dimen/margin4dp"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            tools:text="Sample" />
 
         <ImageView
             android:id="@+id/iv_food"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tv_food"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_place_holder" />
 
@@ -26,32 +42,19 @@
             android:layout_below="@+id/iv_food"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_food"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:padding="@dimen/margin4dp"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                tools:text="Sample" />
-
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="249dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/rl_food"
+            android:layout_below="@+id/iv_food"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="@dimen/margin4dp"
-            android:layout_alignParentLeft="true">
+            android:padding="@dimen/margin4dp">
 
             <TextView
                 android:id="@+id/tv_price"
@@ -83,8 +86,11 @@
             android:id="@+id/ll_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/iv_food"
+            android:layout_marginEnd="14dp"
+            android:layout_marginRight="14dp"
             android:paddingBottom="@dimen/margin8dp">
 
             <ImageView
@@ -108,6 +114,52 @@
                 android:layout_height="32dp"
                 android:src="@drawable/ic_minus" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/ll_content"
+            android:layout_marginLeft="52dp"
+            android:layout_marginStart="52dp"
+            android:text="Size"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/drop_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/ll_content"
+            android:layout_marginLeft="118dp"
+            android:layout_marginStart="118dp">
+
+        </Spinner>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ll_content"
+            android:layout_marginEnd="103dp"
+            android:layout_marginRight="103dp"
+            android:text="COLOR"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/drop_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ll_content"
+            android:layout_marginEnd="29dp"
+            android:layout_marginRight="29dp">
+
+        </Spinner>
 
     </RelativeLayout>
 

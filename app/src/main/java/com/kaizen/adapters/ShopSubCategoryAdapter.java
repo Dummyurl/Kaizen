@@ -101,6 +101,7 @@ public class ShopSubCategoryAdapter extends CommonRecyclerAdapter<ShopSubCategor
                     childCategoryAdapter.addItems(response.body().getShopitemslist());
                     subId = null;
                     childId = null;
+
                 }
 
                 @Override

@@ -94,7 +94,7 @@ public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
                     int increment = content + 1;
                     tv_content.setText(String.valueOf(increment));
                     foodItem.setQuantity(increment);
-                    foodItem.save();
+                   foodItem.save();
                     iCartActions.onCartUpdated();
                     break;
                 case R.id.iv_remove:
@@ -120,7 +120,7 @@ public class CartAdapter extends CommonRecyclerAdapter<FoodItem> {
                     } else {
                         tv_content.setText(String.valueOf(decrement));
                         foodItem.setQuantity(decrement);
-                        foodItem.save();
+//                        foodItem.save();
                         iCartActions.onCartUpdated();
                     }
                     break;

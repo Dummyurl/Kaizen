@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,107 +9,196 @@
     app:cardElevation="2dp"
     app:cardUseCompatPadding="true">
 
+
     <RelativeLayout
-        android:id="@+id/lr_shop"
+        android:id="@+id/rl_selected"
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="291dp">
 
         <ImageView
-            android:id="@+id/iv_shop"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:id="@+id/iv_food"
+            android:layout_width="500dp"
+            android:layout_height="320dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="-33dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_place_holder" />
 
-        <LinearLayout
-            android:id="@+id/rl_shop"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_food1"
+            android:layout_width="673dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_shop"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_shop"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:padding="@dimen/margin4dp"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                tools:text="Sample" />
-
-
-        </LinearLayout>
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/iv_food"
+            android:layout_toRightOf="@+id/iv_food"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="@dimen/margin4dp"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            tools:text="Sample" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="266dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/rl_shop"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="47dp"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="@dimen/margin4dp"
-            android:layout_alignParentLeft="true">
+            android:padding="@dimen/margin4dp">
+
+            <RelativeLayout
+                android:layout_width="566dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_price1"
+                    android:layout_width="86dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginStart="150dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="18sp"
+                    tools:text="10rs" />
+
+                <TextView
+                    android:id="@+id/tv_discount_price1"
+                    android:layout_width="86dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="209dp"
+                    android:layout_marginRight="209dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    tools:text="20rs" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="336dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true">
 
             <TextView
-                android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="18sp"
-                tools:text="10rs" />
+                android:text="SIZE     "
+                android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/tv_discount_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin4dp"
-                android:layout_marginStart="@dimen/margin4dp"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                tools:text="20rs" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/drop_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true">
+
+                </Spinner>
+
+            </RelativeLayout>
+
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_content"
-            android:layout_width="wrap_content"
+            android:layout_width="336dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:paddingBottom="@dimen/margin8dp">
-
-            <ImageView
-                android:id="@+id/iv_add"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/ic_plus" />
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="70dp">
 
             <TextView
-                android:id="@+id/tv_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin16dp"
-                android:layout_marginRight="@dimen/margin16dp"
-                android:text="@string/_1"
-                android:textSize="22sp" />
+                android:text="COLOR"
+                android:textSize="18sp" />
 
-            <ImageView
-                android:id="@+id/iv_remove"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/ic_minus" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/drop_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true">
+
+                </Spinner>
+            </RelativeLayout>
+
+
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_content1"
+            android:layout_width="339dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+
+            android:paddingBottom="@dimen/margin8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/iv_add1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_plus" />
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/_1"
+                    android:textSize="22sp" />
+
+                <ImageView
+                    android:id="@+id/iv_remove1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/ic_minus" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
 
     </RelativeLayout>
 
